@@ -1,0 +1,595 @@
+/* =========================================
+   ABOUT PAGE SPECIFIC STYLES
+   ========================================= */
+
+/* --- Global overrides for this page only --- */
+.about-page-wrapper {
+  background-color: #ffffff; /* Base white */
+  color: #000000;
+  font-family: var(--font-main, sans-serif);
+}
+
+/* =========================================
+   ABOUT PAGE - HERO SECTION
+   ========================================= */
+.about-hero-section {
+  background-color: #000000;
+  color: #ffffff;
+  padding: 120px 0; 
+  min-height: 85vh;
+  display: flex;
+  align-items: center;
+}
+
+.about-hero-section .hero-container {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  gap: 4rem;
+}
+
+.hero-text-content {
+  flex: 1;
+  max-width: 600px;
+}
+
+/* THE TITLE STYLES */
+.hero-title {
+  display: flex;
+  flex-direction: column; 
+  margin-bottom: 2rem;
+}
+
+/* Force sans-serif to match Figma, overriding the global Kasei font */
+.title-main {
+  font-family: var(--font-heading, serif) !important; 
+  font-size: 8rem; /* Make 'About' bigger */
+  line-height: 0.9;
+  font-weight: 400; 
+  letter-spacing: -2px;
+  color: #ffffff;
+}
+
+/* 2. "Us." - Outline Effect */
+.title-sub {
+  /* Keeps your existing sans-serif font */
+  font-family: 'Inter', sans-serif !important;
+  font-size: 7.5rem;
+  line-height: 1;
+  font-weight: 700; 
+  margin-top: 0.5rem;
+  letter-spacing: 1px;
+  
+  /* 1. Makes the inside of the text transparent */
+  color: transparent !important; 
+  
+  /* 2. The solid outline */
+  -webkit-text-stroke: 2px #ffffff; 
+  
+  /* 3. The "Pop" / Shadow effect */
+  text-shadow: 
+    0px 0px 10px rgb(9, 9, 9), /* Soft outer glow */
+    1px 4px 1px rgb(241, 239, 239);  /* Slight drop shadow for depth */
+}
+.hero-description {
+  color: #ffffff;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 2.5rem;
+}
+
+/* The new White Button */
+.btn-solid-light {
+  background-color: #ffffff;
+  color: #000000;
+  border: none;
+  padding: 14px 32px;
+  border-radius: 40px; /* Gives it the pill shape */
+  font-size: 1rem;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px; /* Space between text and arrow */
+  transition: all 0.3s ease;
+}
+
+/* Hover effect */
+.btn-solid-light:hover {
+  background-color: #e0e0e0;
+  transform: translateY(-2px); /* Slight lift on hover */
+}
+
+/* The Arrow */
+.arrow {
+  font-size: 1.2rem;
+  font-weight: 400;
+  transition: transform 0.3s ease;
+}
+
+/* Make arrow slide right on hover */
+.btn-solid-light:hover .arrow {
+  transform: translateX(4px);
+}
+/* The Right Side Box */
+.hero-graphic-box {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #000000;
+  border: 1px solid #222;
+  padding: 2rem;
+  max-width: 500px;
+  aspect-ratio: 1 / 1;
+}
+
+.large-x-placeholder {
+  font-size: 25rem; 
+  font-weight: 700;
+  line-height: 0.8;
+  color: #ffffff;
+  letter-spacing: -5px;
+  font-family: 'Inter', sans-serif; 
+}
+
+/* --- 2. MISSION & VISION --- */
+.mission-vision-section {
+  padding: 100px 0;
+  background-color: #000000;
+  border-top: 1px solid rgba(255, 255, 255, 2);
+}
+
+.mission-vision-section .container {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 5%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.card {
+  padding: 3.5rem;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-label {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  display: block;
+}
+
+.mission-card {
+  background-color: #ffffff;
+  border: 1px solid #eaeaea;
+}
+
+.mission-card h2 {
+  /* FORCE SANS-SERIF AND BOLD */
+  font-family: 'Inter', sans-serif !important;
+  font-size: 2rem; /* Slightly larger */
+  line-height: 1.3;
+  color: #000;
+  font-weight: 700; /* Bold like Figma */
+  letter-spacing: -0.5px;
+}
+
+.vision-card {
+  background-color: #1a1a1a;
+}
+
+.vision-card h2 {
+  /* FORCE SANS-SERIF AND BOLD */
+  font-family: 'Inter', sans-serif !important;
+  font-size: 2rem; /* Slightly larger */
+  line-height: 1.3;
+  color: #ffffff;
+  font-weight: 700; /* Bold like Figma */
+  letter-spacing: -0.5px;
+}
+/* Target the label specifically inside the dark vision card */
+.vision-card .card-label {
+  color: #ffffff !important;
+}
+/* =========================================
+   TIMELINE SECTION
+   ========================================= */
+.timeline-section {
+  padding: 100px 0 120px 0;
+  background-color: #000000; /* Turn background black */
+  color: #ffffff;
+  border-top: 2px solid rgb(255, 255, 255); /* Thin line separator */
+}
+
+.timeline-section .container {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 5%;
+}
+
+.timeline-label {
+  color: #888888;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.timeline-section .section-title {
+  font-size: 3rem;
+  margin-bottom: 4rem;
+  color: #ffffff; /* White title */
+  letter-spacing: -1px;
+  font-family: var(--font-heading, serif); /* Keep the elegant font */
+}
+
+.timeline-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 columns like Figma */
+  gap: 2rem;
+  border-top: 1px solid #555555; /* The horizontal line connecting dots */
+  padding-top: 2rem;
+  position: relative;
+}
+
+.timeline-item {
+  position: relative;
+}
+
+/* The white dot */
+.timeline-item .dot {
+  width: 12px;
+  height: 12px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  position: absolute;
+  top: -2.4rem;
+  left: 0;
+}
+
+/* The brackets [ 2024 ] */
+.timeline-year {
+  font-family: monospace, sans-serif; /* Techy font for numbers */
+  font-size: 1.8rem;
+  color: #ffffff;
+  margin-bottom: 1rem;
+  font-weight: 400;
+}
+
+/* The Titles (Artx Dev LLC) */
+.timeline-title {
+  font-family: var(--font-heading, serif);
+  font-size: 1.2rem;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+/* The Descriptions */
+.timeline-desc {
+  color: #a1a1aa;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+/* =========================================
+   WHY CHOOSE US SECTION
+   ========================================= */
+.why-choose-us-section {
+  padding: 100px 0;
+  background-color: #ffffff;
+  overflow: hidden; /* Prevents the zoomed image from causing horizontal scroll */
+}
+
+.why-choose-us-section .container {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 5%;
+}
+
+/* Header Styles (keep these) */
+.why-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 3rem;
+}
+
+.why-header-left { max-width: 60%; }
+.why-header-right { max-width: 30%; padding-bottom: 0.5rem; }
+
+.why-label {
+  font-family: monospace, sans-serif;
+  color: #888888;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  margin-bottom: 1rem;
+}
+
+.why-title {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 4rem;
+  color: #000000;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -1px;
+}
+
+.why-subtitle {
+  font-family: 'Inter', sans-serif;
+  color: #555555;
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+
+/* --- The Image Fix --- */
+.why-image-wrapper {
+  width: 100%;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 5%;
+  display: flex;
+  justify-content: center;
+}
+
+.full-block-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  
+  /* 
+    THIS IS THE MAGIC: 
+    Zooming in by 8% (1.08) hides the white space 
+    baked into the edges of your image.
+    If it's still not touching the edges perfectly, change 1.08 to 1.1 or 1.12 
+  */
+  transform: scale(1.08); 
+}
+
+/* Make it responsive for mobile */
+@media (max-width: 768px) {
+  .why-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  .why-header-left, .why-header-right {
+    max-width: 100%;
+  }
+  .why-title {
+    font-size: 2.5rem;
+  }
+}
+/* --- 5. STATS --- */
+.stats-section {
+  padding: 100px 0;
+  background-color: #000000;
+  color: #ffffff;
+}
+
+.stats-section .container {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 5%;
+}
+
+.stats-heading {
+  font-size: 3rem;
+  margin-bottom: 4rem;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  text-align: center;
+  font-family: monospace;
+  font-size: 5rem;
+}
+
+/* =========================================
+   COMPANIES SECTION
+   ========================================= */
+.companies-section {
+  padding: 100px 0;
+  background-color: #000000;
+  color: #ffffff;
+  border-top: 1px solid rgba(255, 255, 255, 4); 
+}
+
+.companies-section .container {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 5%;
+}
+
+.companies-title {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 2.5rem;
+  margin-bottom: 3rem;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.companies-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+/* The Dark Card */
+/* The Dark Card */
+.company-card {
+  background-color: #222222;
+  padding: 3rem; /* Good, even padding on all sides */
+  border-radius: 20px;
+  border: 1px solid #333;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Top Row: Logo and Badge */
+.card-top-row {
+  display: flex;
+  justify-content: space-between; /* Pushes logo left, badge right */
+  align-items: flex-start; /* Aligns both to the top of the row */
+  margin-bottom: 2.5rem; 
+}
+
+.company-logo {
+  /* 1. Constrain the height so it doesn't break the layout */
+  height: 35px; 
+  width: auto;
+  object-fit: contain;
+  opacity: 0.8;
+}
+
+.company-badge {
+  font-family: monospace, sans-serif;
+  color: #888888;
+  font-size: 0.85rem;
+  margin-top: 0.5rem; /* Pushes it down slightly to align nicely with the logo */
+}
+
+/* Middle Section: Title and Subtitle */
+.card-main-content {
+  margin-bottom: 3rem; /* Space between subtitle and address */
+  flex-grow: 1; /* Pushes the footer to the bottom */
+}
+
+.card-main-content h3 {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #ffffff;
+}
+
+.company-subtitle {
+  font-family: 'Inter', sans-serif;
+  color: #a1a1aa; /* Gray text */
+  font-size: 0.95rem;
+}
+
+/* Bottom Section: Address */
+.card-footer {
+  border-top: 1px solid #444444;
+  padding-top: 1.5rem;
+}
+
+.card-footer p {
+  font-family: 'Inter', sans-serif;
+  color: #a1a1aa;
+  font-size: 1rem;
+}
+/* --- 7. CLIENTS --- */
+.clients-section {
+  padding: 80px 0;
+  background-color: #ffffff;
+}
+
+.clients-section .container {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 5%;
+}
+
+.clients-label {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+}
+
+.logos-grid {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  opacity: 0.7;
+}
+/* =========================================
+   CTA SECTION (Have a project in mind)
+   ========================================= */
+.cta-section {
+  background-color: #000000;
+  color: #ffffff;
+  padding: 120px 0;
+}
+
+.cta-section .container {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 5%;
+}
+
+.cta-title {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 5rem;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -2px;
+  margin-bottom: 3rem;
+}
+
+.cta-actions {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+/* The Start a project button */
+.btn-cta {
+  background-color: #e6e6e6; /* Light grey from your screenshot */
+  color: #000000;
+  border: none;
+  padding: 16px 32px;
+  border-radius: 40px;
+  font-size: 1.1rem;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.3s ease;
+}
+
+.btn-cta:hover {
+  background-color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.btn-cta .arrow {
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+}
+
+.btn-cta:hover .arrow {
+  transform: translateX(5px);
+}
+
+/* The Email text */
+.cta-email {
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.cta-email:hover {
+  color: #a1a1aa; /* Turns grey on hover */
+}
