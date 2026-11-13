@@ -1,0 +1,53 @@
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Kasei+Tokumin:wght@400;700&family=Karma:wght@400;700&family=Kantumruy+Pro:wght@400;700&family=Hind:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;600;700&display=swap');
+/* Update your Google Fonts import to include these */
+@import url('https://fonts.googleapis.com/css2?family=Hind:wght@400;600&family=Hanuman:wght@400;700&family=Gowun+Dodum&display=swap');
+/* Sansation Font */
+@import url('https://fonts.cdnfonts.com/css/sansation');
+
+:root {
+  /* Colors from your Figma */
+  --bg-primary: #000000;       
+  --bg-secondary: #111111;     
+  --text-primary: #FFFFFF;     
+  --text-secondary: #a1a1aa;   
+  --accent-color: #00ff00;     
+  --border-color: #333333;     
+
+  /* Typography */
+  --font-main: 'Inter', sans-serif;
+  --font-heading: 'Kasei Tokumin', serif; /* Added Kasei Tokumin */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-main);
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #FFFFFF; /* Ensures the whole site base is white */
+  font-family: var(--font-main);
+  overflow-x: hidden;
+}
+
+/* Base Headings */
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
