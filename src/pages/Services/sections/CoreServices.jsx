@@ -37,7 +37,7 @@ const CORE = [
 
 const CoreServices = () => {
   return (
-    <section className="svc-core">
+    <section className="svc-core" id="what-we-build">
       <div className="svc-container">
         <div className="svc-head svc-reveal">
           <p className="svc-eyebrow">[ WHAT WE BUILD ]</p>
@@ -48,7 +48,7 @@ const CoreServices = () => {
 
         <div className="svc-core-list">
           {CORE.map((s, i) => (
-            <div key={s.title} className="svc-core-row svc-reveal" style={{ '--d': `${i * 80}ms` }}>
+            <div key={s.title} id={s.title.toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-")} className="svc-core-row svc-reveal" style={{ '--d': `${i * 80}ms` }}>
               <span className="svc-core-num">0{i + 1}</span>
               <h3 className="svc-core-title">{s.title}</h3>
               <p className="svc-core-desc">{s.desc}</p>

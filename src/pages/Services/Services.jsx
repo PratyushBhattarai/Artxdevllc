@@ -1,5 +1,6 @@
 // src/pages/Services/Services.jsx
 import React, { useEffect, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 import './Services.css';
 import ServicesHero from './sections/ServicesHero';
 import CoreServices from './sections/CoreServices';
@@ -30,6 +31,24 @@ const Services = () => {
     els.forEach((el) => io.observe(el));
     return () => io.disconnect();
   }, []);
+
+  // Jump to a section when the URL has a #hash (e.g. links from the navbar
+  // dropdown like /services#web-apps). Runs after ScrollToTop's jump to top.
+  const location = useLocation();
+  useEffect(() => {
+    const id = decodeURIComponent(location.hash.slice(1));
+    if (!id) return undefined;
+    const timer = setTimeout(() => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.scrollIntoView({ behavior: 'smooth', block: el.classList.contains('svc-core-row') ? 'center' : 'start' });
+      if (el.classList.contains('svc-core-row')) {
+        el.classList.add('is-visible', 'svc-flash');
+        setTimeout(() => el.classList.remove('svc-flash'), 1800);
+      }
+    }, 80);
+    return () => clearTimeout(timer);
+  }, [location.key, location.hash]);
 
   return (
     <main ref={pageRef} className="svc-page">

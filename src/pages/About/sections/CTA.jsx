@@ -1,5 +1,6 @@
 // src/pages/About/sections/CTA.jsx
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const CTA = () => {
   return (
@@ -18,9 +19,9 @@ const CTA = () => {
         </h2>
 
         <div className="cta-actions reveal" style={{ '--d': '300ms' }}>
-          <button className="btn-cta">
+          <Link to="/book-meeting" className="btn-cta">
             Start a project <span className="arrow">→</span>
-          </button>
+          </Link>
           <a href="mailto:Artxdevllc@gmail.com" className="cta-email">
             Artxdevllc@gmail.com
           </a>

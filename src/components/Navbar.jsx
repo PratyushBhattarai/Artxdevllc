@@ -8,10 +8,59 @@ import arrowDown from '../assets/Polygon 1.png';
 const navLinks = [
   { to: '/', label: 'Home' },
   { to: '/about', label: 'About Us' },
-  { to: '/services', label: 'Services', hasArrow: true },
+  { to: '/services', label: 'Services', hasArrow: true, dropdown: true },
   { to: '/portfolio', label: 'Portfolio' },
   { to: '/contact', label: 'Contact Us' },
   { to: '/team', label: 'Our Team' },
+];
+
+// Services dropdown – each item jumps to its row on the Services page
+const icon = (d) => (
+  <svg viewBox="0 0 24 24" aria-hidden="true">{d}</svg>
+);
+const serviceMenu = [
+  {
+    to: '/services#website-design',
+    title: 'Website Design',
+    desc: 'Premium, on-brand layouts',
+    icon: icon(<><rect x="3" y="4" width="18" height="16" rx="2" /><path d="M3 9h18M7 13h4v3H7zM14 13h3M14 16h3" /></>),
+  },
+  {
+    to: '/services#website-development',
+    title: 'Website Development',
+    desc: 'Fast, responsive, SEO-ready',
+    icon: icon(<><rect x="3" y="4" width="18" height="16" rx="2" /><path d="M3 9h18M10 13l-2 2 2 2M14 13l2 2-2 2" /></>),
+  },
+  {
+    to: '/services#web-apps',
+    title: 'Web Apps',
+    desc: 'Dashboards, portals & tools',
+    icon: icon(<><rect x="3" y="3" width="7" height="7" rx="1.5" /><rect x="14" y="3" width="7" height="7" rx="1.5" /><rect x="3" y="14" width="7" height="7" rx="1.5" /><rect x="14" y="14" width="7" height="7" rx="1.5" /></>),
+  },
+  {
+    to: '/services#mobile-apps',
+    title: 'Mobile Apps',
+    desc: 'iOS & Android apps',
+    icon: icon(<><rect x="6" y="2" width="12" height="20" rx="2.5" /><path d="M11 18h2" /></>),
+  },
+  {
+    to: '/services#marketing-and-seo',
+    title: 'Marketing & SEO',
+    desc: 'Get found, get customers',
+    icon: icon(<><path d="M3 17l6-6 4 4 8-8" /><path d="M15 7h6v6" /></>),
+  },
+  {
+    to: '/services#ai-automation',
+    title: 'AI Automation',
+    desc: 'Chatbots & smart workflows',
+    icon: icon(<><rect x="6" y="6" width="12" height="12" rx="2" /><path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3" /></>),
+  },
+];
+
+const serviceQuickLinks = [
+  { to: '/services#packages', label: 'Pricing & packages' },
+  { to: '/services#add-ons', label: 'Add-on services' },
+  { to: '/services#process', label: 'Our process' },
 ];
 
 const Navbar = () => {
@@ -21,6 +70,7 @@ const Navbar = () => {
   const [region, setRegion] = useState('Nepal');
   const [hoverIndex, setHoverIndex] = useState(null);
   const [indicator, setIndicator] = useState({ left: 0, width: 0, visible: false });
+  const [servicesOpen, setServicesOpen] = useState(false);
 
   const linksRef = useRef(null);
   const linkRefs = useRef([]);
@@ -69,10 +119,25 @@ const Navbar = () => {
     return () => observer.disconnect();
   }, [target]);
 
-  // Close mobile menu when the page changes
+  // Close mobile menu + services dropdown when the page changes
   useEffect(() => {
     setMenuOpen(false);
+    setServicesOpen(false);
   }, [pathname]);
+
+  // Services dropdown: close with Escape
+  useEffect(() => {
+    if (!servicesOpen) return undefined;
+    const onKey = (e) => { if (e.key === 'Escape') setServicesOpen(false); };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [servicesOpen]);
+
+  // Clicking an item in the dropdown: close it (the Services page scrolls to the #section)
+  const handleDropdownClick = () => {
+    setServicesOpen(false);
+    setMenuOpen(false);
+  };
 
   // Mobile menu: lock page scroll + close with Escape
   useEffect(() => {
@@ -126,21 +191,91 @@ const Navbar = () => {
           className="nv-links"
           onMouseLeave={() => setHoverIndex(null)}
         >
-          {navLinks.map((link, index) => (
-            <Link
-              key={link.to}
-              ref={(el) => { linkRefs.current[index] = el; }}
-              to={link.to}
-              onClick={handleNavClick}
-              onMouseEnter={() => setHoverIndex(index)}
-              className={`nv-link${isActive(link.to) ? ' is-active' : ''}`}
-              style={{ '--i': index }}
-              aria-current={isActive(link.to) ? 'page' : undefined}
-            >
-              {link.label}
-              {link.hasArrow && <img src={arrowDown} alt="" className="nv-arrow" />}
-            </Link>
-          ))}
+          {navLinks.map((link, index) => {
+            const anchor = (
+              <Link
+                key={link.to}
+                ref={link.dropdown ? undefined : (el) => { linkRefs.current[index] = el; }}
+                to={link.to}
+                onClick={handleNavClick}
+                onMouseEnter={() => setHoverIndex(index)}
+                className={`nv-link${isActive(link.to) ? ' is-active' : ''}`}
+                style={{ '--i': index }}
+                aria-current={isActive(link.to) ? 'page' : undefined}
+                aria-haspopup={link.dropdown ? 'true' : undefined}
+                aria-expanded={link.dropdown ? servicesOpen : undefined}
+              >
+                {link.label}
+                {link.hasArrow && <img src={arrowDown} alt="" className="nv-arrow" />}
+              </Link>
+            );
+
+            if (!link.dropdown) return anchor;
+
+            // ---- Services with hover dropdown ----
+            return (
+              <div
+                key={link.to}
+                ref={(el) => { linkRefs.current[index] = el; }}
+                className={`nv-item${servicesOpen ? ' is-open' : ''}`}
+                onMouseEnter={() => { setHoverIndex(index); setServicesOpen(true); }}
+                onMouseLeave={() => setServicesOpen(false)}
+                onFocus={() => setServicesOpen(true)}
+                onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget)) setServicesOpen(false); }}
+              >
+                {anchor}
+
+                <div className="nv-drop" role="menu" aria-label="Services">
+                  <div className="nv-drop-card">
+                    <div className="nv-drop-grid">
+                      {serviceMenu.map((s, i) => (
+                        <Link
+                          key={s.to}
+                          to={s.to}
+                          role="menuitem"
+                          className="nv-drop-item"
+                          style={{ '--j': i }}
+                          onClick={handleDropdownClick}
+                          tabIndex={servicesOpen ? 0 : -1}
+                        >
+                          <span className="nv-drop-icon">{s.icon}</span>
+                          <span className="nv-drop-text">
+                            <span className="nv-drop-title">{s.title}</span>
+                            <span className="nv-drop-desc">{s.desc}</span>
+                          </span>
+                        </Link>
+                      ))}
+                    </div>
+
+                    <div className="nv-drop-side">
+                      <span className="nv-drop-eyebrow">Explore</span>
+                      {serviceQuickLinks.map((q) => (
+                        <Link
+                          key={q.to}
+                          to={q.to}
+                          role="menuitem"
+                          className="nv-drop-quick"
+                          onClick={handleDropdownClick}
+                          tabIndex={servicesOpen ? 0 : -1}
+                        >
+                          {q.label} <span aria-hidden="true">→</span>
+                        </Link>
+                      ))}
+                      <Link
+                        to="/services"
+                        role="menuitem"
+                        className="nv-drop-all"
+                        onClick={(e) => { handleDropdownClick(e); scrollToTop(); }}
+                        tabIndex={servicesOpen ? 0 : -1}
+                      >
+                        View all services <span aria-hidden="true">↗</span>
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
 
           <span
             className="nv-indicator"
@@ -266,6 +401,105 @@ const Navbar = () => {
           transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
                       width 0.45s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease;
         }
+
+        /* ================= SERVICES DROPDOWN ================= */
+        .nv-item { position: relative; display: flex; }
+        .nv-item.is-open .nv-arrow { transform: rotate(180deg); }
+
+        .nv-drop {
+          position: absolute; top: 100%; left: 50%; z-index: 101;
+          width: 720px; padding-top: 20px;
+          font-family: 'Inter', sans-serif; font-size: 14px;
+          opacity: 0; visibility: hidden; pointer-events: none;
+          transform: translateX(-50%) translateY(12px);
+          transition: opacity 0.3s ease, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), visibility 0s linear 0.3s;
+        }
+        .nv-item.is-open .nv-drop {
+          opacity: 1; visibility: visible; pointer-events: auto;
+          transform: translateX(-50%);
+          transition: opacity 0.3s ease, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), visibility 0s;
+        }
+        /* little pointer above the card */
+        .nv-drop::before {
+          content: ''; position: absolute; top: 13px; left: 50%; z-index: 1;
+          width: 14px; height: 14px; background: #FFFFFF;
+          border-left: 1px solid #E5E5E5; border-top: 1px solid #E5E5E5;
+          transform: translateX(-50%) rotate(45deg);
+        }
+
+        .nv-drop-card {
+          display: grid; grid-template-columns: 1fr 215px;
+          background: #FFFFFF; border: 1px solid #E5E5E5; border-radius: 18px; overflow: hidden;
+          box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.35), 0 12px 24px -12px rgba(0, 163, 255, 0.25);
+        }
+
+        .nv-drop-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 14px; }
+
+        .nv-drop-item {
+          display: flex; align-items: center; gap: 14px;
+          padding: 12px; border-radius: 12px;
+          color: #000000; text-decoration: none;
+          opacity: 0; transform: translateY(8px);
+          transition: background-color 0.25s ease, opacity 0.4s ease, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .nv-item.is-open .nv-drop-item {
+          opacity: 1; transform: none;
+          transition-delay: 0s, calc(0.05s + var(--j) * 0.04s), calc(0.05s + var(--j) * 0.04s);
+        }
+        .nv-drop-item:hover { background: #F2F8FF; }
+
+        .nv-drop-icon {
+          flex-shrink: 0; width: 42px; height: 42px; border-radius: 11px;
+          display: grid; place-items: center;
+          background: #000000; color: #FFFFFF;
+          transition: background-color 0.3s ease, transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+        }
+        .nv-drop-icon svg {
+          width: 20px; height: 20px; fill: none; stroke: currentColor;
+          stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+        }
+        .nv-drop-item:hover .nv-drop-icon {
+          background: #00A3FF; transform: rotate(-8deg) scale(1.08);
+          box-shadow: 0 6px 16px rgba(0, 163, 255, 0.45);
+        }
+
+        .nv-drop-title { display: block; font-size: 15px; font-weight: 600; line-height: 1.3; }
+        .nv-drop-desc { display: block; margin-top: 2px; font-size: 12.5px; color: #777777; }
+        .nv-drop-item:hover .nv-drop-title { color: #000000; }
+
+        .nv-drop-side {
+          position: relative; overflow: hidden; isolation: isolate;
+          display: flex; flex-direction: column; gap: 2px;
+          padding: 22px 20px; background: #000000; color: #FFFFFF;
+        }
+        .nv-drop-side::after {
+          content: ''; position: absolute; right: -90px; bottom: -90px; z-index: -1;
+          width: 220px; height: 220px; border-radius: 50%;
+          background: radial-gradient(circle, rgba(0, 163, 255, 0.4), transparent 65%);
+          animation: nvGlow 4s ease-in-out infinite;
+        }
+        .nv-drop-eyebrow {
+          margin-bottom: 8px; font-family: monospace; font-size: 11px;
+          letter-spacing: 2px; text-transform: uppercase; color: #00A3FF;
+        }
+        .nv-drop-quick {
+          display: flex; justify-content: space-between; align-items: center;
+          padding: 9px 0; border-bottom: 1px solid #222222;
+          color: #CCCCCC; text-decoration: none; font-size: 14px;
+          transition: color 0.25s ease, padding-left 0.3s ease;
+        }
+        .nv-drop-quick span { color: #00A3FF; transition: transform 0.3s ease; }
+        .nv-drop-quick:hover { color: #FFFFFF; padding-left: 6px; }
+        .nv-drop-quick:hover span { transform: translateX(3px); }
+        .nv-drop-all {
+          margin-top: auto; display: inline-flex; justify-content: center; align-items: center; gap: 6px;
+          padding: 10px 14px; border-radius: 30px;
+          background: #00A3FF; color: #000000; font-size: 13.5px; font-weight: 600; text-decoration: none;
+          transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .nv-drop-all:hover { background: #FFFFFF; transform: translateY(-2px); }
+
+        @keyframes nvGlow { 0%, 100% { transform: scale(0.9); opacity: 0.7; } 50% { transform: scale(1.15); opacity: 1; } }
 
         /* Right side */
         .nv-actions {

@@ -1191,3 +1191,17 @@
     transition-delay: 0ms !important;
   }
 }
+
+/* Sections reached from the navbar dropdown stop below the sticky navbar */
+.svc-page [id] { scroll-margin-top: 90px; }
+
+/* Row briefly glows blue when opened from the navbar dropdown */
+.svc-core-row.svc-flash::before { animation: svcFlash 1.8s ease; }
+.svc-core-row.svc-flash .svc-core-title,
+.svc-core-row.svc-flash .svc-core-desc,
+.svc-core-row.svc-flash .svc-core-num,
+.svc-core-row.svc-flash .svc-core-arrow { color: #ffffff; }
+@keyframes svcFlash {
+  0%, 60% { transform: scaleX(1); }
+  100% { transform: scaleX(0); }
+}

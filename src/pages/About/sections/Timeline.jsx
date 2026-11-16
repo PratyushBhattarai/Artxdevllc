@@ -4,9 +4,9 @@ import React from 'react';
 const Timeline = () => {
   const milestones = [
     { year: "2024", title: "Artx Dev Founded", desc: "Started as a freelance studio in Kathmandu." },
-    { year: "2025", title: "Artxdev Dev LLC", desc: "formed in Alabama" },
-    { year: "2025", title: "Artxdev Dev Pvt.Ltd", desc: "formed" },
-    { year: "2026", title: "Artxdev Dev LLC", desc: "formed in Wyoming" }
+    { year: "2025", title: "Artxdev Dev LLC", desc: "Formed in USA" },
+    { year: "2025", title: "Artxdev Dev Pvt.Ltd", desc: "Formed in Nepal" },
+    { year: "2026", title: "Artxdev Dev LLC", desc: "Formed in Wyoming" }
   ];
 
   return (

@@ -26,6 +26,7 @@ const PACKAGES = [
     name: 'E-Commerce Store',
     tagline: 'Everything you need to sell online.',
     price: 1000,
+    plus: true,
     featured: true,
     cta: 'Choose plan',
     features: [

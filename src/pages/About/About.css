@@ -1751,3 +1751,9 @@
     transition-delay: 0ms !important;
   }
 }
+
+/* "Start project" buttons are now links to /book-meeting – keep them looking like buttons */
+.about-page-wrapper a.btn-solid-light,
+.about-page-wrapper a.btn-cta {
+  text-decoration: none;
+}

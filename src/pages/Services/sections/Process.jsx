@@ -13,7 +13,7 @@ const STEPS = [
 
 const Process = () => {
   return (
-    <section className="svc-process">
+    <section className="svc-process" id="process">
       <div className="svc-container">
         <div className="svc-head svc-reveal">
           <p className="svc-eyebrow">[ HOW WE WORK ]</p>

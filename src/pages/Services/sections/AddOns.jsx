@@ -62,7 +62,7 @@ const trackMouse = (e) => {
 
 const AddOns = () => {
   return (
-    <section className="svc-addons">
+    <section className="svc-addons" id="add-ons">
       <div className="svc-container">
         <div className="svc-head svc-head-split svc-reveal">
           <div>

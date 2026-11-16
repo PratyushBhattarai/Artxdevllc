@@ -1,5 +1,6 @@
 // src/pages/About/sections/AboutHero.jsx
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 // Subtle 3D tilt of the logo box following the mouse
 const handleTilt = (e) => {
@@ -52,9 +53,9 @@ const AboutHero = () => {
               building digital products that drive success.
             </p>
 
-            <button className="btn-solid-light">
+            <Link to="/book-meeting" className="btn-solid-light">
               Start project <span className="arrow">→</span>
-            </button>
+            </Link>
           </div>
 
           <div

@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 // Edit these numbers/labels any time — the cards update automatically.
 const STATS = [
   {
-    value: 10,
+    value: 8,
     suffix: '+',
     label: 'Team members',
     desc: 'Designers and developers fully dedicated to building your product.',
@@ -21,7 +21,7 @@ const STATS = [
     desc: 'Offices in Nepal and the USA, working across time zones for you.',
   },
   {
-    value: 8,
+    value: 12,
     suffix: '+',
     label: 'Brands trust us',
     desc: 'Businesses that rely on us for design, code and AI.',
