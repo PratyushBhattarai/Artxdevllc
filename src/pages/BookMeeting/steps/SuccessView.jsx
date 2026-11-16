@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { MEETING_TYPES, MEETING_MODES, CONTACT_EMAIL } from '../bookingConfig';
 import { formatLongDate, formatTime, buildIcs, googleCalendarUrl } from '../timeUtils';
+import { sendsCustomerConfirmation } from '../bookingService';
 
 const SuccessView = ({ booking, reference, onReset }) => {
   const type = MEETING_TYPES.find((t) => t.id === booking.typeId);
@@ -52,7 +53,9 @@ const SuccessView = ({ booking, reference, onReset }) => {
         Booking reference <strong>{reference}</strong>
       </p>
       <p className="bm-success-note">
-        We'll send the details to <strong>{booking.email}</strong>. Need to change something? Email{' '}
+        {sendsCustomerConfirmation ? 'A confirmation has been sent to ' : 'Our team will email you at '}
+        <strong>{booking.email}</strong>
+        {sendsCustomerConfirmation ? '.' : ' to confirm.'} Need to change something? Email{' '}
         <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
       </p>
 
