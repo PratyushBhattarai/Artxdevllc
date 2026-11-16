@@ -12,12 +12,14 @@ const Timeline = () => {
   return (
     <section className="timeline-section">
       <div className="container">
-        <p className="timeline-label">Our story</p>
-        <h2 className="section-title">How we got here</h2>
-        
-        <div className="timeline-grid">
+        <div className="reveal">
+          <p className="timeline-label">Our story</p>
+          <h2 className="section-title">How we got here</h2>
+        </div>
+
+        <div className="timeline-grid reveal">
           {milestones.map((item, index) => (
-            <div key={index} className="timeline-item">
+            <div key={index} className="timeline-item" style={{ '--d': `${300 + index * 200}ms` }}>
               <div className="dot"></div>
               <h3 className="timeline-year">[ {item.year} ]</h3>
               <h4 className="timeline-title">{item.title}</h4>
