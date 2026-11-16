@@ -5,6 +5,22 @@
 // import sales2 from '../../../assets/sales2.png';
 // import sales3 from '../../../assets/sales3.png';
 
+// Photo or silhouette placeholder
+const Avatar = ({ image, name, size = 120 }) => (
+  <div className="tp-avatar" style={{ width: size, height: size }}>
+    <div className="tp-avatar-inner">
+      {image ? <img src={image} alt={name} /> : <div className="tp-silhouette" aria-hidden="true" />}
+    </div>
+  </div>
+);
+
+// Blue spotlight follows the mouse inside the card
+const spotlight = (e) => {
+  const rect = e.currentTarget.getBoundingClientRect();
+  e.currentTarget.style.setProperty('--mx', `${e.clientX - rect.left}px`);
+  e.currentTarget.style.setProperty('--my', `${e.clientY - rect.top}px`);
+};
+
 const Sales = () => {
   // 2. REPLACE null WITH YOUR IMPORTS
   const salesTeam = [
@@ -14,24 +30,28 @@ const Sales = () => {
   ];
 
   return (
-    <div style={{ backgroundColor: '#FFFFFF', padding: '0 0.15rem' }}>
-      <section style={{ backgroundColor: '#000000', padding: '6rem 5%', display: 'flex', flexDirection: 'column', borderTop: '1px solid #333' }}>
-        <h2 style={{ color: '#FFFFFF', fontFamily: "'Hanuman', serif", fontSize: '3rem', marginBottom: '3rem' }}>Sales Team</h2>
-        
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem' }}>
-          {salesTeam.map((member, index) => (
-            <div key={index} style={{ backgroundColor: '#121212', border: '1px solid #333', borderRadius: '16px', padding: '2rem', textAlign: 'center' }}>
-              
-              <div style={{ width: '120px', height: '120px', borderRadius: '50%', margin: '0 auto 1.5rem auto', overflow: 'hidden', backgroundColor: '#2A2A2A' }}>
-                {member.image ? (
-                  <img src={member.image} alt={member.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                ) : (
-                  <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#666', fontSize: '2rem' }}>👤</div>
-                )}
-              </div>
+    <div className="tp-outer">
+      <section className="tp-section">
+        <div className="tp-glow" style={{ bottom: '-260px', left: '-220px' }} aria-hidden="true" />
 
-              <h3 style={{ color: '#FFF', fontFamily: "'Hind', sans-serif", fontSize: '1.2rem', fontWeight: '600', margin: '0 0 0.3rem 0' }}>{member.name}</h3>
-              <p style={{ color: '#888', fontFamily: "'Hind', sans-serif", fontSize: '0.9rem', margin: 0 }}>{member.title}</p>
+        <div className="tp-head">
+          <div>
+            <p className="ax-eyebrow" data-reveal="left">Growth</p>
+            <h2 className="tp-title" data-reveal="up" style={{ '--d': '0.1s' }}>
+              Sales Team<span className="tp-title-dot">.</span>
+            </h2>
+          </div>
+          <span className="tp-count" data-reveal="right"><strong>{String(salesTeam.length).padStart(2, '0')}</strong> members</span>
+        </div>
+
+        <div className="tp-grid-3">
+          {salesTeam.map((member, index) => (
+            <div key={index} data-reveal="zoom" style={{ '--d': `${index * 0.12}s` }}>
+              <article className="tp-card tp-hover" onMouseMove={spotlight}>
+                <Avatar image={member.image} name={member.name} />
+                <h3 className="tp-name">{member.name}</h3>
+                <p className="tp-role">{member.title}</p>
+              </article>
             </div>
           ))}
         </div>

@@ -6,6 +6,22 @@
 // import dev2Img from '../../../assets/dev2.png';
 // import dev3Img from '../../../assets/dev3.png';
 
+// Photo or silhouette placeholder
+const Avatar = ({ image, name, size = 120 }) => (
+  <div className="tp-avatar" style={{ width: size, height: size }}>
+    <div className="tp-avatar-inner">
+      {image ? <img src={image} alt={name} /> : <div className="tp-silhouette" aria-hidden="true" />}
+    </div>
+  </div>
+);
+
+// Blue spotlight follows the mouse inside the card
+const spotlight = (e) => {
+  const rect = e.currentTarget.getBoundingClientRect();
+  e.currentTarget.style.setProperty('--mx', `${e.clientX - rect.left}px`);
+  e.currentTarget.style.setProperty('--my', `${e.clientY - rect.top}px`);
+};
+
 const Developers = () => {
   // 2. REPLACE null WITH YOUR IMPORTS
   const leadDev = { name: '[Lead Developer Name]', title: 'Lead Developer', desc: 'Architects the core infrastructure.', image: null /* change to: leadDevImg */ };
@@ -14,46 +30,45 @@ const Developers = () => {
     { name: '[Dev Name]', title: 'Backend Developer', image: null /* change to: dev2Img */ },
     { name: '[Dev Name]', title: 'Full Stack Developer', image: null /* change to: dev3Img */ },
   ];
+  const total = otherDevs.length + 1;
 
   return (
-    <div style={{ backgroundColor: '#FFFFFF', padding: '0 0.15rem' }}>
-      <section style={{ backgroundColor: '#000000', padding: '6rem 5%', display: 'flex', flexDirection: 'column', borderTop: '1px solid #333' }}>
-        <h2 style={{ color: '#FFFFFF', fontFamily: "'Hanuman', serif", fontSize: '3rem', marginBottom: '3rem' }}>Developer Team</h2>
-        
-        {/* Lead Developer */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '2rem', backgroundColor: '#121212', border: '1px solid #333', borderRadius: '16px', padding: '2rem', marginBottom: '3rem' }}>
-          
-          <div style={{ width: '150px', height: '150px', borderRadius: '50%', flexShrink: 0, overflow: 'hidden', backgroundColor: '#2A2A2A' }}>
-             {/* IF IMAGE EXISTS, SHOW IT, ELSE SHOW PLACEHOLDER */}
-             {leadDev.image ? (
-               <img src={leadDev.image} alt={leadDev.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-             ) : (
-               <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#666', fontSize: '2rem' }}>👤</div>
-             )}
-          </div>
+    <div className="tp-outer">
+      <section className="tp-section">
+        <div className="tp-glow" style={{ top: '-200px', right: '-200px' }} aria-hidden="true" />
 
+        <div className="tp-head">
           <div>
-            <h3 style={{ color: '#FFF', fontFamily: "'Hind', sans-serif", fontSize: '1.5rem', fontWeight: '600', margin: '0 0 0.3rem 0' }}>{leadDev.name}</h3>
-            <p style={{ color: '#888', fontFamily: "'Hind', sans-serif", fontSize: '1rem', margin: '0 0 1rem 0' }}>{leadDev.title}</p>
-            <p style={{ color: '#A1A1AA', fontFamily: "'Hind', sans-serif", fontSize: '0.95rem', lineHeight: '1.5', margin: 0 }}>{leadDev.desc}</p>
+            <p className="ax-eyebrow" data-reveal="left">Engineering</p>
+            <h2 className="tp-title" data-reveal="up" style={{ '--d': '0.1s' }}>
+              Developer Team<span className="tp-title-dot">.</span>
+            </h2>
           </div>
+          <span className="tp-count" data-reveal="right"><strong>{String(total).padStart(2, '0')}</strong> members</span>
+        </div>
+
+        {/* Lead Developer */}
+        <div data-reveal="up" style={{ marginBottom: '2rem' }}>
+          <article className="tp-card tp-card--row tp-hover" onMouseMove={spotlight}>
+            <Avatar image={leadDev.image} name={leadDev.name} size={150} />
+            <div>
+              <span className="tp-pill">Team Lead</span>
+              <h3 className="tp-name" style={{ fontSize: '1.5rem' }}>{leadDev.name}</h3>
+              <p className="tp-role" style={{ fontSize: '1rem' }}>{leadDev.title}</p>
+              <p className="tp-desc">{leadDev.desc}</p>
+            </div>
+          </article>
         </div>
 
         {/* Other Developers */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem' }}>
+        <div className="tp-grid-3">
           {otherDevs.map((dev, index) => (
-            <div key={index} style={{ backgroundColor: '#121212', border: '1px solid #333', borderRadius: '16px', padding: '2rem', textAlign: 'center' }}>
-              
-              <div style={{ width: '120px', height: '120px', borderRadius: '50%', margin: '0 auto 1.5rem auto', overflow: 'hidden', backgroundColor: '#2A2A2A' }}>
-                {dev.image ? (
-                  <img src={dev.image} alt={dev.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                ) : (
-                  <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#666', fontSize: '2rem' }}>👤</div>
-                )}
-              </div>
-
-              <h3 style={{ color: '#FFF', fontFamily: "'Hind', sans-serif", fontSize: '1.2rem', fontWeight: '600', margin: '0 0 0.3rem 0' }}>{dev.name}</h3>
-              <p style={{ color: '#888', fontFamily: "'Hind', sans-serif", fontSize: '0.9rem', margin: 0 }}>{dev.title}</p>
+            <div key={index} data-reveal="zoom" style={{ '--d': `${index * 0.12}s` }}>
+              <article className="tp-card tp-hover" onMouseMove={spotlight}>
+                <Avatar image={dev.image} name={dev.name} />
+                <h3 className="tp-name">{dev.name}</h3>
+                <p className="tp-role">{dev.title}</p>
+              </article>
             </div>
           ))}
         </div>
