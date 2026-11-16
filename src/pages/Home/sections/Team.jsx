@@ -2,177 +2,221 @@
 
 import { Link } from 'react-router-dom';
 
-const Team = () => {
-  // Data structure matching your Figma layout
-  const teamMembers = [
-    { num: '01', name: '[Full name]', title: 'Title', desc: 'Detail about what he do', image: null },
-    { num: '01', name: '[Full name]', title: 'Title', desc: 'Detail about what he do', image: null },
-    { num: '01', name: '[Full name]', title: 'Title', desc: 'Detail about what he do', image: null },
-    { num: '01', name: '[Full name]', title: 'Title', desc: 'Detail about what he do', image: null },
-    { num: '01', name: '[Full name]', title: 'Title', desc: 'Detail about what he do', image: null },
-    { num: '01', name: '[Full name]', title: 'Title', desc: 'Detail about what he do', image: null },
-    { num: '01', name: '[Full name]', title: 'Title', desc: 'Detail about what he do', image: null },
-    { num: '01', name: '[Full name]', title: 'Title', desc: 'Detail about what he do', image: null },
-  ];
+// Data structure matching your Figma layout
+// Add a photo with:  image: someImportedImage
+const teamMembers = [
+  { num: '01', name: '[Full name]', title: 'Title', desc: 'Detail about what he do', image: null },
+  { num: '02', name: '[Full name]', title: 'Title', desc: 'Detail about what he do', image: null },
+  { num: '03', name: '[Full name]', title: 'Title', desc: 'Detail about what he do', image: null },
+  { num: '04', name: '[Full name]', title: 'Title', desc: 'Detail about what he do', image: null },
+  { num: '05', name: '[Full name]', title: 'Title', desc: 'Detail about what he do', image: null },
+  { num: '06', name: '[Full name]', title: 'Title', desc: 'Detail about what he do', image: null },
+  { num: '07', name: '[Full name]', title: 'Title', desc: 'Detail about what he do', image: null },
+  { num: '08', name: '[Full name]', title: 'Title', desc: 'Detail about what he do', image: null },
+];
 
+const TeamCard = ({ member, index }) => (
+  <div data-reveal="zoom" style={{ '--d': `${(index % 4) * 0.1 + Math.floor(index / 4) * 0.12}s` }}>
+    <article className="tm-card">
+
+      {/* Number + status dot */}
+      <div className="tm-card-top">
+        <span className="tm-num">{member.num}</span>
+        <span className="tm-status" aria-hidden="true" />
+      </div>
+
+      {/* Photo / silhouette with blue scan line on hover */}
+      <div className="tm-photo">
+        {member.image ? (
+          <img src={member.image} alt={member.name} className="tm-img" />
+        ) : (
+          <div className="tm-silhouette" aria-hidden="true">
+            <span className="tm-head" />
+            <span className="tm-body" />
+          </div>
+        )}
+        <span className="tm-scan" aria-hidden="true" />
+      </div>
+
+      {/* Member Info */}
+      <div className="tm-info">
+        <h3 className="tm-name">{member.name}</h3>
+        <p className="tm-title-text">{member.title}</p>
+        <p className="tm-desc">{member.desc}</p>
+      </div>
+
+      {/* Social circles + arrow */}
+      <div className="tm-foot">
+        <div className="tm-socials">
+          {[0, 1, 2].map((i) => (
+            <span key={i} className="tm-social" style={{ '--i': i }} />
+          ))}
+        </div>
+        <span className="tm-arrow" aria-hidden="true">↗</span>
+      </div>
+
+    </article>
+  </div>
+);
+
+const Team = () => {
   return (
-    <div style={{ backgroundColor: '#FFFFFF', padding: '0 0.15rem' }}>
-      
-      <section style={{ 
-        backgroundColor: '#000000', 
-        padding: '5rem 5%', 
-        display: 'flex',
-        flexDirection: 'column',
-        borderTop: '1px solid #C0C0C0', 
-        borderBottom: '1px solid #C0C0C0' 
-      }}>
-        
-        {/* 1. Small "Team" Text above the heading */}
-        <p style={{
-          color: '#888888',
-          fontFamily: "'Hind', sans-serif",
-          fontSize: '0.85rem',
-          marginBottom: '0.5rem',
-          marginLeft: '2px'
-        }}>
-          Team
-        </p>
+    <div className="tm-outer">
+      <section className="tm-section">
+        <div className="tm-glow" aria-hidden="true" />
+
+        <p className="ax-eyebrow" data-reveal="left">Team</p>
 
         {/* Header Row */}
-        <div style={{ 
-          display: 'flex', 
-          justifyContent: 'space-between', 
-          alignItems: 'center', 
-          width: '100%',
-          marginBottom: '3rem' 
-        }}>
-          
-          <h2 style={{ 
-            color: '#FFFFFF', 
-            fontFamily: "'Hanuman', serif", // Changed to Hanuman to match Figma
-            fontSize: '3rem', 
-            fontWeight: '400', 
-            margin: 0,
-          }}>
-            The people behind Artx Dev success
+        <div className="tm-header">
+          <h2 className="tm-heading" data-reveal="up" style={{ '--d': '0.1s' }}>
+            The people behind <span className="ax-shimmer">Artx Dev</span> success
           </h2>
-          
-          <Link to="/team" style={{ 
-            color: '#FFFFFF', 
-            fontFamily: "'Hind', sans-serif", 
-            textDecoration: 'none',
-            fontSize: '0.95rem',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '5px'
-          }}>
-            Learn More ↗
-          </Link>
+          <div data-reveal="right">
+            <Link to="/team" className="ax-link">
+              Learn More <span className="ax-link-arrow ax-link-arrow--diag">↗</span>
+            </Link>
+          </div>
         </div>
 
         {/* Team Grid (4 Columns) */}
-        <div style={{ 
-          display: 'grid', 
-          gridTemplateColumns: 'repeat(4, 1fr)', 
-          gap: '1.5rem', 
-          width: '100%',
-        }}>
+        <div className="tm-grid">
           {teamMembers.map((member, index) => (
-            <div 
-              key={index} 
-              style={{ 
-                backgroundColor: '#121212', // Slightly lighter than pure black
-                border: '1px solid #333333', 
-                borderRadius: '16px', 
-                padding: '1rem',
-                display: 'flex',
-                flexDirection: 'column',
-                position: 'relative',
-                cursor: 'pointer',
-                transition: 'all 0.3s ease'
-              }}
-              onMouseEnter={(e) => e.currentTarget.style.borderColor = '#FFFFFF'}
-              onMouseLeave={(e) => e.currentTarget.style.borderColor = '#333333'}
-            >
-              
-              {/* 2. The "01" Number in top left */}
-              <p style={{
-                color: '#666',
-                fontFamily: "'Gowun Dodum', sans-serif",
-                fontSize: '0.8rem',
-                margin: '0 0 0.5rem 0'
-              }}>
-                {member.num}
-              </p>
-
-              {/* Image Placeholder (Silhouette) */}
-              <div style={{
-                width: '100%',
-                aspectRatio: '1 / 1', 
-                backgroundColor: '#333333',
-                borderRadius: '12px',
-                marginBottom: '1.5rem',
-                overflow: 'hidden',
-                display: 'flex',
-                alignItems: 'flex-end',
-                justifyContent: 'center'
-              }}>
-                {member.image ? (
-                  <img src={member.image} alt={member.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                ) : (
-                  // Simple CSS silhouette shape
-                  <div style={{ width: '80%', height: '90%', backgroundColor: '#555', borderTopLeftRadius: '50px', borderTopRightRadius: '50px' }}></div>
-                )}
-              </div>
-              
-              {/* 3. Member Info */}
-              <div style={{ marginBottom: '1.5rem', borderBottom: '1px solid #333', paddingBottom: '1rem' }}>
-                <h3 style={{ 
-                  color: '#FFFFFF', 
-                  fontFamily: "'Hind', sans-serif", 
-                  fontSize: '1rem', 
-                  fontWeight: '600',
-                  margin: '0 0 0.2rem 0'
-                }}>
-                  {member.name}
-                </h3>
-                <p style={{ 
-                  color: '#666', 
-                  fontFamily: "'Hind', sans-serif", 
-                  fontSize: '0.8rem',
-                  margin: '0 0 1rem 0'
-                }}>
-                  {member.title}
-                </p>
-                <p style={{
-                  color: '#888',
-                  fontFamily: "'Hind', sans-serif",
-                  fontSize: '0.85rem',
-                  margin: 0
-                }}>
-                  {member.desc}
-                </p>
-              </div>
-
-              {/* 4. Bottom Row: Social Icons and Arrow */}
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                {/* 3 Little Circles */}
-                <div style={{ display: 'flex', gap: '6px' }}>
-                  <div style={{ width: '18px', height: '18px', borderRadius: '50%', border: '1px solid #555' }}></div>
-                  <div style={{ width: '18px', height: '18px', borderRadius: '50%', border: '1px solid #555' }}></div>
-                  <div style={{ width: '18px', height: '18px', borderRadius: '50%', border: '1px solid #555' }}></div>
-                </div>
-                
-                {/* Arrow */}
-                <div style={{ color: '#888', fontSize: '1.2rem' }}>
-                  ↗
-                </div>
-              </div>
-
-            </div>
+            <TeamCard key={index} member={member} index={index} />
           ))}
         </div>
 
+        <style>{`
+          .tm-outer { background: #FFFFFF; padding: 0 0.15rem; }
+          .tm-section {
+            position: relative; background: #000000; padding: 5rem 5%;
+            display: flex; flex-direction: column; overflow: hidden;
+            border-top: 1px solid #C0C0C0; border-bottom: 1px solid #C0C0C0;
+          }
+          .tm-glow {
+            position: absolute; top: 30%; left: 50%; width: 900px; height: 500px;
+            transform: translateX(-50%); border-radius: 50%; pointer-events: none;
+            background: radial-gradient(ellipse, rgba(0,163,255,0.08), transparent 65%);
+            animation: tmBreath 8s ease-in-out infinite;
+          }
+
+          .tm-header {
+            position: relative; display: flex; justify-content: space-between; align-items: center;
+            gap: 1.5rem; width: 100%; margin-bottom: 3rem; flex-wrap: wrap;
+          }
+          .tm-heading {
+            color: #FFFFFF; font-family: 'Hanuman', serif;
+            font-size: 3rem; font-weight: 400; line-height: 1.2; margin: 0;
+          }
+
+          .tm-grid {
+            position: relative; display: grid; grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem; width: 100%;
+          }
+
+          /* Card */
+          .tm-card {
+            position: relative; overflow: hidden; height: 100%; box-sizing: border-box;
+            display: flex; flex-direction: column; padding: 1rem; cursor: pointer;
+            background: #121212; border: 1px solid #333333; border-radius: 16px;
+            transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.4s ease, box-shadow 0.5s ease;
+          }
+          .tm-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+            background: linear-gradient(90deg, transparent, #00A3FF, transparent);
+            transform: translateX(-100%); transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+          }
+          .tm-card:hover::before { transform: translateX(100%); }
+          .tm-card:hover {
+            transform: translateY(-8px); border-color: rgba(0,163,255,0.55);
+            box-shadow: 0 26px 60px -28px rgba(0,163,255,0.6);
+          }
+
+          .tm-card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
+          .tm-num { color: #666666; font-family: 'Gowun Dodum', sans-serif; font-size: 0.8rem; transition: color 0.3s ease; }
+          .tm-card:hover .tm-num { color: #00A3FF; }
+          .tm-status { width: 6px; height: 6px; border-radius: 50%; background: #333333; transition: background 0.3s ease; }
+          .tm-card:hover .tm-status { background: #00A3FF; animation: tmPulse 1.6s infinite; }
+
+          /* Photo */
+          .tm-photo {
+            position: relative; width: 100%; aspect-ratio: 1 / 1; overflow: hidden;
+            background: #333333; border-radius: 12px; margin-bottom: 1.5rem;
+            display: flex; align-items: flex-end; justify-content: center;
+          }
+          .tm-img {
+            width: 100%; height: 100%; object-fit: cover;
+            filter: grayscale(1) contrast(1.05);
+            transition: filter 0.6s ease, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+          }
+          .tm-card:hover .tm-img { filter: grayscale(0); transform: scale(1.06); }
+
+          .tm-silhouette {
+            position: relative; width: 80%; height: 90%;
+            transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), filter 0.5s ease;
+          }
+          .tm-head {
+            position: absolute; top: 6%; left: 50%; width: 42%; aspect-ratio: 1 / 1;
+            transform: translateX(-50%); border-radius: 50%; background: #555555;
+          }
+          .tm-body {
+            position: absolute; bottom: 0; left: 0; width: 100%; height: 45%;
+            background: #555555; border-top-left-radius: 50px; border-top-right-radius: 50px;
+          }
+          .tm-card:hover .tm-silhouette {
+            transform: scale(1.05) translateY(-2px);
+            filter: drop-shadow(0 0 14px rgba(0,163,255,0.4));
+          }
+
+          .tm-scan {
+            position: absolute; left: 0; right: 0; top: 0; height: 40%; pointer-events: none;
+            background: linear-gradient(to bottom, transparent, rgba(0,163,255,0.18) 80%, rgba(0,163,255,0.9) 100%);
+            transform: translateY(-110%); opacity: 0;
+          }
+          .tm-card:hover .tm-scan { opacity: 1; animation: tmScan 1.6s cubic-bezier(0.45, 0, 0.55, 1) infinite; }
+
+          /* Info */
+          .tm-info { position: relative; margin-bottom: 1.5rem; border-bottom: 1px solid #333333; padding-bottom: 1rem; }
+          .tm-info::after {
+            content: ''; position: absolute; left: 0; bottom: -1px; width: 100%; height: 1px;
+            background: #00A3FF; transform: scaleX(0); transform-origin: left;
+            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+          }
+          .tm-card:hover .tm-info::after { transform: scaleX(1); }
+          .tm-name { color: #FFFFFF; font-family: 'Hind', sans-serif; font-size: 1rem; font-weight: 600; margin: 0 0 0.2rem; }
+          .tm-title-text { color: #666666; font-family: 'Hind', sans-serif; font-size: 0.8rem; margin: 0 0 1rem; transition: color 0.3s ease; }
+          .tm-card:hover .tm-title-text { color: #00A3FF; }
+          .tm-desc { color: #888888; font-family: 'Hind', sans-serif; font-size: 0.85rem; margin: 0; }
+
+          /* Footer */
+          .tm-foot { display: flex; justify-content: space-between; align-items: center; }
+          .tm-socials { display: flex; gap: 6px; }
+          .tm-social {
+            width: 18px; height: 18px; border-radius: 50%; border: 1px solid #555555; box-sizing: border-box;
+            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) calc(var(--i) * 0.06s);
+          }
+          .tm-card:hover .tm-social { border-color: #00A3FF; background: rgba(0,163,255,0.15); transform: translateY(-3px); }
+          .tm-social:hover { background: #00A3FF !important; box-shadow: 0 0 10px #00A3FF; }
+          .tm-arrow {
+            display: inline-block; color: #888888; font-size: 1.2rem;
+            transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.3s ease;
+          }
+          .tm-card:hover .tm-arrow { color: #FFFFFF; transform: rotate(45deg); }
+
+          @keyframes tmScan   { 0% { transform: translateY(-100%); } 100% { transform: translateY(260%); } }
+          @keyframes tmBreath { 0%,100% { opacity: 0.6; } 50% { opacity: 1; } }
+          @keyframes tmPulse {
+            0%   { box-shadow: 0 0 0 0 rgba(0,163,255,0.7); }
+            70%  { box-shadow: 0 0 0 7px rgba(0,163,255,0); }
+            100% { box-shadow: 0 0 0 0 rgba(0,163,255,0); }
+          }
+
+          @media (max-width: 1024px) { .tm-grid { grid-template-columns: repeat(2, 1fr); } }
+          @media (max-width: 560px) {
+            .tm-grid { grid-template-columns: 1fr; }
+            .tm-heading { font-size: 2.2rem; }
+          }
+        `}</style>
       </section>
     </div>
   );

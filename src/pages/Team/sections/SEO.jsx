@@ -4,6 +4,22 @@
 // import seo1 from '../../../assets/seo1.png';
 // import seo2 from '../../../assets/seo2.png';
 
+// Photo or silhouette placeholder
+const Avatar = ({ image, name, size = 120 }) => (
+  <div className="tp-avatar" style={{ width: size, height: size }}>
+    <div className="tp-avatar-inner">
+      {image ? <img src={image} alt={name} /> : <div className="tp-silhouette" aria-hidden="true" />}
+    </div>
+  </div>
+);
+
+// Blue spotlight follows the mouse inside the card
+const spotlight = (e) => {
+  const rect = e.currentTarget.getBoundingClientRect();
+  e.currentTarget.style.setProperty('--mx', `${e.clientX - rect.left}px`);
+  e.currentTarget.style.setProperty('--my', `${e.clientY - rect.top}px`);
+};
+
 const SEO = () => {
   // 2. REPLACE null WITH YOUR IMPORTS
   const seoTeam = [
@@ -12,26 +28,30 @@ const SEO = () => {
   ];
 
   return (
-    <div style={{ backgroundColor: '#FFFFFF', padding: '0 0.15rem' }}>
-      <section style={{ backgroundColor: '#000000', padding: '6rem 5%', display: 'flex', flexDirection: 'column', borderTop: '1px solid #333' }}>
-        <h2 style={{ color: '#FFFFFF', fontFamily: "'Hanuman', serif", fontSize: '3rem', marginBottom: '3rem' }}>SEO Team</h2>
-        
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '2rem' }}>
-          {seoTeam.map((member, index) => (
-            <div key={index} style={{ backgroundColor: '#121212', border: '1px solid #333', borderRadius: '16px', padding: '2rem', display: 'flex', alignItems: 'center', gap: '2rem' }}>
-              
-              <div style={{ width: '100px', height: '100px', borderRadius: '50%', flexShrink: 0, overflow: 'hidden', backgroundColor: '#2A2A2A' }}>
-                {member.image ? (
-                  <img src={member.image} alt={member.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                ) : (
-                  <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#666', fontSize: '1.5rem' }}>👤</div>
-                )}
-              </div>
+    <div className="tp-outer">
+      <section className="tp-section">
+        <div className="tp-glow" style={{ top: '-220px', right: '10%' }} aria-hidden="true" />
 
-              <div>
-                <h3 style={{ color: '#FFF', fontFamily: "'Hind', sans-serif", fontSize: '1.2rem', fontWeight: '600', margin: '0 0 0.3rem 0' }}>{member.name}</h3>
-                <p style={{ color: '#888', fontFamily: "'Hind', sans-serif", fontSize: '0.9rem', margin: 0 }}>{member.title}</p>
-              </div>
+        <div className="tp-head">
+          <div>
+            <p className="ax-eyebrow" data-reveal="left">Search &amp; Content</p>
+            <h2 className="tp-title" data-reveal="up" style={{ '--d': '0.1s' }}>
+              SEO Team<span className="tp-title-dot">.</span>
+            </h2>
+          </div>
+          <span className="tp-count" data-reveal="right"><strong>{String(seoTeam.length).padStart(2, '0')}</strong> members</span>
+        </div>
+
+        <div className="tp-grid-2">
+          {seoTeam.map((member, index) => (
+            <div key={index} data-reveal={index % 2 === 0 ? 'left' : 'right'} style={{ '--d': `${index * 0.12}s` }}>
+              <article className="tp-card tp-card--row tp-hover" onMouseMove={spotlight}>
+                <Avatar image={member.image} name={member.name} size={100} />
+                <div>
+                  <h3 className="tp-name">{member.name}</h3>
+                  <p className="tp-role">{member.title}</p>
+                </div>
+              </article>
             </div>
           ))}
         </div>
