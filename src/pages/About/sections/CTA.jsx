@@ -4,12 +4,20 @@ import React from 'react';
 const CTA = () => {
   return (
     <section className="cta-section">
+      <div className="cta-bg-text" aria-hidden="true">
+        <span>LET'S BUILD ✦ LET'S BUILD ✦ LET'S BUILD ✦ LET'S BUILD ✦&nbsp;</span>
+        <span>LET'S BUILD ✦ LET'S BUILD ✦ LET'S BUILD ✦ LET'S BUILD ✦&nbsp;</span>
+      </div>
+
       <div className="container">
         <h2 className="cta-title">
-          Have a project<br />In mind
+          <span className="title-line reveal"><span>Have a project</span></span>
+          <span className="title-line reveal" style={{ '--d': '150ms' }}>
+            <span className="outline-text">In mind?</span>
+          </span>
         </h2>
-        
-        <div className="cta-actions">
+
+        <div className="cta-actions reveal" style={{ '--d': '300ms' }}>
           <button className="btn-cta">
             Start a project <span className="arrow">→</span>
           </button>
@@ -22,5 +30,4 @@ const CTA = () => {
   );
 };
 
-// THIS LINE IS CRITICAL TO FIX THE ERROR
 export default CTA;
