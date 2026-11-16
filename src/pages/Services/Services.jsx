@@ -1,16 +1,47 @@
+// src/pages/Services/Services.jsx
+import React, { useEffect, useRef } from 'react';
+import './Services.css';
+import ServicesHero from './sections/ServicesHero';
+import CoreServices from './sections/CoreServices';
+import Packages from './sections/Packages';
+import AddOns from './sections/AddOns';
+import Process from './sections/Process';
+import TechStack from './sections/TechStack';
+import ServicesCTA from './sections/ServicesCTA';
+
 const Services = () => {
+  const pageRef = useRef(null);
+
+  // Scroll-reveal: any element with class "svc-reveal" animates in
+  // when it enters the viewport.
+  useEffect(() => {
+    const els = pageRef.current?.querySelectorAll('.svc-reveal') ?? [];
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            io.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15, rootMargin: '0px 0px -60px 0px' }
+    );
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, []);
+
   return (
-    <section style={{ padding: '6rem 5%', minHeight: '60vh' }}>
-      <h1 style={{ fontSize: '4rem', marginBottom: '3rem' }}>Our Services</h1>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
-        {['Web Design', 'Web Development', 'App Development', 'AI Automation'].map((s, i) => (
-          <div key={i} style={{ padding: '3rem', background: 'var(--bg-secondary)', borderRadius: '15px', border: '1px solid var(--border-color)' }}>
-            <h2 style={{ marginBottom: '1rem' }}>{s}</h2>
-            <p style={{ color: 'var(--text-secondary)' }}>Service details go here.</p>
-          </div>
-        ))}
-      </div>
-    </section>
+    <main ref={pageRef} className="svc-page">
+      <ServicesHero />
+      <CoreServices />
+      <Packages />
+      <AddOns />
+      <Process />
+      <TechStack />
+      <ServicesCTA />
+    </main>
   );
 };
+
 export default Services;
