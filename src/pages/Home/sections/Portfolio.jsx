@@ -5,17 +5,19 @@ import { Link } from 'react-router-dom';
 
 /*
   =========================================
-  WHEN YOU HAVE YOUR VIDEOS, DO THIS:
-  Add the video path/URL to the 'videoUrl' key.
-  The card will auto-play a muted preview on hover,
-  and the popup will play it with controls.
+  ADDING A PREVIEW TO A PROJECT:
+  - GIF  → put it in public/gifs/ and set 'gifUrl'  (e.g. '/gifs/name.gif').
+           It loops on its own – no hover, no sound or timeline controls.
+  - Video → put it in public/videos/ and set 'videoUrl'.
+           The card plays a muted preview on hover; the popup has controls.
+  If both are set, the GIF is used.
   =========================================
 */
 const projects = [
-  { title: 'Seabrook Texas Town', category: 'Web App', description: 'A complete digital overhaul for a coastal town. We built a custom booking system and designed a stunning visual experience.', videoUrl: '/videos/seabrook.mp4', projectLink: 'https://seabrooktexastown.com/' },
-  { title: 'Website', category: 'Website', description: 'A robust, secure platform for a national organization. We focused on accessibility and fast load times.', videoUrl: null, projectLink: 'https://example.com' },
-  { title: 'Project Name 3', category: 'Category', description: 'Description for project 3 goes here.', videoUrl: null, projectLink: 'https://example.com' },
-  { title: 'Project Name 4', category: 'Category', description: 'Description for project 4 goes here.', videoUrl: null, projectLink: 'https://example.com' },
+  { title: 'Seabrook Texas Town', category: 'Web App', description: 'A destination and community website for Seabrook, Texas on Galveston Bay – covering ecotourism, wildlife, local history and news, with a local business section, an online shop and an AI chat assistant for visitors.', videoUrl: '/videos/seabrook.mp4', projectLink: 'https://seabrooktexastown.com/' },
+  { title: 'Actexas', category: 'Website', description: 'A clean, professional business website for ACTS – Acoustical Ceiling Tile Solutions – presenting their acoustical ceiling tile services clearly so customers know exactly what they offer.', videoUrl: '/videos/actexas.mp4', projectLink: 'https://actexas.com' },
+  { title: 'Stelgh', category: 'Website', description: 'A premium Gulf Coast apparel brand and store – print-on-demand tees, hoodies and caps shipped worldwide – paired with a Seabrook travel guide covering things to do, places to stay and local wildlife.', videoUrl: '/videos/stelgh.mp4', projectLink: 'https://stelgh.com' },
+  { title: 'RRLCLLC', category: 'Website', description: 'A website for DoubleR LawnCare (RRLC LLC) showcasing weekly lawn maintenance, aeration, fertilization and weed control, with before-and-after concepts and a free estimate request.', videoUrl: '/videos/rrlcllc.mp4', projectLink: 'https://rrlcllc.com' },
 ];
 
 // One project card – 3D tilt + light that follows the mouse
@@ -35,18 +37,30 @@ const ProjectCard = ({ project, index, onOpen }) => {
     el.style.setProperty('--mx', `${x * 100}%`);
     el.style.setProperty('--my', `${y * 100}%`);
   };
-  const handleEnter = () => {
-    if (videoRef.current) videoRef.current.play().catch(() => {});
-  };
   const handleLeave = () => {
     const el = mediaRef.current;
-    if (el) {
-      el.style.setProperty('--rx', '0deg');
-      el.style.setProperty('--ry', '0deg');
-    }
-    if (videoRef.current) videoRef.current.pause();
+    if (!el) return;
+    el.style.setProperty('--rx', '0deg');
+    el.style.setProperty('--ry', '0deg');
   };
   const open = () => onOpen(project);
+  const hasPreview = Boolean(project.gifUrl || project.videoUrl);
+
+  // Videos loop on their own like a GIF, but only while the card is on screen
+  // (saves battery/data on phones). No hover needed.
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return undefined;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) video.play().catch(() => {});
+        else video.pause();
+      },
+      { threshold: 0.2 }
+    );
+    io.observe(video);
+    return () => io.disconnect();
+  }, [project.videoUrl]);
 
   return (
     <div data-reveal="up" style={{ '--d': `${(index % 2) * 0.15}s` }}>
@@ -56,17 +70,29 @@ const ProjectCard = ({ project, index, onOpen }) => {
           className="pf-media"
           role="button"
           tabIndex={0}
-          aria-label={`Play ${project.title} video`}
+          aria-label={`Open ${project.title}`}
           onClick={open}
           onKeyDown={(e) => {
             if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); }
           }}
           onMouseMove={handleMove}
-          onMouseEnter={handleEnter}
           onMouseLeave={handleLeave}
         >
-          {project.videoUrl ? (
-            <video ref={videoRef} className="pf-video" src={project.videoUrl} muted loop playsInline preload="metadata" />
+          {project.gifUrl ? (
+            <img className="pf-video" src={project.gifUrl} alt={`${project.title} preview`} loading="lazy" decoding="async" />
+          ) : project.videoUrl ? (
+            <video
+              ref={videoRef}
+              className="pf-video"
+              src={project.videoUrl}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              disablePictureInPicture
+              aria-label={`${project.title} preview`}
+            />
           ) : (
             <div className="pf-placeholder">
               <span className="pf-placeholder-text">Video Placeholder {index + 1}</span>
@@ -74,9 +100,9 @@ const ProjectCard = ({ project, index, onOpen }) => {
           )}
 
           <span className="pf-shine" aria-hidden="true" />
-          <span className="pf-badge"><span className="pf-badge-dot" />PLAY VIDEO</span>
+          <span className="pf-badge"><span className="pf-badge-dot" />{hasPreview ? 'VIEW PROJECT' : 'PLAY VIDEO'}</span>
           <span className="pf-index" aria-hidden="true">{number}</span>
-          <span className="ax-play"><span className="ax-play-tri" /></span>
+          {!hasPreview && <span className="ax-play"><span className="ax-play-tri" /></span>}
 
           <div className="pf-overlay">
             <p>{project.description}</p>
@@ -162,8 +188,10 @@ const Portfolio = () => {
 
             {/* LEFT SIDE: VIDEO */}
             <div className="pf-modal-video">
-              {activeVideo.videoUrl ? (
-                <video src={activeVideo.videoUrl} controls autoPlay style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+              {activeVideo.gifUrl ? (
+                <img src={activeVideo.gifUrl} alt={`${activeVideo.title} preview`} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+              ) : activeVideo.videoUrl ? (
+                <video src={activeVideo.videoUrl} autoPlay muted loop playsInline disablePictureInPicture style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
               ) : (
                 <div className="pf-modal-placeholder">
                   <span className="pf-loader" />

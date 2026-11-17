@@ -3,7 +3,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-const ProjectSection = ({ title, description, videoUrl, projectLink, category, index = 0 }) => {
+// gifUrl (looping GIF) takes priority over videoUrl when both are set
+const ProjectSection = ({ title, description, gifUrl, videoUrl, projectLink, category, index = 0 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const mediaRef = useRef(null);
   const number = String(index + 1).padStart(2, '0');
@@ -57,8 +58,10 @@ const ProjectSection = ({ title, description, videoUrl, projectLink, category, i
           onMouseMove={handleMove}
           onMouseLeave={handleLeave}
         >
-          {videoUrl ? (
-            <video className="ps-video" src={videoUrl} autoPlay loop muted playsInline />
+          {gifUrl ? (
+            <img className="ps-video" src={gifUrl} alt={`${title} preview`} loading="lazy" decoding="async" />
+          ) : videoUrl ? (
+            <video className="ps-video" src={videoUrl} autoPlay loop muted playsInline preload="metadata" disablePictureInPicture />
           ) : (
             <div className="ps-placeholder" aria-hidden="true" />
           )}
@@ -66,7 +69,7 @@ const ProjectSection = ({ title, description, videoUrl, projectLink, category, i
           <span className="ps-shine" aria-hidden="true" />
           <span className="ps-badge"><span className="ps-badge-dot" />VIEW PROJECT</span>
           <span className="ps-index" aria-hidden="true">{number}</span>
-          <span className="ax-play ax-play--sm"><span className="ax-play-tri" /></span>
+          {!gifUrl && !videoUrl && <span className="ax-play ax-play--sm"><span className="ax-play-tri" /></span>}
 
           <div className="ps-overlay">
             <p>{description}</p>
@@ -93,8 +96,10 @@ const ProjectSection = ({ title, description, videoUrl, projectLink, category, i
 
             {/* LEFT SIDE: VIDEO */}
             <div className="ps-modal-video">
-              {videoUrl ? (
-                <video src={videoUrl} controls autoPlay style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+              {gifUrl ? (
+                <img src={gifUrl} alt={`${title} preview`} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+              ) : videoUrl ? (
+                <video src={videoUrl} autoPlay muted loop playsInline disablePictureInPicture style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
               ) : (
                 <div className="ps-modal-placeholder">
                   <span className="ps-loader" />
