@@ -137,7 +137,7 @@ const Hero = () => {
           </h1>
 
           <p className="hx-sub">
-            Website, Web apps, Design, App and Marketing. Design and develop with care, <br />
+            Website, Web apps, Design, App and Marketing. Design and develop with care,
             engineered to be fast and supported after launch.
           </p>
 
@@ -282,9 +282,11 @@ const Hero = () => {
           }
           .hx-premium { font-family: 'Sansation', sans-serif; font-weight: 700; letter-spacing: 1px; }
 
+          /* Same type as the About page hero description (Inter, 1.1rem) */
           .hx-sub {
-            color: #FFFFFF; max-width: 500px; margin: 0 0 4.5rem;
-            font-size: 0.85rem; line-height: 3; font-family: 'Karma', serif;
+            color: #FFFFFF; max-width: 590px; margin: 0 0 3rem;
+            font-size: 1.1rem; line-height: 1.6; font-family: 'Inter', sans-serif; font-weight: 400;
+            text-shadow: 0 2px 14px rgba(0, 0, 0, 0.85);
             opacity: 0; animation: hxFadeUp 1s cubic-bezier(0.22, 1, 0.36, 1) 1.1s forwards;
           }
 
@@ -370,13 +372,72 @@ const Hero = () => {
           @keyframes hxWheel { 0% { transform: translateY(0); opacity: 1; } 70% { transform: translateY(10px); opacity: 0; } 100% { opacity: 0; } }
 
           /* ---------- Responsive ---------- */
+          /* Tablet & phone: same scene as desktop, stacked –
+             text on top, "AI Automation" below it, then the two hands meeting
+             with the X spark between them along the bottom. */
           @media (max-width: 900px) {
-            .hx-section { height: auto; min-height: 85vh; padding: 7rem 6% 9rem; }
-            .hx-title, .hx-premium { font-size: 2.5rem; }
-            .hx-ai { top: 6%; right: 6%; font-size: 1.6rem; }
-            .hx-hand-wrap--human { width: 60%; opacity: 0.55; }
-            .hx-hand-wrap--robot { width: 55%; opacity: 0.55; }
+            .hx-section {
+              height: auto; min-height: 0;
+              flex-direction: column; align-items: stretch;
+              padding: 3.5rem 6% calc(60vw + 24px);
+            }
+            .hx-content { max-width: none; }
+            .hx-pill { margin-bottom: 1.1rem; font-size: 0.66rem; }
+            .hx-title, .hx-premium { font-size: clamp(2.1rem, 9vw, 3rem); }
+            .hx-title { line-height: 1.12; margin-bottom: 1.1rem; }
+            .hx-sub { max-width: 520px; margin-bottom: 2rem; font-size: 1.02rem; line-height: 1.6; }
             .hx-sub br { display: none; }
+            /* Two matching full-width pills, stacked and perfectly aligned */
+            .hx-actions {
+              top: 0; flex-direction: column; align-items: stretch; gap: 0.6rem;
+              max-width: 420px;
+            }
+            .hx-actions .hx-cta,
+            .hx-actions .hx-link {
+              display: flex; justify-content: center; align-items: center; gap: 8px;
+              width: 100%; box-sizing: border-box; padding: 9px 18px; line-height: 1.3;
+              border-radius: 30px; font-size: 0.92rem; white-space: nowrap;
+            }
+            .hx-actions .hx-link {
+              border: 1px solid rgba(255, 255, 255, 0.35);
+              background: rgba(255, 255, 255, 0.06);
+              -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+              transition: border-color 0.3s ease, background 0.3s ease;
+            }
+            .hx-actions .hx-link::after { display: none; }
+            .hx-actions .hx-link:hover,
+            .hx-actions .hx-link:active { border-color: #00A3FF; background: rgba(0, 163, 255, 0.12); }
+
+            /* "AI Automation" centred, right above the X spark */
+            .hx-ai {
+              position: relative; top: auto; right: auto;
+              align-self: center; text-align: center;
+              margin: 3rem 0 0; font-size: clamp(1.6rem, 7.5vw, 2.3rem);
+            }
+            .hx-ai::after { width: 70%; margin-left: auto; margin-right: auto; transform-origin: center; }
+            /* Readable over the bright background: pure white + soft dark halo behind it */
+            .hx-ai { color: #FFFFFF; isolation: isolate; }
+            .hx-ai::before {
+              content: ''; position: absolute; z-index: -1; inset: -14px -28px;
+              background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.45) 45%, transparent 72%);
+              pointer-events: none;
+            }
+
+            /* Hands meet along the bottom, like on desktop */
+            .hx-hand-wrap--human { width: 64%; left: -6%; bottom: 0; }
+            .hx-hand-wrap--robot { width: 60%; right: -6%; bottom: 15vw; }
+
+            /* X spark sits just above where the fingertips meet */
+            .hx-spark { top: auto; bottom: 36vw; left: 50%; width: 40px; margin-left: -20px; }
+            .hx-spark-glow { width: 170px; height: 170px; }
+
+            .hx-scroll { display: none; }
+          }
+
+          @media (max-width: 380px) {
+            .hx-section { padding-top: 3rem; }
+            .hx-pill { letter-spacing: 1px; }
+            .hx-cta { padding: 11px 22px; }
           }
         `}</style>
       </section>

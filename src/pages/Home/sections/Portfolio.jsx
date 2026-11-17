@@ -417,6 +417,11 @@ const Portfolio = () => {
           .pf-modal-video { min-height: 220px; }
           .pf-modal-title { font-size: 1.8rem; }
         }
+        /* Small phones: "All Projects" link drops under the title instead of overflowing */
+        @media (max-width: 420px) {
+          .pf-header { flex-wrap: wrap; align-items: flex-start; }
+          .pf-header .ax-link { white-space: nowrap; }
+        }
       `}</style>
     </div>
   );
