@@ -497,12 +497,31 @@
   -webkit-text-stroke: 1px #000;
 }
 
+/* Cross (✕) separators: spin a quarter turn with a little pop, then rest */
 .marquee-star {
-  display: inline-block;
+  display: inline-flex;
+  vertical-align: middle;
+  width: 0.8em;
+  height: 0.8em;
   margin-left: 2.5rem;
   color: #000;
   -webkit-text-stroke: 0;
-  animation: spin 6s linear infinite;
+  animation: crossSpin 2.4s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+.marquee-star svg {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3.4;
+  stroke-linecap: round;
+}
+
+@keyframes crossSpin {
+  0%, 45% { transform: rotate(0deg) scale(1); }
+  70% { transform: rotate(90deg) scale(1.3); }
+  85%, 100% { transform: rotate(90deg) scale(1); }
 }
 
 @keyframes marquee {
@@ -1422,7 +1441,6 @@
 }
 .about-page-wrapper .hero-pulse { border-color: rgba(var(--accent-rgb), 0.55); }
 .about-page-wrapper .hero-logo-svg .s3 { stroke: var(--accent); }
-
 /* Mission & Vision */
 .about-page-wrapper .mission-vision-section .card-label,
 .about-page-wrapper .mission-vision-section .card-arrow { color: var(--accent) !important; }
@@ -1701,10 +1719,34 @@
   }
   .stat-card:nth-child(2) { border-right: none; }
   .stat-card:nth-child(-n + 2) { border-bottom: 1px solid #2a2a2a; }
-  .timeline-grid {
-    grid-template-columns: repeat(2, 1fr);
-    row-gap: 3.5rem;
+
+  /* Timeline becomes vertical: line on the left, dots sit on the line */
+  .about-page-wrapper .timeline-grid {
+    grid-template-columns: 1fr;
+    row-gap: 2.75rem;
+    padding-top: 0;
+    padding-left: 2.5rem;
   }
+  .about-page-wrapper .timeline-grid::before,
+  .about-page-wrapper .timeline-grid::after {
+    top: 10px;
+    bottom: 10px;
+    left: 5px;
+    right: auto;
+    width: 2px;
+    height: auto;
+  }
+  .about-page-wrapper .timeline-grid::after {
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+  .about-page-wrapper .timeline-grid.is-visible::after { transform: scaleY(1); }
+  .about-page-wrapper .timeline-item { padding-right: 0; }
+  .about-page-wrapper .timeline-item .dot {
+    top: 0.75rem;
+    left: -2.5rem;
+  }
+  .about-page-wrapper .timeline-year { font-size: 1.5rem; margin-bottom: 0.6rem; }
 }
 
 @media (max-width: 768px) {
@@ -1733,7 +1775,7 @@
   .stat-card { border-right: none; border-bottom: 1px solid #2a2a2a; }
   .stat-card:last-child { border-bottom: none; }
 
-  .timeline-grid { grid-template-columns: 1fr; }
+  .timeline-section .section-title { font-size: 2.4rem; margin-bottom: 2.5rem; }
   .company-card { padding: 2rem; }
   .card-top-row { flex-direction: column; }
   .cta-title { font-size: 3rem; }

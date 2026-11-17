@@ -1048,11 +1048,32 @@ select.bm-input option { background: #000; }
 @media (max-width: 768px) {
   .bm-hero { padding: 80px 0 50px; }
   .bm-hero-title { font-size: 3.8rem; letter-spacing: -1.5px; }
-  .bm-card { padding: 1.5rem; border-radius: 18px; }
+  .bm-card { padding: 1.1rem; border-radius: 18px; }
+  .bm-stepper { margin-bottom: 1.75rem; }
   .bm-step-name { display: none; }
+  .bm-step-num { width: 32px; height: 32px; }
+  .bm-stepper::before, .bm-stepper::after { top: 15px; }
   .bm-step-title { font-size: 1.5rem; }
-  .bm-dt-grid { grid-template-columns: 1fr; }
+  .bm-step-sub { margin-bottom: 1.5rem; }
+  .bm-type { padding: 1.2rem; }
+  .bm-mode { padding: 0.85rem; }
+  .bm-tz { max-width: none; }
+  .bm-dt-grid { grid-template-columns: 1fr; gap: 1rem; }
+  .bm-cal, .bm-slots { padding: 1rem 0.85rem; border-radius: 14px; }
+  .bm-cal-grid { gap: 4px; }
+  .bm-cal-day { border-radius: 9px; font-size: 0.9rem; }
+  .bm-cal-day.is-available::after { bottom: 4px; }
   .bm-slots { min-height: 0; }
+  .bm-slots-empty { padding: 1.5rem 0; }
+  .bm-slots-scroll { max-height: none; }
+  .bm-slot-list { grid-template-columns: repeat(3, 1fr); }
+  .bm-slot { padding: 10px 4px; font-size: 0.85rem; }
+  .bm-actions { margin-top: 1.75rem; }
+  .bm-actions-right { flex: 1; justify-content: flex-end; }
+  .bm-actions .bm-btn { padding: 13px 20px; }
+  .bm-success-title { font-size: 2.1rem; }
+  .bm-success-when { font-size: 1.15rem; }
+  .bm-success-actions .bm-btn { width: 100%; }
   .bm-form-grid { grid-template-columns: 1fr; }
   .bm-span-2 { grid-column: auto; }
   .bm-review-row { grid-template-columns: 1fr auto; }

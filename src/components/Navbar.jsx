@@ -1,9 +1,17 @@
 // src/components/Navbar.jsx
 
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import logo from '../assets/logo.png';
 import arrowDown from '../assets/Polygon 1.png';
+import PayNowModal from './PayNowModal';
+
+const cardIcon = (
+  <svg viewBox="0 0 24 24" aria-hidden="true" className="nv-pay-icon">
+    <rect x="2" y="5" width="20" height="14" rx="2.5" />
+    <path d="M2 10h20M6 15h4" />
+  </svg>
+);
 
 const navLinks = [
   { to: '/', label: 'Home' },
@@ -71,6 +79,14 @@ const Navbar = () => {
   const [hoverIndex, setHoverIndex] = useState(null);
   const [indicator, setIndicator] = useState({ left: 0, width: 0, visible: false });
   const [servicesOpen, setServicesOpen] = useState(false);
+  const [payOpen, setPayOpen] = useState(false);
+  const [payKey, setPayKey] = useState(0); // new key = fresh Pay Now form each time
+  const openPay = () => { setMenuOpen(false); setPayOpen(true); };
+  const closePay = useCallback(() => {
+    setPayOpen(false);
+    // after the close animation, swap in a fresh (empty) form for next time
+    setTimeout(() => setPayKey((k) => k + 1), 400);
+  }, []);
 
   const linksRef = useRef(null);
   const linkRefs = useRef([]);
@@ -161,8 +177,9 @@ const Navbar = () => {
         className={`nv-region-btn${region === 'Nepal' ? ' is-active' : ''}`}
         aria-pressed={region === 'Nepal'}
         onClick={() => chooseRegion('Nepal')}
+        aria-label="Nepal"
       >
-        Nepal
+        NEP
       </button>
       <span className="nv-region-slash" aria-hidden="true" />
       <button
@@ -170,8 +187,9 @@ const Navbar = () => {
         className={`nv-region-btn${region === 'USA' ? ' is-active' : ''}`}
         aria-pressed={region === 'USA'}
         onClick={() => chooseRegion('USA')}
+        aria-label="USA"
       >
-        USA
+        US
       </button>
     </div>
   );
@@ -290,7 +308,10 @@ const Navbar = () => {
 
         {/* 3. Right Side Buttons (desktop) */}
         <div className="nv-actions">
-          {renderRegion()}
+          <button type="button" className="nv-pay" onClick={openPay} aria-label="Pay now">
+            {cardIcon}
+            <span className="nv-pay-text">Pay Now</span>
+          </button>
 
           <Link to="/book-meeting" onClick={handleNavClick} className="nv-book">
             <span className="nv-book-text">Book a Meeting</span>
@@ -309,6 +330,11 @@ const Navbar = () => {
           <span /><span /><span />
         </button>
       </nav>
+
+      {/* Floating Nepal / USA switch – sits under "Book a Meeting", stays while scrolling */}
+      <div className={`nv-float${scrolled ? ' is-scrolled' : ''}${menuOpen ? ' is-hidden' : ''}`}>
+        {renderRegion('nv-region--float')}
+      </div>
 
       {/* ================= MOBILE MENU ================= */}
       <div className={`nv-panel${menuOpen ? ' is-open' : ''}`} aria-hidden={!menuOpen}>
@@ -329,7 +355,10 @@ const Navbar = () => {
           ))}
         </div>
         <div className="nv-panel-actions">
-          {renderRegion('nv-region--panel')}
+          <button type="button" className="nv-pay nv-pay--panel" onClick={openPay} tabIndex={menuOpen ? 0 : -1}>
+            {cardIcon}
+            <span className="nv-pay-text">Pay Now</span>
+          </button>
           <Link to="/book-meeting" onClick={handleNavClick} className="nv-book nv-book--panel" tabIndex={menuOpen ? 0 : -1}>
             <span className="nv-book-text">Book a Meeting</span>
             <span className="nv-book-arrow" aria-hidden="true">↗</span>
@@ -337,7 +366,72 @@ const Navbar = () => {
         </div>
       </div>
 
+      <PayNowModal key={payKey} open={payOpen} onClose={closePay} />
+
       <style>{`
+        /* ================= PAY NOW BUTTON ================= */
+        .nv-pay {
+          position: relative; overflow: hidden; isolation: isolate;
+          display: inline-flex; align-items: center; gap: 8px;
+          height: 40px; padding: 0 18px; box-sizing: border-box;
+          border: 2px solid #00A3FF; border-radius: 30px; background: #FFFFFF;
+          font-family: 'Karma', serif; font-size: 15px; font-weight: 700; color: #000000;
+          white-space: nowrap; cursor: pointer;
+          transition: color 0.35s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .nv-pay::before {
+          content: ''; position: absolute; inset: 0; z-index: -1; background: #00A3FF;
+          transform: translateY(101%); transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        /* soft blue pulse to draw the eye */
+        .nv-pay::after {
+          content: ''; position: absolute; inset: -2px; border-radius: inherit; pointer-events: none;
+          box-shadow: 0 0 0 0 rgba(0, 163, 255, 0.5); animation: nvPayPulse 2.6s ease-out infinite;
+        }
+        .nv-pay:hover { transform: translateY(-2px); box-shadow: 0 8px 18px -6px rgba(0, 163, 255, 0.7); }
+        .nv-pay:hover::before { transform: translateY(0); }
+        .nv-pay-icon {
+          width: 18px; height: 18px; flex-shrink: 0; fill: none; stroke: currentColor;
+          stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; color: #00A3FF;
+          transition: color 0.35s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .nv-pay:hover .nv-pay-icon { color: #000000; transform: rotate(-10deg) scale(1.1); }
+        @keyframes nvPayPulse {
+          0% { box-shadow: 0 0 0 0 rgba(0, 163, 255, 0.45); }
+          70%, 100% { box-shadow: 0 0 0 10px rgba(0, 163, 255, 0); }
+        }
+        /* Mobile menu version */
+        .nv-pay--panel { background: transparent; color: #FFFFFF; height: 44px; }
+        .nv-pay--panel:hover { color: #000000; }
+        /* Tight desktop widths: icon-only so the navbar never wraps */
+        @media (max-width: 1180px) and (min-width: 1081px) {
+          .nv-pay:not(.nv-pay--panel) { width: 40px; padding: 0; justify-content: center; }
+          .nv-pay:not(.nv-pay--panel) .nv-pay-text { display: none; }
+        }
+
+        /* ================= FLOATING NEPAL / USA ================= */
+        .nv-float {
+          position: fixed; z-index: 98; right: 2%; top: 92px;
+          padding: 3px; border-radius: 30px;
+          background: rgba(255, 255, 255, 0.75);
+          -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+          box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(0, 0, 0, 0.06);
+          transition: top 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease, transform 0.3s ease;
+          animation: nvFloatIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.7s backwards;
+        }
+        .nv-float.is-scrolled { top: 74px; }
+        .nv-float.is-hidden { opacity: 0; transform: translateY(-8px); pointer-events: none; }
+        .nv-float:hover { transform: translateY(-2px); }
+        .nv-float .nv-region--float { width: 92px; height: 28px; }
+        .nv-region--float .nv-region-btn { font-size: 12px; letter-spacing: 0.5px; }
+        .nv-region--float .nv-region-slash { height: 36px; }
+        @keyframes nvFloatIn { from { opacity: 0; transform: translateY(-14px) scale(0.9); } to { opacity: 1; transform: none; } }
+        @media (max-width: 1080px) {
+          .nv-float { top: 86px; right: 2%; }
+          .nv-float.is-scrolled { top: 74px; }
+          .nv-float .nv-region--float { width: 86px; height: 26px; }
+        }
+
         /* ================= NAV BAR ================= */
         .nv {
           position: sticky; top: 0; z-index: 100;

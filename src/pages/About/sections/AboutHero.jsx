@@ -100,7 +100,10 @@ const AboutHero = () => {
         <div className="marquee-track">
           {[...MARQUEE_ITEMS, ...MARQUEE_ITEMS].map((item, i) => (
             <span key={i} className="marquee-item">
-              {item} <span className="marquee-star">✦</span>
+              {item}{' '}
+              <span className="marquee-star">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+              </span>
             </span>
           ))}
         </div>
