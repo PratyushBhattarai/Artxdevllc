@@ -31,7 +31,7 @@ export const MEETING_MODES = [
   { id: 'meet', label: 'Google Meet', hint: 'Video link sent by email' },
   { id: 'zoom', label: 'Zoom', hint: 'Video link sent by email' },
   { id: 'phone', label: 'Phone call', hint: 'We call your number' },
-  { id: 'office', label: 'In person', hint: 'Lalitpur office, Nepal' },
+  
 ];
 
 // ---- Availability ----

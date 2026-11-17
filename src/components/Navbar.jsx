@@ -337,7 +337,12 @@ const Navbar = () => {
         {renderRegion('nv-region--float')}
       </div>
 
-      {/* ================= MOBILE MENU ================= */}
+      {/* ================= MOBILE MENU (right-side drawer) ================= */}
+      <div
+        className={`nv-backdrop${menuOpen ? ' is-open' : ''}`}
+        onClick={() => setMenuOpen(false)}
+        aria-hidden="true"
+      />
       <div className={`nv-panel${menuOpen ? ' is-open' : ''}`} aria-hidden={!menuOpen}>
         <div className="nv-panel-glow" aria-hidden="true" />
         <div className="nv-panel-links">
@@ -745,50 +750,69 @@ const Navbar = () => {
         .nv.is-menu-open .nv-burger span:nth-child(2) { opacity: 0; transform: scaleX(0); }
         .nv.is-menu-open .nv-burger span:nth-child(3) { top: 21px; transform: rotate(-45deg); }
 
-        /* ================= MOBILE PANEL ================= */
+        /* ================= MOBILE DRAWER (slides in from the right) ================= */
+        /* Dimmed + blurred page behind the drawer – tap it to close */
+        .nv-backdrop {
+          position: fixed; inset: 0; z-index: 98;
+          background: rgba(0, 0, 0, 0.5);
+          -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px);
+          opacity: 0; visibility: hidden; cursor: pointer;
+          transition: opacity 0.4s ease, visibility 0s linear 0.4s;
+        }
+        .nv-backdrop.is-open { opacity: 1; visibility: visible; transition: opacity 0.4s ease, visibility 0s; }
+
         .nv-panel {
-          position: fixed; inset: 0; z-index: 99; overflow-y: auto; overflow-x: hidden;
-          display: flex; flex-direction: column; justify-content: space-between; gap: 2.5rem;
-          padding: 110px 8% 3rem; box-sizing: border-box;
-          background: #000000;
-          clip-path: circle(0% at calc(100% - 40px) 38px);
-          visibility: hidden;
-          transition: clip-path 0.7s cubic-bezier(0.65, 0, 0.35, 1), visibility 0s linear 0.7s;
+          position: fixed; top: 0; right: 0; bottom: 0; z-index: 99;
+          width: min(84vw, 360px); box-sizing: border-box;
+          overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain;
+          display: flex; flex-direction: column; gap: 1.75rem;
+          padding: 96px 22px 26px;
+          background: linear-gradient(180deg, #0a0a0a 0%, #000000 100%);
+          border-left: 1px solid #1f1f1f;
+          border-top-left-radius: 22px;
+          box-shadow: -30px 0 60px rgba(0, 0, 0, 0.55);
+          transform: translateX(105%); visibility: hidden;
+          transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1), visibility 0s linear 0.55s;
         }
         .nv-panel.is-open {
-          clip-path: circle(150% at calc(100% - 40px) 38px);
-          visibility: visible;
-          transition: clip-path 0.7s cubic-bezier(0.65, 0, 0.35, 1), visibility 0s;
+          transform: none; visibility: visible;
+          transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1), visibility 0s;
+        }
+        /* thin glowing blue edge on the left of the drawer */
+        .nv-panel::before {
+          content: ''; position: fixed; top: 0; bottom: 0; width: 2px; margin-left: -23px;
+          background: linear-gradient(180deg, transparent, #00A3FF 35%, #00A3FF 65%, transparent);
+          opacity: 0.6; pointer-events: none;
         }
         .nv-panel-glow {
-          position: absolute; bottom: 0; right: 0; width: 100%; height: 420px; pointer-events: none;
-          background: radial-gradient(circle at 100% 100%, rgba(0, 163, 255, 0.2), transparent 70%);
+          position: absolute; bottom: 0; right: 0; width: 100%; height: 360px; pointer-events: none;
+          background: radial-gradient(circle at 100% 100%, rgba(0, 163, 255, 0.18), transparent 70%);
         }
-        .nv-panel-links { position: relative; display: flex; flex-direction: column; gap: 0.4rem; }
+        .nv-panel-links { position: relative; display: flex; flex-direction: column; }
         .nv-panel-link {
-          display: flex; align-items: baseline; gap: 1rem;
-          padding: 0.6rem 0; border-bottom: 1px solid #222222;
-          font-family: var(--font-heading); font-size: clamp(1.6rem, 6vw, 2.4rem);
+          display: flex; align-items: center; gap: 0.85rem;
+          padding: 0.8rem 0; border-bottom: 1px solid #1c1c1c;
+          font-family: var(--font-heading); font-size: clamp(1.15rem, 5vw, 1.4rem);
           color: #FFFFFF; text-decoration: none;
-          opacity: 0; transform: translateY(24px);
-          transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), color 0.3s ease, padding-left 0.4s ease;
+          opacity: 0; transform: translateX(28px);
+          transition: opacity 0.45s ease, transform 0.55s cubic-bezier(0.22, 1, 0.36, 1), color 0.3s ease, padding-left 0.4s ease;
         }
         .nv-panel.is-open .nv-panel-link {
           opacity: 1; transform: none;
-          transition-delay: calc(0.25s + var(--i) * 0.06s), calc(0.25s + var(--i) * 0.06s), 0s, 0s;
+          transition-delay: calc(0.15s + var(--i) * 0.05s), calc(0.15s + var(--i) * 0.05s), 0s, 0s;
         }
         .nv-panel-link:hover { color: #00A3FF; padding-left: 0.6rem; }
         .nv-panel-link.is-active { color: #00A3FF; }
-        .nv-panel-num { font-family: 'Gowun Dodum', sans-serif; font-size: 0.8rem; color: #555555; }
+        .nv-panel-num { font-family: 'Gowun Dodum', sans-serif; font-size: 0.72rem; color: #555555; min-width: 18px; }
 
         /* ---- Services accordion (phone menu) ---- */
         .nv-panel-toggle {
           width: 100%; text-align: left; cursor: pointer;
-          background: none; border: none; border-bottom: 1px solid #222222; border-radius: 0;
+          background: none; border: none; border-bottom: 1px solid #1c1c1c; border-radius: 0;
         }
         .nv-panel-chevron {
           margin-left: auto; align-self: center;
-          width: 34px; height: 34px; border-radius: 50%; border: 1px solid #333333;
+          width: 30px; height: 30px; border-radius: 50%; border: 1px solid #333333;
           display: grid; place-items: center; flex-shrink: 0;
           transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), background 0.3s ease, border-color 0.3s ease;
         }
@@ -806,13 +830,14 @@ const Navbar = () => {
         .nv-panel-group.is-open .nv-panel-sub { grid-template-rows: 1fr; }
         .nv-panel-sub-inner { overflow: hidden; min-height: 0; }
 
+        /* compact one-column list inside the narrow drawer */
         .nv-panel-sub-grid {
-          display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
-          padding: 14px 0 10px;
+          display: grid; grid-template-columns: 1fr; gap: 6px;
+          padding: 12px 0 10px;
         }
         .nv-panel-sub-item {
           display: flex; align-items: center; gap: 10px;
-          padding: 10px; border-radius: 12px; border: 1px solid #222222; background: #0d0d0d;
+          padding: 7px 10px; border-radius: 11px; border: 1px solid #1f1f1f; background: #0d0d0d;
           color: #FFFFFF; text-decoration: none;
           font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 600; line-height: 1.25;
           opacity: 0; transform: translateY(10px);
@@ -823,8 +848,8 @@ const Navbar = () => {
           transition-delay: calc(0.08s + var(--j) * 0.04s), calc(0.08s + var(--j) * 0.04s), 0s, 0s;
         }
         .nv-panel-sub-item:hover, .nv-panel-sub-item:active { border-color: #00A3FF; background: rgba(0, 163, 255, 0.08); }
-        .nv-panel-sub-item .nv-drop-icon { width: 34px; height: 34px; border-radius: 9px; background: #1a1a1a; }
-        .nv-panel-sub-item .nv-drop-icon svg { width: 17px; height: 17px; }
+        .nv-panel-sub-item .nv-drop-icon { width: 30px; height: 30px; border-radius: 8px; background: #1a1a1a; }
+        .nv-panel-sub-item .nv-drop-icon svg { width: 15px; height: 15px; }
         .nv-panel-sub-item:hover .nv-drop-icon { background: #00A3FF; color: #000000; }
 
         .nv-panel-sub-quick {
@@ -832,24 +857,25 @@ const Navbar = () => {
           padding: 4px 0 16px; border-bottom: 1px solid #222222;
         }
         .nv-panel-sub-quick a {
-          padding: 7px 12px; border-radius: 30px; border: 1px solid #333333;
-          color: #CCCCCC; text-decoration: none; font-family: 'Inter', sans-serif; font-size: 0.8rem;
+          padding: 6px 11px; border-radius: 30px; border: 1px solid #333333;
+          color: #CCCCCC; text-decoration: none; font-family: 'Inter', sans-serif; font-size: 0.76rem;
           transition: color 0.25s ease, border-color 0.25s ease;
         }
         .nv-panel-sub-quick a:hover { color: #FFFFFF; border-color: #00A3FF; }
         .nv-panel-sub-quick .nv-panel-sub-all { background: #00A3FF; border-color: #00A3FF; color: #000000; font-weight: 600; }
 
-        @media (max-width: 360px) {
-          .nv-panel-sub-grid { grid-template-columns: 1fr; }
-        }
         .nv-panel-link.is-active .nv-panel-num { color: #00A3FF; }
 
+        /* Pay Now + Book a Meeting pinned to the bottom of the drawer, full width */
         .nv-panel-actions {
-          position: relative; display: flex; flex-wrap: wrap; align-items: center; gap: 1rem;
+          position: relative; margin-top: auto;
+          display: flex; flex-direction: column; align-items: stretch; gap: 0.7rem;
           opacity: 0; transform: translateY(20px);
           transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
         }
-        .nv-panel.is-open .nv-panel-actions { opacity: 1; transform: none; transition-delay: 0.65s; }
+        .nv-panel.is-open .nv-panel-actions { opacity: 1; transform: none; transition-delay: 0.45s; }
+        .nv-panel-actions .nv-pay,
+        .nv-panel-actions .nv-book { width: 100%; justify-content: center; }
         .nv-region--panel { border: 1px solid #333333; }
         .nv-book--panel { background: transparent; border-color: #FFFFFF; color: #FFFFFF; }
         .nv-book--panel::before { background: #FFFFFF; }
@@ -869,7 +895,7 @@ const Navbar = () => {
           .nv-burger { display: block; }
         }
         @media (min-width: 1081px) {
-          .nv-panel { display: none; }
+          .nv-panel, .nv-backdrop { display: none; }
         }
       `}</style>
     </>
