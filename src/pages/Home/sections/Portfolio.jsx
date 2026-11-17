@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom';
   =========================================
 */
 const projects = [
-  { title: 'Seabrook Texas Town', category: 'Web App', description: 'A complete digital overhaul for a coastal town. We built a custom booking system and designed a stunning visual experience.', videoUrl: null, projectLink: 'https://example.com' },
+  { title: 'Seabrook Texas Town', category: 'Web App', description: 'A complete digital overhaul for a coastal town. We built a custom booking system and designed a stunning visual experience.', videoUrl: '/videos/seabrook.mp4', projectLink: 'https://seabrooktexastown.com/' },
   { title: 'Website', category: 'Website', description: 'A robust, secure platform for a national organization. We focused on accessibility and fast load times.', videoUrl: null, projectLink: 'https://example.com' },
   { title: 'Project Name 3', category: 'Category', description: 'Description for project 3 goes here.', videoUrl: null, projectLink: 'https://example.com' },
   { title: 'Project Name 4', category: 'Category', description: 'Description for project 4 goes here.', videoUrl: null, projectLink: 'https://example.com' },

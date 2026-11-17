@@ -425,7 +425,7 @@ const Hero = () => {
 
             /* Hands meet along the bottom, like on desktop */
             .hx-hand-wrap--human { width: 64%; left: -6%; bottom: 0; }
-            .hx-hand-wrap--robot { width: 60%; right: -6%; bottom: 15vw; }
+            .hx-hand-wrap--robot { width: 60%; right: -6%; bottom: 9vw; }
 
             /* X spark sits just above where the fingertips meet */
             .hx-spark { top: auto; bottom: 36vw; left: 50%; width: 40px; margin-left: -20px; }

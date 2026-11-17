@@ -12,8 +12,8 @@ const projects = [
     title: 'Seabrook Texas Town',
     category: 'Web App',
     description: 'A complete digital overhaul for a coastal town. We built a custom booking system, integrated local business directories, and designed a stunning visual experience.',
-    videoUrl: null,
-    projectLink: 'https://example.com',
+    videoUrl: '/videos/seabrook.mp4',
+    projectLink: 'https://seabrooktexastown.com/',
   },
   {
     title: 'ACTS',
