@@ -1,14 +1,12 @@
 // src/pages/Team/sections/TeamHero.jsx
 
-// 1. IMPORT YOUR CEO PHOTO HERE
-// import ceoPhoto from '../../../assets/ceo-photo.png';
+import ceoPhoto from '../../../assets/team/raybeen.jpg';
 
-// 2. REPLACE null WITH YOUR IMPORT (image: ceoPhoto)
 const ceo = {
-  name: '[CEO Full Name]',
-  title: 'Chief Executive Officer',
-  desc: '[Place CEO description here. Talk about their vision, experience, and how they lead the company towards success.]',
-  image: null,
+  name: 'Raybeen',
+  title: 'CEO & Project Manager',
+  desc: 'Sets the vision for Artx Dev and manages every project from first call to launch, keeping the team aligned and clients in the loop.',
+  image: ceoPhoto,
 };
 
 const TeamHero = () => {
@@ -47,7 +45,7 @@ const TeamHero = () => {
               <span className="th-photo-ring th-photo-ring--2" aria-hidden="true" />
               <div className="th-photo">
                 {ceo.image ? (
-                  <img src={ceo.image} alt={ceo.name} />
+                  <img src={ceo.image} alt={ceo.name} style={{ objectPosition: 'center 45%' }} />
                 ) : (
                   <div className="th-silhouette" aria-hidden="true" />
                 )}
