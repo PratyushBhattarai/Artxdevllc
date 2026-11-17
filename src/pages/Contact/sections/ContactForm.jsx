@@ -144,45 +144,7 @@ const ContactForm = () => {
                       </div>
                       <Link to="/services#packages" className="cf-plan-change">Change</Link>
                     </div>
-                  ) : (
-                  <>
-                  {/* Dropdowns */}
-                  <div className="cf-field">
-                    <label htmlFor="cf-service" className="cf-label">Service Interested In <span>*</span></label>
-                    <select id="cf-service" name="service" required className="cf-input cf-select" defaultValue="">
-                      <option value="">Select a service</option>
-                      <option value="basic-website">Basic Website ($700)</option>
-                      <option value="ecommerce">E-Commerce Store ($1,000)</option>
-                      <option value="enterprise">Enterprise Solution ($1,500+)</option>
-                      <option value="custom">Custom Development</option>
-                      <option value="consultation">Free Consultation</option>
-                    </select>
-                  </div>
-                  <div className="cf-row">
-                    <div className="cf-field">
-                      <label htmlFor="cf-budget" className="cf-label">Project Budget</label>
-                      <select id="cf-budget" name="budget" className="cf-input cf-select" defaultValue="">
-                        <option value="">Select budget range</option>
-                        <option value="under-1k">Under $1,000</option>
-                        <option value="1k-3k">$1,000 - $3,000</option>
-                        <option value="3k-5k">$3,000 - $5,000</option>
-                        <option value="5k-10k">$5,000 - $10,000</option>
-                        <option value="10k-plus">$10,000+</option>
-                      </select>
-                    </div>
-                    <div className="cf-field">
-                      <label htmlFor="cf-timeline" className="cf-label">Project Timeline</label>
-                      <select id="cf-timeline" name="timeline" className="cf-input cf-select" defaultValue="">
-                        <option value="">Select timeline</option>
-                        <option value="asap">ASAP</option>
-                        <option value="1-month">Within 1 month</option>
-                        <option value="2-3-months">2-3 months</option>
-                        <option value="flexible">Flexible</option>
-                      </select>
-                    </div>
-                  </div>
-                  </>
-                  )}
+                  ) : null}
 
                   {/* Project Details */}
                   <div className="cf-field">
@@ -224,7 +186,7 @@ const ContactForm = () => {
 
             <p className="cf-office-note" aria-live="polite">
               <span className="cf-office-dot" />
-              Showing <strong key={region} className="cf-swap">{office.label}</strong> · switch with NEP / US at the top
+              Showing <strong key={region} className="cf-swap">{office.label}</strong> · switch with NEP / USA at the top
             </p>
 
             {/* Email Card */}

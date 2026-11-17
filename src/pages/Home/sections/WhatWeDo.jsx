@@ -28,7 +28,7 @@ const ServiceCard = ({ service, index }) => {
 
   return (
     <div data-reveal="up" style={{ '--d': `${(index % 3) * 0.12 + Math.floor(index / 3) * 0.1}s` }}>
-      <Link to="/services" className="wwd-card" onMouseMove={handleMove}>
+      <article className="wwd-card" onMouseMove={handleMove}>
         <span className="wwd-card-border" aria-hidden="true" />
 
         <div className="wwd-card-top">
@@ -41,13 +41,12 @@ const ServiceCard = ({ service, index }) => {
 
           <span className="wwd-card-corner" aria-hidden="true">
             <span className="wwd-card-num">{String(index + 1).padStart(2, '0')}</span>
-            <span className="wwd-card-arrow">↗</span>
           </span>
         </div>
 
         <p className="wwd-card-desc">{service.desc}</p>
         <span className="wwd-card-bar" aria-hidden="true" />
-      </Link>
+      </article>
     </div>
   );
 };
@@ -135,9 +134,9 @@ const WhatWeDo = () => {
           /* Card */
           .wwd-card {
             position: relative; isolation: isolate; overflow: hidden; box-sizing: border-box;
-            display: flex; flex-direction: column; justify-content: space-between;
-            height: 280px; padding: 2rem; border-radius: 16px;
-            background: #0A0A0A; border: 1px solid #444444; text-decoration: none;
+            display: flex; flex-direction: column; justify-content: flex-start; gap: 1.5rem;
+            height: 100%; padding: 2rem; border-radius: 16px;
+            background: #0A0A0A; border: 1px solid #444444; text-decoration: none; cursor: default;
             transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.4s ease, box-shadow 0.5s ease;
           }
           .wwd-card::before {
@@ -185,9 +184,8 @@ const WhatWeDo = () => {
           }
           .wwd-card-num { font-family: 'Gowun Dodum', sans-serif; color: #555555; font-size: 0.85rem; }
           .wwd-card-arrow { color: #00A3FF; font-size: 1.1rem; transform: translate(-14px, 14px); opacity: 0; }
-          .wwd-card:hover .wwd-card-num { transform: translate(14px, -14px); opacity: 0; }
-          .wwd-card:hover .wwd-card-arrow { transform: none; opacity: 1; }
-
+          .wwd-card:hover .wwd-card-num { color: #00A3FF; }
+          
           .wwd-card-desc {
             color: #888888; font-family: 'Hind', sans-serif;
             font-size: 0.95rem; line-height: 1.6; margin: 0;
@@ -218,7 +216,13 @@ const WhatWeDo = () => {
           @media (max-width: 640px) {
             .wwd-grid { grid-template-columns: 1fr; }
             .wwd-title { font-size: 2.4rem; }
-            .wwd-card { height: auto; min-height: 240px; gap: 1.5rem; }
+            .wwd-card { height: auto; min-height: 0; gap: 0.75rem; padding: 1.1rem 1.15rem 1.2rem; border-radius: 14px; }
+            .wwd-grid { gap: 0.8rem !important; }
+            .wwd-icon { width: 38px; height: 38px; }
+            .wwd-card-head { gap: 0.75rem; }
+            .wwd-card-title { font-size: 1.05rem; }
+            .wwd-card-desc { font-size: 0.86rem; line-height: 1.5; }
+            .wwd-section { padding: 3.5rem 5%; }
           }
         `}</style>
       </section>

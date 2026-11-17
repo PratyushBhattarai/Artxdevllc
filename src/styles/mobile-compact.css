@@ -1,0 +1,109 @@
+/* =========================================================
+   PHONE-ONLY COMPACT CARDS  (screens up to 600px wide)
+   Makes cards on every page smaller so visitors scroll less.
+   Desktop and tablet are NOT affected by anything in this file.
+   (!important is used because each section keeps its own styles
+    inside its component – this file just tightens them on phones.)
+   ========================================================= */
+@media (max-width: 600px) {
+
+  /* ---------------- HOME ---------------- */
+  /* Portfolio cards: shorter video area */
+  .pf-grid { gap: 1.5rem !important; }
+  .pf-media { height: 200px !important; }
+
+  /* Team cards: two per row, smaller photo + text */
+  .tm-grid { grid-template-columns: 1fr 1fr !important; gap: 0.75rem !important; }
+  .tm-card { padding: 0.75rem !important; }
+  .tm-card-top { margin-bottom: 0.4rem !important; }
+  .tm-info { padding: 0.6rem 0 0 !important; }
+  .tm-name { font-size: 1rem !important; }
+  .tm-title-text { font-size: 0.78rem !important; }
+  .tm-desc { font-size: 0.76rem !important; line-height: 1.4 !important; }
+
+  /* How we work */
+  .hww-grid { gap: 0.8rem !important; }
+  .hww-card { padding: 1.1rem !important; }
+
+  /* ---------------- ABOUT ---------------- */
+  .mission-vision-section .card { min-height: 0 !important; padding: 1.5rem 1.25rem 2.5rem !important; }
+  .mission-vision-section .card h2 { font-size: 1.2rem !important; }
+  .mission-vision-section .card-label { margin-bottom: 1rem !important; }
+
+  /* Why choose us */
+  .why-grid { gap: 0.8rem !important; }
+  .why-card { padding: 1.25rem 1.25rem 1.4rem !important; }
+  .why-card-top { margin-bottom: 1.1rem !important; }
+  .why-icon { width: 52px !important; height: 52px !important; border-radius: 13px !important; }
+  .why-icon svg { width: 26px !important; height: 26px !important; }
+  .why-card-title { font-size: 1.25rem !important; margin-bottom: 0.6rem !important; }
+  .why-card-desc { font-size: 0.9rem !important; line-height: 1.5 !important; }
+
+  /* Stats: two per row */
+  .stats-grid { grid-template-columns: 1fr 1fr !important; }
+  .stat-card {
+    padding: 1.25rem 1rem 1.5rem !important;
+    border-right: 1px solid #2a2a2a !important;
+    border-bottom: 1px solid #2a2a2a !important;
+  }
+  .stat-card:nth-child(2n) { border-right: none !important; }
+  .stat-card:nth-last-child(-n + 2) { border-bottom: none !important; }
+  .stat-index { margin-bottom: 0.9rem !important; }
+  .stat-number { font-size: 1.9rem !important; gap: 0.3rem !important; margin-bottom: 0.75rem !important; }
+  .stat-label { font-size: 0.98rem !important; }
+  .stat-desc { font-size: 0.8rem !important; line-height: 1.45 !important; }
+
+  /* Two companies */
+  .company-card { padding: 1.4rem !important; }
+  .card-top-row { margin-bottom: 1rem !important; }
+  .card-main-content { margin-bottom: 1.25rem !important; }
+  .card-main-content h3 { font-size: 1.35rem !important; }
+  .card-footer { padding-top: 1rem !important; }
+
+  /* ---------------- SERVICES ---------------- */
+  /* Packages */
+  .svc-pack-grid { gap: 2rem !important; }
+  .svc-pack { padding: 1.75rem 1.25rem 1.25rem !important; }
+  .svc-pack-head { padding-bottom: 1rem !important; margin-bottom: 1rem !important; }
+  .svc-pack-tagline { margin-bottom: 0.9rem !important; }
+  .svc-pack-price { font-size: 2.4rem !important; }
+  .svc-pack .svc-pack-price--quote { font-size: 1.6rem !important; }
+  .svc-pack-features { gap: 0.5rem !important; margin-bottom: 1.25rem !important; }
+  .svc-pack-features li { font-size: 0.88rem !important; }
+
+  /* Add-on services */
+  .svc-addon-grid { gap: 0.8rem !important; }
+  .svc-addon { padding: 1.25rem 1.25rem 1.4rem !important; }
+  .svc-addon-top { margin-bottom: 1rem !important; }
+  .svc-icon { width: 52px !important; height: 52px !important; border-radius: 13px !important; }
+  .svc-icon svg { width: 24px !important; height: 24px !important; }
+  .svc-addon-title { font-size: 1.2rem !important; margin-bottom: 0.5rem !important; }
+  .svc-addon-desc { font-size: 0.9rem !important; line-height: 1.5 !important; }
+
+  /* Process steps */
+  .svc-steps { row-gap: 1.75rem !important; }
+  .svc-step-marker { margin-bottom: 0.9rem !important; }
+  .svc-step-num { font-size: 2.4rem !important; margin-bottom: 0.4rem !important; }
+  .svc-step-title { font-size: 1.15rem !important; }
+  .svc-step-desc { font-size: 0.9rem !important; line-height: 1.5 !important; }
+
+  /* ---------------- PORTFOLIO ---------------- */
+  .pp-grid { gap: 1.75rem !important; }
+  .ps-media { margin-bottom: 0.6rem !important; }
+
+  /* ---------------- TEAM ---------------- */
+  .tp-grid-3, .tp-grid-2 { gap: 1rem !important; }
+  .tp-card, .tp-card--row { padding: 1.4rem 1.25rem !important; }
+  .tp-avatar { width: 96px !important; height: 96px !important; }
+  .tp-card .tp-avatar { margin-bottom: 0.9rem !important; }
+  .tp-card--row .tp-avatar { margin-bottom: 0 !important; }
+  .tp-card--row { gap: 1rem !important; }
+  .tp-name { font-size: 1.15rem !important; }
+  .tp-role { font-size: 0.85rem !important; }
+  .tp-desc { font-size: 0.85rem !important; line-height: 1.45 !important; }
+
+  /* ---------------- CONTACT ---------------- */
+  .cf-card { padding: 1.25rem !important; }
+  .cf-icon { width: 42px !important; height: 42px !important; margin-bottom: 0.75rem !important; }
+  .cf-card-text { font-size: 0.85rem !important; margin-bottom: 0.5rem !important; }
+}

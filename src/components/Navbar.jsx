@@ -197,7 +197,7 @@ const Navbar = () => {
         onClick={() => chooseRegion('USA')}
         aria-label="USA"
       >
-        US
+        USA
       </button>
     </div>
   );
@@ -502,14 +502,14 @@ const Navbar = () => {
         .nv-float.is-scrolled { top: 74px; }
         .nv-float.is-hidden { opacity: 0; transform: translateY(-8px); pointer-events: none; }
         .nv-float:hover { transform: translateY(-2px); }
-        .nv-float .nv-region--float { width: 92px; height: 28px; }
+        .nv-float .nv-region--float { width: 104px; height: 28px; }
         .nv-region--float .nv-region-btn { font-size: 12px; letter-spacing: 0.5px; }
         .nv-region--float .nv-region-slash { height: 36px; }
         @keyframes nvFloatIn { from { opacity: 0; transform: translateY(-14px) scale(0.9); } to { opacity: 1; transform: none; } }
         @media (max-width: 1080px) {
           .nv-float { top: 86px; right: 2%; }
           .nv-float.is-scrolled { top: 74px; }
-          .nv-float .nv-region--float { width: 86px; height: 26px; }
+          .nv-float .nv-region--float { width: 98px; height: 26px; }
         }
 
         /* ================= NAV BAR ================= */

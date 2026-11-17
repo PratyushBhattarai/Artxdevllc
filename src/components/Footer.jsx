@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../assets/logo2.png';
 import { OFFICES } from '../data/offices';
+import { useRegion } from '../context/RegionContext';
 
 // ---- Edit footer content here ----
 const pageLinks = [
@@ -12,7 +13,6 @@ const pageLinks = [
   { to: '/portfolio', label: 'Portfolio' },
   { to: '/team', label: 'Our Team' },
   { to: '/contact', label: 'Contact Us' },
-  { to: '/book-meeting', label: 'Book a Meeting' },
 ];
 
 // Each one opens that service on the Services page
@@ -40,31 +40,36 @@ const contact = {
 const socials = [
   {
     label: 'LinkedIn',
-    href: '', // TODO: paste the company LinkedIn URL
+    href: 'https://www.linkedin.com/in/artx-dev-llc-467b87398/',
     icon: (
       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
     ),
   },
   {
     label: 'Instagram',
-    href: '', // TODO: paste the Instagram URL
+    // different account per office – picked by the NEP / USA pill
+    href: {
+      Nepal: 'https://www.instagram.com/artxdevai/',
+      USA: 'https://www.instagram.com/artx_dev/',
+    },
     icon: (
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
     ),
   },
   {
     label: 'Facebook',
-    href: '', // TODO: paste the Facebook page URL
+    href: 'https://www.facebook.com/share/1cXrkRp565/?mibextid=wwXIfr',
     icon: (
       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
     ),
   },
 ];
 
-// Only show social icons that have a real link
-const activeSocials = socials.filter((s) => s.href);
+// A social link can be one URL, or { Nepal, USA } to switch with the NEP / USA pill
+const socialHref = (s, region) => (typeof s.href === 'string' ? s.href : s.href[region] || s.href.USA);
 
 const Footer = () => {
+  const { region } = useRegion();
   const [isVisible, setIsVisible] = useState(false);
   const footerRef = useRef(null);
   const bigTextRef = useRef(null);
@@ -124,18 +129,21 @@ const Footer = () => {
             <p className="ft-tagline">
               Websites, apps & AI automation for growing businesses – built in Nepal, serving clients across the USA.
             </p>
-            <Link to="/book-meeting" className="ft-cta" onClick={onLinkClick('/book-meeting')}>
-              Book a free call <span aria-hidden="true">→</span>
-            </Link>
-            {activeSocials.length > 0 && (
-              <div className="ft-socials">
-                {activeSocials.map((s) => (
-                  <a key={s.label} href={s.href} className="ft-social" aria-label={s.label} target="_blank" rel="noopener noreferrer">
-                    {s.icon}
-                  </a>
-                ))}
-              </div>
-            )}
+            <div className="ft-socials">
+              {socials.map((s) => (
+                <a
+                  key={s.label}
+                  href={socialHref(s, region)}
+                  className="ft-social"
+                  aria-label={`${s.label} (opens in a new tab)`}
+                  title={s.label}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {s.icon}
+                </a>
+              ))}
+            </div>
           </div>
 
           {/* Column 2: Links */}
@@ -159,15 +167,17 @@ const Footer = () => {
           <div className="ft-col ft-list" style={{ '--i': 3 }}>
             <span className="ft-heading"><span className="ft-heading-dot" />Contact</span>
             <a href={'mailto:' + contact.email} className="ft-link">{contact.email}</a>
-            {contact.offices.map((o) => (
-              <div key={o.label} className="ft-office-block">
-                <span className="ft-link ft-link--static ft-address">
-                  <span className="ft-office">{o.label}</span>
-                  {o.address}
-                </span>
-                <a href={o.phoneHref} className="ft-link ft-phone">{o.phone}</a>
-              </div>
-            ))}
+            <div className="ft-contact-offices">
+              {contact.offices.map((o) => (
+                <div key={o.label} className="ft-office-block">
+                  <span className="ft-link ft-link--static ft-address">
+                    <span className="ft-office">{o.label}</span>
+                    {o.address}
+                  </span>
+                  <a href={o.phoneHref} className="ft-link ft-phone">{o.phone}</a>
+                </div>
+              ))}
+            </div>
           </div>
 
         </div>
@@ -309,6 +319,7 @@ const Footer = () => {
           text-transform: uppercase; color: #00A3FF;
         }
 
+        .ft-contact-offices { display: flex; flex-direction: column; gap: 0.85rem; }
         .ft-office-block { display: flex; flex-direction: column; gap: 0.35rem; }
         .ft-phone { font-size: 0.88rem; }
         .ft-tagline { margin: 0 0 1.25rem; max-width: 300px; color: #A1A1AA; font-size: 0.9rem; line-height: 1.6; }
@@ -407,7 +418,14 @@ const Footer = () => {
           .ft-top { grid-template-columns: 1fr 1fr; margin-bottom: 4rem; }
         }
         @media (max-width: 560px) {
-          .ft-top { grid-template-columns: 1fr; }
+          .ft { padding: 3rem 5% 1.5rem; }
+          .ft-top { grid-template-columns: 1fr 1fr; gap: 2rem 1.25rem; margin-bottom: 3rem; }
+          .ft-top > .ft-col:first-child, .ft-top > .ft-col:last-child { grid-column: 1 / -1; }
+          .ft-list { gap: 0.7rem; }
+          .ft-link { font-size: 0.86rem; }
+          .ft-logo { height: 48px; }
+          .ft-tagline { margin-bottom: 1rem; font-size: 0.85rem; }
+          .ft-contact-offices { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
           .ft-bottom { flex-direction: column; align-items: flex-start; }
           .ft-copy, .ft-legal { gap: 1rem; }
         }
