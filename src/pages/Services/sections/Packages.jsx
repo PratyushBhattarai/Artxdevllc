@@ -8,7 +8,7 @@ import CountUp from './CountUp';
   Each package:
     price  – a number (shown as $price) … or leave it out to show priceLabel instead
     priceLabel – text shown when there is no fixed price (e.g. 'Custom quote')
-    cta / to   – button text and where it goes
+    cta        – button text (every button opens the Contact form with this plan chosen)
 */
 const GROUPS = [
   {
@@ -22,8 +22,7 @@ const GROUPS = [
         name: 'Basic Website',
         tagline: 'Perfect for small businesses getting online.',
         price: 500,
-        cta: 'Choose plan',
-        to: '/book-meeting',
+        cta: 'Choose plan',
         features: [
           'Up to 5 custom pages',
           'Fully responsive design',
@@ -42,8 +41,7 @@ const GROUPS = [
         price: 1000,
         plus: true,
         featured: true,
-        cta: 'Choose plan',
-        to: '/book-meeting',
+        cta: 'Choose plan',
         features: [
           'Complete online store setup',
           'Product catalog (up to 50 products)',
@@ -62,8 +60,7 @@ const GROUPS = [
         tagline: 'Custom builds for growing companies.',
         price: 1500,
         plus: true,
-        cta: 'Consult With Expert',
-        to: '/contact',
+        cta: 'Consult With Expert',
         features: [
           'Unlimited custom pages',
           'Advanced CMS integration',
@@ -90,8 +87,7 @@ const GROUPS = [
         name: 'SEO Starter',
         tagline: 'Get found in your local area.',
         priceLabel: 'Custom quote',
-        cta: 'Consult with an expert',
-        to: '/contact',
+        cta: 'Consult with an expert',
         features: [
           'Full website SEO audit',
           'Keyword research',
@@ -106,8 +102,7 @@ const GROUPS = [
         tagline: 'Climb the rankings and grow traffic.',
         priceLabel: 'Custom quote',
         featured: true,
-        cta: 'Consult with an expert',
-        to: '/contact',
+        cta: 'Consult with an expert',
         features: [
           'Everything in SEO Starter',
           'Technical SEO fixes',
@@ -122,8 +117,7 @@ const GROUPS = [
         name: 'SEO Pro',
         tagline: 'For competitive markets and bigger goals.',
         priceLabel: 'Custom quote',
-        cta: 'Consult with an expert',
-        to: '/contact',
+        cta: 'Consult with an expert',
         features: [
           'Everything in SEO Growth',
           'Advanced link building',
@@ -146,8 +140,7 @@ const GROUPS = [
         name: 'Essential Care',
         tagline: 'Secure hosting for small websites.',
         priceLabel: 'Custom quote',
-        cta: 'Consult with an expert',
-        to: '/contact',
+        cta: 'Consult with an expert',
         features: [
           'Managed hosting & SSL',
           'Regular backups',
@@ -161,8 +154,7 @@ const GROUPS = [
         tagline: 'Hands-off care for growing businesses.',
         priceLabel: 'Custom quote',
         featured: true,
-        cta: 'Consult with an expert',
-        to: '/contact',
+        cta: 'Consult with an expert',
         features: [
           'Everything in Essential Care',
           'Priority support',
@@ -175,8 +167,7 @@ const GROUPS = [
         name: 'Premium Care',
         tagline: 'Full support for business-critical sites.',
         priceLabel: 'Custom quote',
-        cta: 'Consult with an expert',
-        to: '/contact',
+        cta: 'Consult with an expert',
         features: [
           'Everything in Business Care',
           'Dedicated account manager',
@@ -188,6 +179,16 @@ const GROUPS = [
     ],
   },
 ];
+
+// Every package button opens the Contact form with that plan already chosen,
+// so the form skips the service / budget / timeline questions.
+const planLink = (p, group) => {
+  const price = typeof p.price === 'number'
+    ? `$${p.price.toLocaleString('en-US')}${p.plus ? '+' : ''}`
+    : p.priceLabel || 'Custom quote';
+  const params = new URLSearchParams({ plan: p.name, type: group.tab, price });
+  return `/contact?${params.toString()}`;
+};
 
 const trackMouse = (e) => {
   const r = e.currentTarget.getBoundingClientRect();
@@ -276,7 +277,7 @@ const Packages = () => {
                 ))}
               </ul>
 
-              <Link to={p.to || '/book-meeting'} className={`svc-btn ${p.featured ? 'svc-btn-accent' : 'svc-btn-light'} svc-btn-block`}>
+              <Link to={planLink(p, group)} className={`svc-btn ${p.featured ? 'svc-btn-accent' : 'svc-btn-light'} svc-btn-block`}>
                 {p.cta} <span className="svc-arrow">→</span>
               </Link>
             </div>

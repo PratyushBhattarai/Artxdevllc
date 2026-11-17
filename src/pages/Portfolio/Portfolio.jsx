@@ -12,6 +12,9 @@ import logoTrikore from '../../assets/brand5.png';
 import logoSamLandscaping from '../../assets/brand4.png';
 import logoHabiff from '../../assets/brand7.png';
 import logoCarolinaStump from '../../assets/barnd8.png';
+// Logos taken from each company's own website
+import logoDeConstruction from '../../assets/de-construction-logo.png';
+import logoTotalLandscape from '../../assets/total-landscape-solutions-logo.png';
 
 // "Other projects we've built" – logo + link only (no video needed)
 const otherProjects = [
@@ -19,10 +22,10 @@ const otherProjects = [
   { name: 'Sam Landscaping SVCS', url: 'https://landscapinginsandiego.com/', logo: logoSamLandscaping },
   { name: 'Habiff Builders Group', url: 'https://hbgtexas.com/', logo: logoHabiff },
   { name: 'Carolina Stump Services', url: 'https://carolinastumpservices.com/', logo: logoCarolinaStump },
-  // No logo file yet – these show a name tile. To use a real logo: put the image in
-  // src/assets, import it above, and add  logo: yourImport  to the line.
-  { name: 'DE Construction', url: 'https://deconstructionph.com/', mark: 'DE' },
-  { name: 'Total Landscape Solutions', url: 'https://www.totallandscapesolution.com/' },
+  { name: 'DE Construction', url: 'https://deconstructionph.com/', logo: logoDeConstruction },
+  { name: 'Total Landscape Solutions', url: 'https://www.totallandscapesolution.com/', logo: logoTotalLandscape },
+  // A project without a logo file shows a name tile instead. Add  logo: yourImport  to use an image,
+  // and optionally  mark: 'AB'  to choose the letters on the name tile.
 ];
 
 // "Total Landscape Solutions" -> "TLS" (used when there's no logo image)

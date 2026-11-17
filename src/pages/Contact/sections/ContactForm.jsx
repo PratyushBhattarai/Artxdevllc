@@ -1,7 +1,7 @@
 // src/pages/Contact/sections/ContactForm.jsx
 
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 import { useRegion } from '../../../context/RegionContext';
 import { OFFICES } from '../../../data/offices';
 
@@ -36,6 +36,22 @@ const ContactForm = () => {
   const [isSuccess, setIsSuccess] = useState(false);
   const [activeFaq, setActiveFaq] = useState(null);
 
+  // Coming from a package's button (/contact?plan=...): the plan is already chosen,
+  // so the service / budget / timeline questions are skipped.
+  const [searchParams] = useSearchParams();
+  const selectedPlan = searchParams.get('plan');
+  const planType = searchParams.get('type');
+  const planPrice = searchParams.get('price');
+
+  // ...and jump straight to the form
+  useEffect(() => {
+    if (!selectedPlan) return undefined;
+    const t = setTimeout(() => {
+      document.getElementById('cf-form-card')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 150);
+    return () => clearTimeout(t);
+  }, [selectedPlan]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -58,7 +74,7 @@ const ContactForm = () => {
 
           {/* LEFT: Contact Form */}
           <div data-reveal="left">
-            <div className="cf-form-card" onMouseMove={handleSpotlight}>
+            <div id="cf-form-card" className="cf-form-card" onMouseMove={handleSpotlight}>
               <div className="cf-form-head">
                 <p className="ax-eyebrow">Start the conversation</p>
                 <h2 className="cf-form-title">Send Us a Message</h2>
@@ -110,6 +126,26 @@ const ContactForm = () => {
                     <input id="cf-company" name="company" type="text" autoComplete="organization" className="cf-input" />
                   </div>
 
+                  {selectedPlan ? (
+                    /* Plan chosen on the Services page: show it instead of the 3 questions */
+                    <div className="cf-plan" role="group" aria-label="Selected plan">
+                      <input type="hidden" name="service" value={selectedPlan} />
+                      {planType && <input type="hidden" name="planType" value={planType} />}
+                      {planPrice && <input type="hidden" name="planPrice" value={planPrice} />}
+                      <div className="cf-plan-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg>
+                      </div>
+                      <div className="cf-plan-text">
+                        <span className="cf-plan-label">Selected plan</span>
+                        <strong className="cf-plan-name">{selectedPlan}</strong>
+                        <span className="cf-plan-meta">
+                          {[planType, planPrice].filter(Boolean).join(' · ')}
+                        </span>
+                      </div>
+                      <Link to="/services#packages" className="cf-plan-change">Change</Link>
+                    </div>
+                  ) : (
+                  <>
                   {/* Dropdowns */}
                   <div className="cf-field">
                     <label htmlFor="cf-service" className="cf-label">Service Interested In <span>*</span></label>
@@ -145,6 +181,8 @@ const ContactForm = () => {
                       </select>
                     </div>
                   </div>
+                  </>
+                  )}
 
                   {/* Project Details */}
                   <div className="cf-field">
@@ -452,6 +490,31 @@ const ContactForm = () => {
           .cf-card-link span { color: #00A3FF; transition: transform 0.35s ease; }
           .cf-card-link:hover span { transform: translateX(4px); }
           .cf-card-address { color: #FFFFFF; font-family: 'Hind', sans-serif; font-size: 0.95rem; line-height: 1.5; }
+
+          /* ---- Selected plan (when coming from a package button) ---- */
+          .cf-plan {
+            display: flex; align-items: center; gap: 14px;
+            padding: 16px 18px; border-radius: 14px;
+            border: 1px solid rgba(0, 163, 255, 0.45);
+            background: linear-gradient(135deg, rgba(0, 163, 255, 0.12), rgba(0, 163, 255, 0.03));
+            box-shadow: 0 0 24px -10px rgba(0, 163, 255, 0.7);
+            animation: cfSwap 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+          }
+          .cf-plan-icon {
+            flex-shrink: 0; width: 40px; height: 40px; border-radius: 50%;
+            display: grid; place-items: center; background: #00A3FF; color: #000000;
+          }
+          .cf-plan-icon svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+          .cf-plan-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; flex: 1; }
+          .cf-plan-label { font-family: monospace, sans-serif; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: #00A3FF; }
+          .cf-plan-name { color: #FFFFFF; font-family: 'Hind', sans-serif; font-size: 1.15rem; font-weight: 700; }
+          .cf-plan-meta { color: #A1A1AA; font-family: 'Hind', sans-serif; font-size: 0.85rem; }
+          .cf-plan-change {
+            flex-shrink: 0; padding: 7px 14px; border-radius: 20px; border: 1px solid #444;
+            color: #FFFFFF; text-decoration: none; font-family: 'Hind', sans-serif; font-size: 0.82rem;
+            transition: border-color 0.3s ease, color 0.3s ease;
+          }
+          .cf-plan-change:hover { border-color: #00A3FF; color: #00A3FF; }
 
           /* ---- NEP / US office switch ---- */
           .cf-office-note {
