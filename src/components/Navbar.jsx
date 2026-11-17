@@ -79,6 +79,7 @@ const Navbar = () => {
   const [hoverIndex, setHoverIndex] = useState(null);
   const [indicator, setIndicator] = useState({ left: 0, width: 0, visible: false });
   const [servicesOpen, setServicesOpen] = useState(false);
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false); // accordion in the phone menu
   const [payOpen, setPayOpen] = useState(false);
   const [payKey, setPayKey] = useState(0); // new key = fresh Pay Now form each time
   const openPay = () => { setMenuOpen(false); setPayOpen(true); };
@@ -325,7 +326,7 @@ const Navbar = () => {
           className="nv-burger"
           aria-label={menuOpen ? 'Close menu' : 'Open menu'}
           aria-expanded={menuOpen}
-          onClick={() => setMenuOpen((open) => !open)}
+          onClick={() => { setMenuOpen((open) => !open); setMobileServicesOpen(false); }}
         >
           <span /><span /><span />
         </button>
@@ -340,19 +341,86 @@ const Navbar = () => {
       <div className={`nv-panel${menuOpen ? ' is-open' : ''}`} aria-hidden={!menuOpen}>
         <div className="nv-panel-glow" aria-hidden="true" />
         <div className="nv-panel-links">
-          {navLinks.map((link, index) => (
-            <Link
-              key={link.to}
-              to={link.to}
-              onClick={handleNavClick}
-              className={`nv-panel-link${isActive(link.to) ? ' is-active' : ''}`}
-              style={{ '--i': index }}
-              tabIndex={menuOpen ? 0 : -1}
-            >
-              <span className="nv-panel-num">{String(index + 1).padStart(2, '0')}</span>
-              {link.label}
-            </Link>
-          ))}
+          {navLinks.map((link, index) => {
+            const num = <span className="nv-panel-num">{String(index + 1).padStart(2, '0')}</span>;
+
+            if (!link.dropdown) {
+              return (
+                <Link
+                  key={link.to}
+                  to={link.to}
+                  onClick={handleNavClick}
+                  className={`nv-panel-link${isActive(link.to) ? ' is-active' : ''}`}
+                  style={{ '--i': index }}
+                  tabIndex={menuOpen ? 0 : -1}
+                >
+                  {num}
+                  {link.label}
+                </Link>
+              );
+            }
+
+            // ---- Services: tap to expand the list of services ----
+            return (
+              <div key={link.to} className={`nv-panel-group${mobileServicesOpen ? ' is-open' : ''}`}>
+                <button
+                  type="button"
+                  className={`nv-panel-link nv-panel-toggle${isActive(link.to) ? ' is-active' : ''}`}
+                  style={{ '--i': index }}
+                  onClick={() => setMobileServicesOpen((o) => !o)}
+                  aria-expanded={mobileServicesOpen}
+                  aria-controls="nv-panel-services"
+                  tabIndex={menuOpen ? 0 : -1}
+                >
+                  {num}
+                  {link.label}
+                  <span className="nv-panel-chevron" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" /></svg>
+                  </span>
+                </button>
+
+                <div className="nv-panel-sub" id="nv-panel-services">
+                  <div className="nv-panel-sub-inner">
+                    <div className="nv-panel-sub-grid">
+                      {serviceMenu.map((s, i) => (
+                        <Link
+                          key={s.to}
+                          to={s.to}
+                          className="nv-panel-sub-item"
+                          style={{ '--j': i }}
+                          onClick={handleDropdownClick}
+                          tabIndex={menuOpen && mobileServicesOpen ? 0 : -1}
+                        >
+                          <span className="nv-drop-icon">{s.icon}</span>
+                          <span>{s.title}</span>
+                        </Link>
+                      ))}
+                    </div>
+                    <div className="nv-panel-sub-quick">
+                      {serviceQuickLinks.map((q) => (
+                        <Link
+                          key={q.to}
+                          to={q.to}
+                          onClick={handleDropdownClick}
+                          tabIndex={menuOpen && mobileServicesOpen ? 0 : -1}
+                        >
+                          {q.label}
+                        </Link>
+                      ))}
+                      <Link
+                        to="/services"
+                        className="nv-panel-sub-all"
+                        onClick={handleNavClick}
+                        tabIndex={menuOpen && mobileServicesOpen ? 0 : -1}
+                      >
+                        View all services ↗
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
         <div className="nv-panel-actions">
           <button type="button" className="nv-pay nv-pay--panel" onClick={openPay} tabIndex={menuOpen ? 0 : -1}>
@@ -679,7 +747,7 @@ const Navbar = () => {
 
         /* ================= MOBILE PANEL ================= */
         .nv-panel {
-          position: fixed; inset: 0; z-index: 99; overflow-y: auto;
+          position: fixed; inset: 0; z-index: 99; overflow-y: auto; overflow-x: hidden;
           display: flex; flex-direction: column; justify-content: space-between; gap: 2.5rem;
           padding: 110px 8% 3rem; box-sizing: border-box;
           background: #000000;
@@ -693,9 +761,8 @@ const Navbar = () => {
           transition: clip-path 0.7s cubic-bezier(0.65, 0, 0.35, 1), visibility 0s;
         }
         .nv-panel-glow {
-          position: absolute; bottom: -200px; right: -200px; width: 600px; height: 600px;
-          border-radius: 50%; pointer-events: none;
-          background: radial-gradient(circle, rgba(0, 163, 255, 0.2), transparent 65%);
+          position: absolute; bottom: 0; right: 0; width: 100%; height: 420px; pointer-events: none;
+          background: radial-gradient(circle at 100% 100%, rgba(0, 163, 255, 0.2), transparent 70%);
         }
         .nv-panel-links { position: relative; display: flex; flex-direction: column; gap: 0.4rem; }
         .nv-panel-link {
@@ -713,6 +780,68 @@ const Navbar = () => {
         .nv-panel-link:hover { color: #00A3FF; padding-left: 0.6rem; }
         .nv-panel-link.is-active { color: #00A3FF; }
         .nv-panel-num { font-family: 'Gowun Dodum', sans-serif; font-size: 0.8rem; color: #555555; }
+
+        /* ---- Services accordion (phone menu) ---- */
+        .nv-panel-toggle {
+          width: 100%; text-align: left; cursor: pointer;
+          background: none; border: none; border-bottom: 1px solid #222222; border-radius: 0;
+        }
+        .nv-panel-chevron {
+          margin-left: auto; align-self: center;
+          width: 34px; height: 34px; border-radius: 50%; border: 1px solid #333333;
+          display: grid; place-items: center; flex-shrink: 0;
+          transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), background 0.3s ease, border-color 0.3s ease;
+        }
+        .nv-panel-chevron svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+        .nv-panel-group.is-open .nv-panel-toggle { color: #00A3FF; }
+        .nv-panel-group.is-open .nv-panel-chevron {
+          transform: rotate(180deg); background: #00A3FF; border-color: #00A3FF; color: #000000;
+        }
+
+        /* smooth open/close height using grid rows 0fr → 1fr */
+        .nv-panel-sub {
+          display: grid; grid-template-rows: 0fr;
+          transition: grid-template-rows 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .nv-panel-group.is-open .nv-panel-sub { grid-template-rows: 1fr; }
+        .nv-panel-sub-inner { overflow: hidden; min-height: 0; }
+
+        .nv-panel-sub-grid {
+          display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+          padding: 14px 0 10px;
+        }
+        .nv-panel-sub-item {
+          display: flex; align-items: center; gap: 10px;
+          padding: 10px; border-radius: 12px; border: 1px solid #222222; background: #0d0d0d;
+          color: #FFFFFF; text-decoration: none;
+          font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 600; line-height: 1.25;
+          opacity: 0; transform: translateY(10px);
+          transition: opacity 0.35s ease, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.25s ease, background 0.25s ease;
+        }
+        .nv-panel-group.is-open .nv-panel-sub-item {
+          opacity: 1; transform: none;
+          transition-delay: calc(0.08s + var(--j) * 0.04s), calc(0.08s + var(--j) * 0.04s), 0s, 0s;
+        }
+        .nv-panel-sub-item:hover, .nv-panel-sub-item:active { border-color: #00A3FF; background: rgba(0, 163, 255, 0.08); }
+        .nv-panel-sub-item .nv-drop-icon { width: 34px; height: 34px; border-radius: 9px; background: #1a1a1a; }
+        .nv-panel-sub-item .nv-drop-icon svg { width: 17px; height: 17px; }
+        .nv-panel-sub-item:hover .nv-drop-icon { background: #00A3FF; color: #000000; }
+
+        .nv-panel-sub-quick {
+          display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+          padding: 4px 0 16px; border-bottom: 1px solid #222222;
+        }
+        .nv-panel-sub-quick a {
+          padding: 7px 12px; border-radius: 30px; border: 1px solid #333333;
+          color: #CCCCCC; text-decoration: none; font-family: 'Inter', sans-serif; font-size: 0.8rem;
+          transition: color 0.25s ease, border-color 0.25s ease;
+        }
+        .nv-panel-sub-quick a:hover { color: #FFFFFF; border-color: #00A3FF; }
+        .nv-panel-sub-quick .nv-panel-sub-all { background: #00A3FF; border-color: #00A3FF; color: #000000; font-weight: 600; }
+
+        @media (max-width: 360px) {
+          .nv-panel-sub-grid { grid-template-columns: 1fr; }
+        }
         .nv-panel-link.is-active .nv-panel-num { color: #00A3FF; }
 
         .nv-panel-actions {
