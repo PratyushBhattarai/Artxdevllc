@@ -37,30 +37,24 @@ const ProjectCard = ({ project, index, onOpen }) => {
     el.style.setProperty('--mx', `${x * 100}%`);
     el.style.setProperty('--my', `${y * 100}%`);
   };
+  // Video plays only while the mouse is over the card
+  const handleEnter = () => {
+    videoRef.current?.play().catch(() => {});
+  };
   const handleLeave = () => {
     const el = mediaRef.current;
-    if (!el) return;
-    el.style.setProperty('--rx', '0deg');
-    el.style.setProperty('--ry', '0deg');
+    if (el) {
+      el.style.setProperty('--rx', '0deg');
+      el.style.setProperty('--ry', '0deg');
+    }
+    const video = videoRef.current;
+    if (video) {
+      video.pause();
+      video.currentTime = 0.1; // back to the first frame
+    }
   };
   const open = () => onOpen(project);
   const hasPreview = Boolean(project.gifUrl || project.videoUrl);
-
-  // Videos loop on their own like a GIF, but only while the card is on screen
-  // (saves battery/data on phones). No hover needed.
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return undefined;
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) video.play().catch(() => {});
-        else video.pause();
-      },
-      { threshold: 0.2 }
-    );
-    io.observe(video);
-    return () => io.disconnect();
-  }, [project.videoUrl]);
 
   return (
     <div data-reveal="up" style={{ '--d': `${(index % 2) * 0.15}s` }}>
@@ -76,6 +70,7 @@ const ProjectCard = ({ project, index, onOpen }) => {
             if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); }
           }}
           onMouseMove={handleMove}
+          onMouseEnter={handleEnter}
           onMouseLeave={handleLeave}
         >
           {project.gifUrl ? (
@@ -84,8 +79,7 @@ const ProjectCard = ({ project, index, onOpen }) => {
             <video
               ref={videoRef}
               className="pf-video"
-              src={project.videoUrl}
-              autoPlay
+              src={`${project.videoUrl}#t=0.1`}
               muted
               loop
               playsInline

@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useRegion } from '../../../context/RegionContext';
+import { OFFICES } from '../../../data/offices';
 
 const faqs = [
   { q: "How long does it take to build a website?", a: "Most basic websites take 2-3 weeks, e-commerce stores take 3-4 weeks, and enterprise solutions take 4-8 weeks depending on complexity. We'll provide a detailed timeline during our initial consultation." },
@@ -27,6 +29,9 @@ const handleSpotlight = (e) => {
 };
 
 const ContactForm = () => {
+  // NEP / US pill in the navbar decides which office's details are shown
+  const { region } = useRegion();
+  const office = OFFICES[region] || OFFICES.Nepal;
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [activeFaq, setActiveFaq] = useState(null);
@@ -176,8 +181,13 @@ const ContactForm = () => {
             </div>
           </div>
 
-          {/* RIGHT: Contact Info & Hours */}
+          {/* RIGHT: Contact Info & Hours (switches with the NEP / US pill) */}
           <div className="cf-side">
+
+            <p className="cf-office-note" aria-live="polite">
+              <span className="cf-office-dot" />
+              Showing <strong key={region} className="cf-swap">{office.label}</strong> · switch with NEP / US at the top
+            </p>
 
             {/* Email Card */}
             <div data-reveal="right" style={{ '--d': '0.05s' }}>
@@ -185,8 +195,8 @@ const ContactForm = () => {
                 <div className="cf-icon">{Icon.mail}</div>
                 <h3 className="cf-card-title">Email Us</h3>
                 <p className="cf-card-text">Get in touch via email for detailed project discussions</p>
-                <a href="mailto:raybeen@artxdevllc.com" className="cf-card-link">
-                  raybeen@artxdevllc.com <span aria-hidden="true">→</span>
+                <a key={region} href={`mailto:${office.email}`} className="cf-card-link cf-swap">
+                  {office.email} <span aria-hidden="true">→</span>
                 </a>
               </div>
             </div>
@@ -195,10 +205,10 @@ const ContactForm = () => {
             <div data-reveal="right" style={{ '--d': '0.15s' }}>
               <div className="cf-card" onMouseMove={handleSpotlight}>
                 <div className="cf-icon">{Icon.phone}</div>
-                <h3 className="cf-card-title">Call Us</h3>
+                <h3 className="cf-card-title">Call Us <span key={region} className="cf-office-tag cf-swap">{region === 'USA' ? 'USA' : 'Nepal'}</span></h3>
                 <p className="cf-card-text">Speak directly with our team for immediate assistance</p>
-                <a href="tel:+13342184725" className="cf-card-link">
-                  (334) 218-4725 <span aria-hidden="true">→</span>
+                <a key={region} href={office.phoneHref} className="cf-card-link cf-swap">
+                  {office.phone} <span aria-hidden="true">→</span>
                 </a>
               </div>
             </div>
@@ -207,9 +217,12 @@ const ContactForm = () => {
             <div data-reveal="right" style={{ '--d': '0.25s' }}>
               <div className="cf-card" onMouseMove={handleSpotlight}>
                 <div className="cf-icon">{Icon.pin}</div>
-                <h3 className="cf-card-title">Visit Us</h3>
-                <p className="cf-card-text">Come say hello at our office</p>
-                <span className="cf-card-address">30 N Gould St Ste R, Sheridan Wyoming 82801</span>
+                <h3 className="cf-card-title">Visit Us <span key={region} className="cf-office-tag cf-swap">{region === 'USA' ? 'USA' : 'Nepal'}</span></h3>
+                <p className="cf-card-text">Come say hello at our {region === 'USA' ? 'USA' : 'Nepal'} office</p>
+                <span key={region} className="cf-card-address cf-swap">
+                  <strong className="cf-company">{office.company}</strong>
+                  {office.address}
+                </span>
               </div>
             </div>
 
@@ -439,6 +452,23 @@ const ContactForm = () => {
           .cf-card-link span { color: #00A3FF; transition: transform 0.35s ease; }
           .cf-card-link:hover span { transform: translateX(4px); }
           .cf-card-address { color: #FFFFFF; font-family: 'Hind', sans-serif; font-size: 0.95rem; line-height: 1.5; }
+
+          /* ---- NEP / US office switch ---- */
+          .cf-office-note {
+            display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 0 0 0.25rem;
+            color: #8A8A8A; font-family: 'Hind', sans-serif; font-size: 0.85rem;
+          }
+          .cf-office-note strong { color: #00A3FF; font-weight: 600; }
+          .cf-office-dot { width: 7px; height: 7px; border-radius: 50%; background: #00A3FF; box-shadow: 0 0 8px #00A3FF; }
+          .cf-office-tag {
+            display: inline-block; vertical-align: middle; margin-left: 8px; padding: 2px 9px; border-radius: 20px;
+            border: 1px solid rgba(0, 163, 255, 0.5); color: #00A3FF;
+            font-family: monospace, sans-serif; font-size: 0.68rem; font-weight: 400; letter-spacing: 1.5px; text-transform: uppercase;
+          }
+          .cf-company { display: block; margin-bottom: 2px; color: #00A3FF; font-weight: 600; font-size: 0.85rem; }
+          /* details fade/slide in whenever NEP / US changes */
+          .cf-swap { animation: cfSwap 0.45s cubic-bezier(0.22, 1, 0.36, 1); }
+          @keyframes cfSwap { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 
           .cf-hours-head { display: flex; align-items: center; gap: 0.8rem; }
           .cf-hours { display: flex; flex-direction: column; margin-top: 1.25rem; }

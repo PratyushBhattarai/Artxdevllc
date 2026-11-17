@@ -5,6 +5,7 @@ import { Link, useLocation } from 'react-router-dom';
 import logo from '../assets/logo.png';
 import arrowDown from '../assets/Polygon 1.png';
 import PayNowModal from './PayNowModal';
+import { useRegion } from '../context/RegionContext';
 
 const cardIcon = (
   <svg viewBox="0 0 24 24" aria-hidden="true" className="nv-pay-icon">
@@ -63,6 +64,12 @@ const serviceMenu = [
     desc: 'Chatbots & smart workflows',
     icon: icon(<><rect x="6" y="6" width="12" height="12" rx="2" /><path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3" /></>),
   },
+  {
+    to: '/services#hosting-and-maintenance',
+    title: 'Hosting & Maintenance',
+    desc: 'Secure hosting, updates & support',
+    icon: icon(<><rect x="3" y="4" width="18" height="7" rx="1.5" /><rect x="3" y="13" width="18" height="7" rx="1.5" /><path d="M7 7.5h.01M7 16.5h.01M11 7.5h6M11 16.5h6" /></>),
+  },
 ];
 
 const serviceQuickLinks = [
@@ -75,7 +82,7 @@ const Navbar = () => {
   const { pathname } = useLocation();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [region, setRegion] = useState('Nepal');
+  const { region, setRegion } = useRegion(); // shared with the Contact page
   const [hoverIndex, setHoverIndex] = useState(null);
   const [indicator, setIndicator] = useState({ left: 0, width: 0, visible: false });
   const [servicesOpen, setServicesOpen] = useState(false);
@@ -104,9 +111,9 @@ const Navbar = () => {
     setMenuOpen(false);
   };
 
+  // Switch NEP / US. No scroll jump, so you can see the Contact page details change in place.
   const chooseRegion = (value) => {
     setRegion(value);
-    scrollToTop();
   };
 
   // Navbar shrinks + turns glassy after scrolling a little
@@ -614,6 +621,8 @@ const Navbar = () => {
           transition-delay: 0s, calc(0.05s + var(--j) * 0.04s), calc(0.05s + var(--j) * 0.04s);
         }
         .nv-drop-item:hover { background: #F2F8FF; }
+        /* odd number of services: the last one spans the full width */
+        .nv-drop-item:last-child:nth-child(odd) { grid-column: 1 / -1; }
 
         .nv-drop-icon {
           flex-shrink: 0; width: 42px; height: 42px; border-radius: 11px;

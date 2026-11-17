@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
+import { RegionProvider } from './context/RegionContext';
 
 // Pages
 import Home from './pages/Home/Home';
@@ -20,6 +21,7 @@ import SMS from './pages/SMS/SMS';
 
 function App() {
   return (
+    <RegionProvider>
     <Router>
       <ScrollToTop />
       <Navbar />
@@ -39,6 +41,7 @@ function App() {
       </Routes>
       <Footer />
     </Router>
+    </RegionProvider>
   );
 }
 

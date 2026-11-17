@@ -19,7 +19,14 @@ const otherProjects = [
   { name: 'Sam Landscaping SVCS', url: 'https://landscapinginsandiego.com/', logo: logoSamLandscaping },
   { name: 'Habiff Builders Group', url: 'https://hbgtexas.com/', logo: logoHabiff },
   { name: 'Carolina Stump Services', url: 'https://carolinastumpservices.com/', logo: logoCarolinaStump },
+  // No logo file yet – these show a name tile. To use a real logo: put the image in
+  // src/assets, import it above, and add  logo: yourImport  to the line.
+  { name: 'DE Construction', url: 'https://deconstructionph.com/', mark: 'DE' },
+  { name: 'Total Landscape Solutions', url: 'https://www.totallandscapesolution.com/' },
 ];
+
+// "Total Landscape Solutions" -> "TLS" (used when there's no logo image)
+const initials = (name) => name.split(/\s+/).map((w) => w[0]).join('').slice(0, 3).toUpperCase();
 
 // "https://www.example.com/" -> "example.com"
 const prettyDomain = (url) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
@@ -139,8 +146,15 @@ const PortfolioPage = () => {
                   style={{ '--d': `${i * 0.1}s` }}
                   aria-label={`Visit ${p.name} website (opens in a new tab)`}
                 >
-                  <span className="pp-other-logo">
-                    <img src={p.logo} alt={`${p.name} logo`} loading="lazy" decoding="async" />
+                  <span className={`pp-other-logo${p.logo ? '' : ' pp-other-logo--text'}`}>
+                    {p.logo ? (
+                      <img src={p.logo} alt={`${p.name} logo`} loading="lazy" decoding="async" />
+                    ) : (
+                      <span className="pp-other-mark" aria-hidden="true">
+                        <span className="pp-other-initials">{p.mark || initials(p.name)}</span>
+                        <span className="pp-other-wordmark">{p.name}</span>
+                      </span>
+                    )}
                   </span>
                   <span className="pp-other-info">
                     <span className="pp-other-name">{p.name}</span>
@@ -241,6 +255,28 @@ const PortfolioPage = () => {
           transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
         }
         .pp-other-card:hover .pp-other-logo img { transform: scale(1.07); }
+
+        /* Name tile – used until a real logo image is added */
+        .pp-other-logo--text {
+          background: linear-gradient(135deg, #0B0B0B 0%, #10202E 100%);
+          border: 1px solid #1F1F1F;
+        }
+        .pp-other-mark {
+          display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center;
+          transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .pp-other-card:hover .pp-other-mark { transform: scale(1.07); }
+        .pp-other-initials {
+          display: grid; place-items: center;
+          min-width: 54px; height: 54px; padding: 0 10px; box-sizing: border-box;
+          border-radius: 14px; background: #00A3FF; color: #000000;
+          font-family: 'Inter', sans-serif; font-weight: 800; font-size: 1.15rem; letter-spacing: 1px;
+          box-shadow: 0 0 24px rgba(0, 163, 255, 0.45);
+        }
+        .pp-other-wordmark {
+          color: #FFFFFF; font-family: 'Inter', sans-serif; font-weight: 700;
+          font-size: 0.82rem; letter-spacing: 1.5px; text-transform: uppercase; line-height: 1.3;
+        }
         .pp-other-info { display: flex; flex-direction: column; gap: 4px; padding: 0 4px; padding-right: 36px; min-width: 0; }
         .pp-other-name { font-family: 'Hind', sans-serif; font-weight: 600; font-size: 1.02rem; line-height: 1.3; }
         .pp-other-domain {

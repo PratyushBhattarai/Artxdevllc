@@ -3,45 +3,66 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../assets/logo2.png';
+import { OFFICES } from '../data/offices';
 
+// ---- Edit footer content here ----
 const pageLinks = [
   { to: '/about', label: 'About Us' },
-  { to: '/team', label: 'Team' },
-  { to: '/contact', label: 'Contact Us' },
+  { to: '/services', label: 'Services' },
   { to: '/portfolio', label: 'Portfolio' },
+  { to: '/team', label: 'Our Team' },
+  { to: '/contact', label: 'Contact Us' },
+  { to: '/book-meeting', label: 'Book a Meeting' },
 ];
 
+// Each one opens that service on the Services page
 const services = [
-  'Web Development',
-  'Web App',
-  'SEO, AEO & GEO',
-  'Social Media Management',
-  'Hosting and Maintenance',
+  { to: '/services#website-design', label: 'Website Design' },
+  { to: '/services#website-development', label: 'Website Development' },
+  { to: '/services#web-apps', label: 'Web Apps' },
+  { to: '/services#mobile-apps', label: 'Mobile Apps' },
+  { to: '/services#marketing-and-seo', label: 'Marketing & SEO' },
+  { to: '/services#ai-automation', label: 'AI Automation' },
+  { to: '/services#hosting-and-maintenance', label: 'Hosting & Maintenance' },
+  { to: '/services#packages', label: 'Pricing & Packages' },
 ];
+
+// Same details as the Contact page
+// Office details come from src/data/offices.js (same as the Contact page)
+const contact = {
+  email: OFFICES.USA.email,
+  offices: [
+    { label: 'USA', ...OFFICES.USA },
+    { label: 'Nepal', ...OFFICES.Nepal },
+  ],
+};
 
 const socials = [
   {
     label: 'LinkedIn',
-    href: '/',
+    href: '', // TODO: paste the company LinkedIn URL
     icon: (
       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
     ),
   },
   {
     label: 'Instagram',
-    href: '/',
+    href: '', // TODO: paste the Instagram URL
     icon: (
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
     ),
   },
   {
     label: 'Facebook',
-    href: '/',
+    href: '', // TODO: paste the Facebook page URL
     icon: (
       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
     ),
   },
 ];
+
+// Only show social icons that have a real link
+const activeSocials = socials.filter((s) => s.href);
 
 const Footer = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -76,6 +97,9 @@ const Footer = () => {
   };
 
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+  // Page links go to the top of the page (also when you're already on that page).
+  // Service links (with #) are scrolled into place by the Services page itself.
+  const onLinkClick = (to) => () => { if (!to.includes('#')) window.scrollTo({ top: 0 }); };
   const year = new Date().getFullYear();
 
   return (
@@ -97,38 +121,53 @@ const Footer = () => {
             <Link to="/" className="ft-logo-link" aria-label="ARTX Dev home">
               <img src={logo} alt="ARTX Logo" className="ft-logo" />
             </Link>
-            <div className="ft-socials">
-              {socials.map((s) => (
-                <a key={s.label} href={s.href} className="ft-social" aria-label={s.label}>
-                  {s.icon}
-                </a>
-              ))}
-            </div>
+            <p className="ft-tagline">
+              Websites, apps & AI automation for growing businesses – built in Nepal, serving clients across the USA.
+            </p>
+            <Link to="/book-meeting" className="ft-cta" onClick={onLinkClick('/book-meeting')}>
+              Book a free call <span aria-hidden="true">→</span>
+            </Link>
+            {activeSocials.length > 0 && (
+              <div className="ft-socials">
+                {activeSocials.map((s) => (
+                  <a key={s.label} href={s.href} className="ft-social" aria-label={s.label} target="_blank" rel="noopener noreferrer">
+                    {s.icon}
+                  </a>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Column 2: Links */}
           <div className="ft-col ft-list" style={{ '--i': 1 }}>
-            <Link to="/" className="ft-heading ft-heading--link">
-              <span className="ft-heading-dot" />Home
-            </Link>
+            <span className="ft-heading"><span className="ft-heading-dot" />Company</span>
+            <Link to="/" className="ft-link" onClick={onLinkClick('/')}>Home</Link>
             {pageLinks.map((link) => (
-              <Link key={link.to} to={link.to} className="ft-link">{link.label}</Link>
+              <Link key={link.to} to={link.to} className="ft-link" onClick={onLinkClick(link.to)}>{link.label}</Link>
             ))}
           </div>
 
           {/* Column 3: Services */}
           <div className="ft-col ft-list" style={{ '--i': 2 }}>
             <span className="ft-heading"><span className="ft-heading-dot" />Services</span>
-            {services.map((service) => (
-              <span key={service} className="ft-link ft-link--static">{service}</span>
+            {services.map((s) => (
+              <Link key={s.to} to={s.to} className="ft-link" onClick={onLinkClick(s.to)}>{s.label}</Link>
             ))}
           </div>
 
           {/* Column 4: Contact */}
           <div className="ft-col ft-list" style={{ '--i': 3 }}>
             <span className="ft-heading"><span className="ft-heading-dot" />Contact</span>
-            <a href="tel:+11112223333" className="ft-link">(111) 222-3333</a>
-            <span className="ft-link ft-link--static ft-address">30 N Gould St Ste R, Sheridan Wyoming 82801</span>
+            <a href={'mailto:' + contact.email} className="ft-link">{contact.email}</a>
+            {contact.offices.map((o) => (
+              <div key={o.label} className="ft-office-block">
+                <span className="ft-link ft-link--static ft-address">
+                  <span className="ft-office">{o.label}</span>
+                  {o.address}
+                </span>
+                <a href={o.phoneHref} className="ft-link ft-phone">{o.phone}</a>
+              </div>
+            ))}
           </div>
 
         </div>
@@ -141,13 +180,13 @@ const Footer = () => {
         {/* Very Bottom Bar */}
         <div className="ft-bottom">
           <div className="ft-copy">
-            <span>©{year} Artx Dev LLC PVT. Ltd.</span>
+            <span>© {year} Artx Dev LLC & Artx Dev Pvt. Ltd.</span>
             <span>All rights reserved</span>
           </div>
           <div className="ft-legal">
-            <Link to="/privacy">Privacy Policy</Link>
-            <Link to="/terms">Terms & Conditions</Link>
-            <Link to="/sms">SMS Terms & Conditions</Link>
+            <Link to="/privacy" onClick={onLinkClick('/privacy')}>Privacy Policy</Link>
+            <Link to="/terms" onClick={onLinkClick('/terms')}>Terms & Conditions</Link>
+            <Link to="/sms" onClick={onLinkClick('/sms')}>SMS Terms & Conditions</Link>
             <button type="button" className="ft-top-btn" onClick={scrollToTop} aria-label="Back to top">
               <span>↑</span>
             </button>
@@ -198,7 +237,7 @@ const Footer = () => {
 
         /* ---------- Columns ---------- */
         .ft-top {
-          display: grid; grid-template-columns: 2fr 1.5fr 1.5fr 1.5fr;
+          display: grid; grid-template-columns: 1.9fr 1.1fr 1.4fr 1.6fr;
           gap: 2rem; width: 100%; margin-bottom: 8rem;
         }
         .ft-col {
@@ -229,7 +268,7 @@ const Footer = () => {
           box-shadow: 0 8px 24px -6px rgba(0,163,255,0.8);
         }
 
-        .ft-list { display: flex; flex-direction: column; gap: 1rem; }
+        .ft-list { display: flex; flex-direction: column; gap: 0.85rem; }
         .ft-heading {
           display: inline-flex; align-items: center; gap: 0.55rem; width: fit-content;
           color: #FFFFFF; font-size: 1.05rem; font-weight: 600; text-decoration: none;
@@ -243,11 +282,11 @@ const Footer = () => {
         .ft-link {
           position: relative; width: fit-content;
           color: #FFFFFF; text-decoration: none; font-size: 0.95rem;
-          transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), color 0.3s ease;
+          transition: padding-left 0.4s cubic-bezier(0.22, 1, 0.36, 1), color 0.3s ease;
         }
         /* Blue arrow appears on the left */
         .ft-link::before {
-          content: '→'; position: absolute; left: -1.2rem; top: 0;
+          content: '→'; position: absolute; left: 0; top: 0;
           color: #00A3FF; opacity: 0; transform: translateX(-6px);
           transition: opacity 0.3s ease, transform 0.35s ease;
         }
@@ -257,12 +296,31 @@ const Footer = () => {
           background: #00A3FF; transform: scaleX(0); transform-origin: right;
           transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
         }
-        .ft-link:hover { transform: translateX(1.2rem); }
+        .ft-link:hover { padding-left: 1.3rem; }
         .ft-link:hover::before { opacity: 1; transform: none; }
         .ft-link:hover::after { transform: scaleX(1); transform-origin: left; }
-        .ft-link--static { cursor: default; }
-        .ft-link--static:hover { color: #CFCFCF; }
-        .ft-address { line-height: 1.5; max-width: 240px; }
+        .ft-link--static { cursor: default; color: #BDBDBD; }
+        .ft-link--static:hover { padding-left: 0; }
+        .ft-link--static::before, .ft-link--static::after { display: none; }
+        .ft-address { line-height: 1.5; max-width: 260px; font-size: 0.88rem; }
+        .ft-office {
+          display: block; margin-bottom: 2px;
+          font-family: monospace, sans-serif; font-size: 0.72rem; letter-spacing: 2px;
+          text-transform: uppercase; color: #00A3FF;
+        }
+
+        .ft-office-block { display: flex; flex-direction: column; gap: 0.35rem; }
+        .ft-phone { font-size: 0.88rem; }
+        .ft-tagline { margin: 0 0 1.25rem; max-width: 300px; color: #A1A1AA; font-size: 0.9rem; line-height: 1.6; }
+        .ft-cta {
+          display: inline-flex; align-items: center; gap: 8px; margin-bottom: 1.5rem;
+          padding: 10px 20px; border-radius: 30px;
+          background: #FFFFFF; color: #000000; text-decoration: none; font-weight: 700; font-size: 0.9rem;
+          transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .ft-cta:hover { background: #00A3FF; transform: translateY(-2px); box-shadow: 0 10px 24px -8px rgba(0,163,255,0.8); }
+        .ft-cta span { transition: transform 0.3s ease; }
+        .ft-cta:hover span { transform: translateX(4px); }
 
         /* ---------- Huge text ---------- */
         .ft-big-wrap {

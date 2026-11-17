@@ -41,11 +41,11 @@ const Services = () => {
     const timer = setTimeout(() => {
       const el = document.getElementById(id);
       if (!el) return;
-      el.scrollIntoView({ behavior: 'smooth', block: el.classList.contains('svc-core-row') ? 'center' : 'start' });
-      if (el.classList.contains('svc-core-row')) {
-        el.classList.add('is-visible', 'svc-flash');
-        setTimeout(() => el.classList.remove('svc-flash'), 1800);
-      }
+      const isService = el.classList.contains('svc-core-row');
+      el.scrollIntoView({ behavior: 'smooth', block: isService ? 'center' : 'start' });
+      // Make sure the row has faded in. (The service itself is opened and highlighted
+      // by CoreServices, so no extra flash effect is needed here.)
+      if (isService) el.closest('.svc-reveal')?.classList.add('is-visible');
     }, 80);
     return () => clearTimeout(timer);
   }, [location.key, location.hash]);

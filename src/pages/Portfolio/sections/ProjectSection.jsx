@@ -7,6 +7,7 @@ import { createPortal } from 'react-dom';
 const ProjectSection = ({ title, description, gifUrl, videoUrl, projectLink, category, index = 0 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const mediaRef = useRef(null);
+  const videoRef = useRef(null);
   const number = String(index + 1).padStart(2, '0');
 
   // 3D tilt + light that follows the mouse
@@ -21,11 +22,21 @@ const ProjectSection = ({ title, description, gifUrl, videoUrl, projectLink, cat
     el.style.setProperty('--mx', `${x * 100}%`);
     el.style.setProperty('--my', `${y * 100}%`);
   };
+  // Video plays only while the mouse is over the card
+  const handleEnter = () => {
+    videoRef.current?.play().catch(() => {});
+  };
   const handleLeave = () => {
     const el = mediaRef.current;
-    if (!el) return;
-    el.style.setProperty('--rx', '0deg');
-    el.style.setProperty('--ry', '0deg');
+    if (el) {
+      el.style.setProperty('--rx', '0deg');
+      el.style.setProperty('--ry', '0deg');
+    }
+    const video = videoRef.current;
+    if (video) {
+      video.pause();
+      video.currentTime = 0.1; // back to the first frame
+    }
   };
 
   // Escape closes the popup, page behind doesn't scroll
@@ -56,12 +67,13 @@ const ProjectSection = ({ title, description, gifUrl, videoUrl, projectLink, cat
           onClick={open}
           onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } }}
           onMouseMove={handleMove}
+          onMouseEnter={handleEnter}
           onMouseLeave={handleLeave}
         >
           {gifUrl ? (
             <img className="ps-video" src={gifUrl} alt={`${title} preview`} loading="lazy" decoding="async" />
           ) : videoUrl ? (
-            <video className="ps-video" src={videoUrl} autoPlay loop muted playsInline preload="metadata" disablePictureInPicture />
+            <video ref={videoRef} className="ps-video" src={`${videoUrl}#t=0.1`} loop muted playsInline preload="metadata" disablePictureInPicture />
           ) : (
             <div className="ps-placeholder" aria-hidden="true" />
           )}
