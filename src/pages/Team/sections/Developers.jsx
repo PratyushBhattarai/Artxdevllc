@@ -1,16 +1,14 @@
 // src/pages/Team/sections/Developers.jsx
 
-// 1. IMPORT DEVELOPER PHOTOS HERE
-// import leadDevImg from '../../../assets/lead-dev.png';
-// import dev1Img from '../../../assets/dev1.png';
-// import dev2Img from '../../../assets/dev2.png';
-// import dev3Img from '../../../assets/dev3.png';
+import leadDevImg from '../../../assets/team/prashant.jpg';
+import ankitImg from '../../../assets/team/ankit.jpg';
+import pratyushImg from '../../../assets/team/pratyush.jpg';
 
 // Photo or silhouette placeholder
-const Avatar = ({ image, name, size = 120 }) => (
+const Avatar = ({ image, name, size = 120, pos }) => (
   <div className="tp-avatar" style={{ width: size, height: size }}>
     <div className="tp-avatar-inner">
-      {image ? <img src={image} alt={name} /> : <div className="tp-silhouette" aria-hidden="true" />}
+      {image ? <img src={image} alt={name} style={{ objectPosition: pos || 'center' }} /> : <div className="tp-silhouette" aria-hidden="true" />}
     </div>
   </div>
 );
@@ -23,12 +21,10 @@ const spotlight = (e) => {
 };
 
 const Developers = () => {
-  // 2. REPLACE null WITH YOUR IMPORTS
-  const leadDev = { name: '[Lead Developer Name]', title: 'Lead Developer', desc: 'Architects the core infrastructure.', image: null /* change to: leadDevImg */ };
+  const leadDev = { name: 'Prashant', title: 'Lead Developer', desc: 'Leads the engineering team and architects the core infrastructure.', image: leadDevImg, pos: 'center 15%' };
   const otherDevs = [
-    { name: '[Dev Name]', title: 'Frontend Developer', image: null /* change to: dev1Img */ },
-    { name: '[Dev Name]', title: 'Backend Developer', image: null /* change to: dev2Img */ },
-    { name: '[Dev Name]', title: 'Full Stack Developer', image: null /* change to: dev3Img */ },
+    { name: 'Ankit Jung Thapa', title: 'Developer', image: ankitImg, pos: 'center 20%' },
+    { name: 'Pratyush Bhattarai', title: 'Developer', image: pratyushImg, pos: 'center 30%' },
   ];
   const total = otherDevs.length + 1;
 
@@ -50,7 +46,7 @@ const Developers = () => {
         {/* Lead Developer */}
         <div data-reveal="up" style={{ marginBottom: '2rem' }}>
           <article className="tp-card tp-card--row tp-hover" onMouseMove={spotlight}>
-            <Avatar image={leadDev.image} name={leadDev.name} size={150} />
+            <Avatar image={leadDev.image} name={leadDev.name} size={150} pos={leadDev.pos} />
             <div>
               <span className="tp-pill">Team Lead</span>
               <h3 className="tp-name" style={{ fontSize: '1.5rem' }}>{leadDev.name}</h3>
@@ -61,11 +57,11 @@ const Developers = () => {
         </div>
 
         {/* Other Developers */}
-        <div className="tp-grid-3">
+        <div className="tp-grid-2">
           {otherDevs.map((dev, index) => (
             <div key={index} data-reveal="zoom" style={{ '--d': `${index * 0.12}s` }}>
               <article className="tp-card tp-hover" onMouseMove={spotlight}>
-                <Avatar image={dev.image} name={dev.name} />
+                <Avatar image={dev.image} name={dev.name} pos={dev.pos} />
                 <h3 className="tp-name">{dev.name}</h3>
                 <p className="tp-role">{dev.title}</p>
               </article>

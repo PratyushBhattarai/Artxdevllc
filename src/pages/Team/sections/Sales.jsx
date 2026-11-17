@@ -1,15 +1,14 @@
 // src/pages/Team/sections/Sales.jsx
 
-// 1. IMPORT SALES PHOTOS HERE
-// import sales1 from '../../../assets/sales1.png';
-// import sales2 from '../../../assets/sales2.png';
-// import sales3 from '../../../assets/sales3.png';
+import raybeenImg from '../../../assets/team/raybeen.jpg';
+import ankitImg from '../../../assets/team/ankit.jpg';
+import pratyushImg from '../../../assets/team/pratyush.jpg';
 
 // Photo or silhouette placeholder
-const Avatar = ({ image, name, size = 120 }) => (
+const Avatar = ({ image, name, size = 120, pos }) => (
   <div className="tp-avatar" style={{ width: size, height: size }}>
     <div className="tp-avatar-inner">
-      {image ? <img src={image} alt={name} /> : <div className="tp-silhouette" aria-hidden="true" />}
+      {image ? <img src={image} alt={name} style={{ objectPosition: pos || 'center' }} /> : <div className="tp-silhouette" aria-hidden="true" />}
     </div>
   </div>
 );
@@ -22,11 +21,10 @@ const spotlight = (e) => {
 };
 
 const Sales = () => {
-  // 2. REPLACE null WITH YOUR IMPORTS
   const salesTeam = [
-    { name: '[Sales Name]', title: 'Head of Sales', image: null /* change to: sales1 */ },
-    { name: '[Sales Name]', title: 'Account Executive', image: null /* change to: sales2 */ },
-    { name: '[Sales Name]', title: 'Sales Representative', image: null /* change to: sales3 */ },
+    { name: 'Raybeen', title: 'Project Manager', image: raybeenImg, pos: 'center 45%' },
+    { name: 'Ankit Jung Thapa', title: 'Sales Representative', image: ankitImg, pos: 'center 20%' },
+    { name: 'Pratyush Bhattarai', title: 'Sales Representative', image: pratyushImg, pos: 'center 30%' },
   ];
 
   return (
@@ -48,7 +46,7 @@ const Sales = () => {
           {salesTeam.map((member, index) => (
             <div key={index} data-reveal="zoom" style={{ '--d': `${index * 0.12}s` }}>
               <article className="tp-card tp-hover" onMouseMove={spotlight}>
-                <Avatar image={member.image} name={member.name} />
+                <Avatar image={member.image} name={member.name} pos={member.pos} />
                 <h3 className="tp-name">{member.name}</h3>
                 <p className="tp-role">{member.title}</p>
               </article>

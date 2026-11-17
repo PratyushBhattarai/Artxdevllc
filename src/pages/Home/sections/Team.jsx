@@ -1,18 +1,18 @@
 // src/pages/Home/sections/Team.jsx
 
 import { Link } from 'react-router-dom';
+import ankitImg from '../../../assets/team/ankit.jpg';
+import prashantImg from '../../../assets/team/prashant.jpg';
+import raybeenImg from '../../../assets/team/raybeen.jpg';
+import pratyushImg from '../../../assets/team/pratyush.jpg';
 
-// Data structure matching your Figma layout
 // Add a photo with:  image: someImportedImage
+// pos = object-position, keeps the face inside the square crop
 const teamMembers = [
-  { num: '01', name: '[Full name]', title: 'Title', desc: 'Detail about what he do', image: null },
-  { num: '02', name: '[Full name]', title: 'Title', desc: 'Detail about what he do', image: null },
-  { num: '03', name: '[Full name]', title: 'Title', desc: 'Detail about what he do', image: null },
-  { num: '04', name: '[Full name]', title: 'Title', desc: 'Detail about what he do', image: null },
-  { num: '05', name: '[Full name]', title: 'Title', desc: 'Detail about what he do', image: null },
-  { num: '06', name: '[Full name]', title: 'Title', desc: 'Detail about what he do', image: null },
-  { num: '07', name: '[Full name]', title: 'Title', desc: 'Detail about what he do', image: null },
-  { num: '08', name: '[Full name]', title: 'Title', desc: 'Detail about what he do', image: null },
+  { num: '01', name: 'Raybeen', title: 'CEO & Project Manager', desc: 'Sets the vision and keeps every project on track.', image: raybeenImg, pos: 'center 45%' },
+  { num: '02', name: 'Prashant', title: 'Lead Developer', desc: 'Leads the engineering team and architects the core infrastructure.', image: prashantImg, pos: 'center 15%' },
+  { num: '03', name: 'Ankit Jung Thapa', title: 'Developer', desc: 'Builds and ships features across our web projects.', image: ankitImg, pos: 'center 20%' },
+  { num: '04', name: 'Pratyush Bhattarai', title: 'Developer', desc: 'Builds and ships features across our web projects.', image: pratyushImg, pos: 'center 30%' },
 ];
 
 const TeamCard = ({ member, index }) => (
@@ -25,17 +25,16 @@ const TeamCard = ({ member, index }) => (
         <span className="tm-status" aria-hidden="true" />
       </div>
 
-      {/* Photo / silhouette with blue scan line on hover */}
+      {/* Photo / silhouette */}
       <div className="tm-photo">
         {member.image ? (
-          <img src={member.image} alt={member.name} className="tm-img" />
+          <img src={member.image} alt={member.name} className="tm-img" style={{ objectPosition: member.pos || 'center' }} />
         ) : (
           <div className="tm-silhouette" aria-hidden="true">
             <span className="tm-head" />
             <span className="tm-body" />
           </div>
         )}
-        <span className="tm-scan" aria-hidden="true" />
       </div>
 
       {/* Member Info */}
@@ -168,13 +167,6 @@ const Team = () => {
             filter: drop-shadow(0 0 14px rgba(0,163,255,0.4));
           }
 
-          .tm-scan {
-            position: absolute; left: 0; right: 0; top: 0; height: 40%; pointer-events: none;
-            background: linear-gradient(to bottom, transparent, rgba(0,163,255,0.18) 80%, rgba(0,163,255,0.9) 100%);
-            transform: translateY(-110%); opacity: 0;
-          }
-          .tm-card:hover .tm-scan { opacity: 1; animation: tmScan 1.6s cubic-bezier(0.45, 0, 0.55, 1) infinite; }
-
           /* Info */
           .tm-info { position: relative; margin-bottom: 1.5rem; border-bottom: 1px solid #333333; padding-bottom: 1rem; }
           .tm-info::after {
@@ -203,7 +195,6 @@ const Team = () => {
           }
           .tm-card:hover .tm-arrow { color: #FFFFFF; transform: rotate(45deg); }
 
-          @keyframes tmScan   { 0% { transform: translateY(-100%); } 100% { transform: translateY(260%); } }
           @keyframes tmBreath { 0%,100% { opacity: 0.6; } 50% { opacity: 1; } }
           @keyframes tmPulse {
             0%   { box-shadow: 0 0 0 0 rgba(0,163,255,0.7); }
