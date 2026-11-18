@@ -63,28 +63,29 @@ const HowWeWork = () => {
         </div>
 
         <style>{`
-          .hww-outer { background: #FFFFFF; padding: 0 1.5rem; }
+          .hww-outer { background: #000000; }
           .hww-section {
-            position: relative; background: #FFFFFF; padding: 3rem 5%;
+            position: relative; background: #000000; padding: 5rem 5%;
             display: flex; flex-direction: column; overflow: hidden;
-            border-top: 1px solid #C0C0C0; border-bottom: 1px solid #C0C0C0;
           }
-          /* Subtle dotted background */
+          /* Fine grid in the corner */
           .hww-section::before {
             content: ''; position: absolute; inset: 0; pointer-events: none;
-            background-image: radial-gradient(rgba(0,0,0,0.12) 1px, transparent 1px);
-            background-size: 22px 22px;
-            -webkit-mask-image: radial-gradient(ellipse 50% 70% at 100% 0%, #000, transparent 70%);
-                    mask-image: radial-gradient(ellipse 50% 70% at 100% 0%, #000, transparent 70%);
+            background-image:
+              linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 56px 56px;
+            -webkit-mask-image: radial-gradient(ellipse 55% 70% at 100% 0%, #000, transparent 70%);
+                    mask-image: radial-gradient(ellipse 55% 70% at 100% 0%, #000, transparent 70%);
           }
 
-          .hww-header { position: relative; margin-bottom: 2rem; }
-          .hww-eyebrow { color: #3D3D3D; }
+          .hww-header { position: relative; margin-bottom: 2.5rem; }
+          .hww-eyebrow { color: #888888; }
           .hww-title {
-            color: #000000; font-family: 'Hanuman', serif;
+            color: #FFFFFF; font-family: 'Hanuman', serif;
             font-size: 3rem; font-weight: 700; margin: 0;
-            opacity: 0; transform: translateY(-20px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
+            opacity: 0; transform: translateY(16px);
+            transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
           }
           .is-visible .hww-title { opacity: 1; transform: none; }
 
@@ -95,115 +96,88 @@ const HowWeWork = () => {
           }
           .hww-track {
             position: absolute; left: 0; right: 0; top: 50%; height: 1px;
-            background: #DADADA; transform: translateY(-50%);
+            background: rgba(255,255,255,0.12); transform: translateY(-50%);
           }
           .hww-track-fill {
-            position: absolute; inset: 0;
-            background: linear-gradient(90deg, #000000, #00A3FF);
+            position: absolute; inset: 0; background: rgba(255,255,255,0.6);
             transform: scaleX(0); transform-origin: left;
-            transition: transform 1.6s cubic-bezier(0.22, 1, 0.36, 1) 0.3s;
+            transition: transform 1.8s cubic-bezier(0.22, 1, 0.36, 1) 0.3s;
           }
           .is-visible .hww-track-fill { transform: scaleX(1); }
           .hww-traveler {
-            position: absolute; top: 50%; left: 0; width: 8px; height: 8px; margin-top: -4px;
-            border-radius: 50%; background: #00A3FF;
-            box-shadow: 0 0 12px 3px rgba(0,163,255,0.7); opacity: 0;
+            position: absolute; top: 50%; left: 0; width: 6px; height: 6px; margin-top: -3px;
+            border-radius: 50%; background: #FFFFFF; opacity: 0;
           }
-          .is-visible .hww-traveler { animation: hwwTravel 3.5s ease-in-out 2s infinite; }
+          .is-visible .hww-traveler { animation: hwwTravel 5s ease-in-out 2.2s infinite; }
 
           .hww-node-cell { position: relative; padding-left: 1.5rem; }
           .hww-node {
             position: relative; z-index: 1; display: block;
-            width: 14px; height: 14px; border-radius: 50%; box-sizing: border-box;
-            background: #FFFFFF; border: 1.5px solid #BBBBBB; transform: scale(0.6);
-            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) calc(var(--i) * 0.35s + 0.4s);
+            width: 10px; height: 10px; border-radius: 50%; box-sizing: border-box;
+            background: #000000; border: 1px solid rgba(255,255,255,0.3);
+            transition: background-color 0.6s ease calc(var(--i) * 0.3s + 0.5s), border-color 0.6s ease calc(var(--i) * 0.3s + 0.5s);
           }
-          .is-visible .hww-node {
-            transform: scale(1); background: #00A3FF; border-color: #00A3FF;
-            box-shadow: 0 0 0 5px rgba(0,163,255,0.15), 0 0 14px rgba(0,163,255,0.6);
-          }
+          .is-visible .hww-node { background: #00A3FF; border-color: #00A3FF; }
 
           /* ---------- Cards ---------- */
           .hww-grid {
             display: grid; grid-template-columns: repeat(4, 1fr);
-            gap: 1.5rem; width: 100%; perspective: 1000px;
+            gap: 1.5rem; width: 100%;
           }
           .hww-card-wrap {
-            opacity: 0; transform: scale(0.8) rotateX(20deg) translateX(-30px);
+            opacity: 0; transform: translateY(20px);
             transition:
-              opacity 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275) calc(var(--i) * 0.15s),
-              transform 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275) calc(var(--i) * 0.15s);
+              opacity 0.8s ease calc(var(--i) * 0.12s),
+              transform 0.8s cubic-bezier(0.22, 1, 0.36, 1) calc(var(--i) * 0.12s);
           }
           .is-visible .hww-card-wrap { opacity: 1; transform: none; }
 
           .hww-card {
-            position: relative; isolation: isolate; overflow: hidden;
+            position: relative; overflow: hidden;
             height: 100%; box-sizing: border-box;
             display: flex; flex-direction: column;
             padding: 2rem 1.5rem; border-radius: 12px;
-            background: transparent; border: 1px solid #555555; cursor: pointer;
-            transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.5s ease, border-color 0.4s ease;
+            background: #0A0A0A; border: 1px solid rgba(255,255,255,0.1);
+            transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.4s ease;
           }
-          /* Black fill sweeps up on hover */
-          .hww-card::before {
-            content: ''; position: absolute; inset: 0; z-index: -1; background: #000000;
-            transform: translateY(101%);
-            transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
-          }
-          .hww-card:hover::before { transform: translateY(0); }
-          .hww-card:hover {
-            transform: translateY(-8px) scale(1.03); border-color: #000000;
-            box-shadow: 0 26px 50px -20px rgba(0,163,255,0.55);
-          }
+          .hww-card:hover { transform: translateY(-4px); border-color: rgba(255,255,255,0.35); }
           .hww-card > *:not(.hww-watermark) { position: relative; }
 
           .hww-watermark {
             position: absolute; right: -0.4rem; bottom: -1.8rem; pointer-events: none;
             font-family: 'Hanuman', serif; font-weight: 700; font-size: 6.5rem; line-height: 1;
-            color: transparent; -webkit-text-stroke: 1px rgba(0,0,0,0.08);
-            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), -webkit-text-stroke-color 0.4s ease;
+            color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,0.07);
+            transition: -webkit-text-stroke-color 0.4s ease;
           }
-          .hww-card:hover .hww-watermark { transform: translate(-8px, -8px); -webkit-text-stroke-color: rgba(0,163,255,0.45); }
+          .hww-card:hover .hww-watermark { -webkit-text-stroke-color: rgba(255,255,255,0.16); }
 
           .hww-num {
-            color: #000000; font-family: 'Gowun Dodum', sans-serif; font-size: 1.2rem; margin: 0 0 1rem;
-            opacity: 0; transform: translateX(-20px);
-            transition:
-              opacity 0.8s ease calc(var(--i) * 0.15s + 0.4s),
-              transform 0.8s ease calc(var(--i) * 0.15s + 0.4s),
-              color 0.4s ease;
+            color: #777777; font-family: 'Gowun Dodum', sans-serif; font-size: 1rem; margin: 0 0 1rem;
+            transition: color 0.4s ease;
           }
-          .is-visible .hww-num { opacity: 1; transform: none; }
           .hww-card:hover .hww-num { color: #00A3FF; }
 
           .hww-rule {
-            width: 100%; height: 1px; background: #555555; margin-bottom: 1.5rem;
+            width: 100%; height: 1px; background: rgba(255,255,255,0.12); margin-bottom: 1.5rem;
             transform: scaleX(0); transform-origin: left;
-            transition: transform 1s ease calc(var(--i) * 0.15s + 0.3s), background-color 0.4s ease;
+            transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1) calc(var(--i) * 0.12s + 0.3s), background-color 0.4s ease;
           }
           .is-visible .hww-rule { transform: scaleX(1); }
-          .hww-card:hover .hww-rule { background-color: #00A3FF; box-shadow: 0 0 10px rgba(0,163,255,0.7); }
+          .hww-card:hover .hww-rule { background-color: rgba(255,255,255,0.45); }
 
           .hww-card-title {
-            color: #000000; font-family: 'Hanuman', serif; font-size: 1.4rem; font-weight: 700; margin: 0 0 1rem;
-            opacity: 0;
-            transition: opacity 0.8s ease calc(var(--i) * 0.15s + 0.5s), color 0.4s ease;
+            color: #FFFFFF; font-family: 'Hanuman', serif; font-size: 1.4rem; font-weight: 700; margin: 0 0 1rem;
           }
-          .is-visible .hww-card-title { opacity: 1; }
-          .hww-card:hover .hww-card-title { color: #FFFFFF; }
-
           .hww-desc {
-            color: #888888; font-family: 'Hanuman', serif; font-size: 0.9rem; line-height: 1.6; margin: 0;
-            opacity: 0;
-            transition: opacity 0.8s ease calc(var(--i) * 0.15s + 0.6s), color 0.4s ease;
+            color: #8A8A8A; font-family: 'Hanuman', serif; font-size: 0.9rem; line-height: 1.6; margin: 0;
+            transition: color 0.4s ease;
           }
-          .is-visible .hww-desc { opacity: 1; }
           .hww-card:hover .hww-desc { color: #BDBDBD; }
 
           @keyframes hwwTravel {
             0%   { left: 0%;   opacity: 0; }
-            10%  { opacity: 1; }
-            90%  { opacity: 1; }
+            15%  { opacity: 0.9; }
+            85%  { opacity: 0.9; }
             100% { left: 100%; opacity: 0; }
           }
 
@@ -212,7 +186,7 @@ const HowWeWork = () => {
             .hww-timeline { display: none; }
           }
           @media (max-width: 600px) {
-            .hww-outer { padding: 0 0.5rem; }
+            .hww-section { padding: 3.5rem 5%; }
             .hww-grid { grid-template-columns: 1fr; }
             .hww-title { font-size: 2.3rem; }
           }

@@ -146,7 +146,7 @@ const Portfolio = () => {
             </h2>
           </div>
           <div data-reveal="right">
-            <Link to="/portfolio" className="ax-link">
+            <Link to="/portfolio" className="ax-link ax-link--ink">
               All Projects <span className="ax-link-arrow">→︎</span>
             </Link>
           </div>
@@ -161,7 +161,7 @@ const Portfolio = () => {
 
         {/* See More Button */}
         <div className="pf-more" data-reveal="up">
-          <Link to="/portfolio" className="ax-btn ax-btn--outline">
+          <Link to="/portfolio" className="ax-btn ax-btn--ink">
             See More <span className="ax-btn-arrow">→︎</span>
           </Link>
         </div>
@@ -214,17 +214,16 @@ const Portfolio = () => {
       )}
 
       <style>{`
-        .pf-outer { background: #FFFFFF; padding: 0 0.15rem; }
+        .pf-outer { background: #FFFFFF; padding: 0; }
         .pf-section {
-          position: relative; background: #000000; padding: 5rem 5%;
-          display: flex; flex-direction: column;
-          border-top: 1px solid #C0C0C0; overflow: hidden;
+          position: relative; background: #FFFFFF; padding: 5rem 5%;
+          display: flex; flex-direction: column; overflow: hidden;
         }
         .pf-orb {
           position: absolute; top: -150px; right: -150px; width: 600px; height: 600px;
           border-radius: 50%; pointer-events: none;
-          background: radial-gradient(circle, rgba(0,163,255,0.12), transparent 65%);
-          animation: pfOrb 14s ease-in-out infinite alternate;
+          background: radial-gradient(circle, rgba(0,0,0,0.035), transparent 65%);
+          animation: pfOrb 18s ease-in-out infinite alternate;
         }
 
         /* Header */
@@ -233,7 +232,7 @@ const Portfolio = () => {
           gap: 1rem; width: 100%; margin-bottom: 3rem;
         }
         .pf-title {
-          color: #FFFFFF; font-family: 'Inknut Antiqua', serif;
+          color: #0A0A0A; font-family: 'Inknut Antiqua', serif;
           font-size: 3.5rem; font-weight: 400; line-height: 1.2; margin: 0;
         }
         .pf-count {
@@ -251,15 +250,15 @@ const Portfolio = () => {
         .pf-media {
           position: relative; height: 300px; margin-bottom: 1rem;
           border-radius: 16px; overflow: hidden; cursor: pointer; outline: none;
-          background: #1A1A1A; border: 1px solid #333333;
+          background: #111111; border: 1px solid #E5E5E5;
           display: flex; align-items: center; justify-content: center;
           transform: perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
           transition: transform 0.25s ease-out, border-color 0.4s ease, box-shadow 0.5s ease;
           will-change: transform;
         }
         .pf-media:hover, .pf-media:focus-visible {
-          border-color: rgba(0,163,255,0.7);
-          box-shadow: 0 30px 70px -30px rgba(0,163,255,0.6);
+          border-color: #0A0A0A;
+          box-shadow: 0 24px 50px -28px rgba(0,0,0,0.5);
         }
 
         .pf-placeholder {
@@ -314,7 +313,7 @@ const Portfolio = () => {
         .pf-media .ax-play { z-index: 3; }
         .pf-media:hover .ax-play {
           transform: scale(1.14);
-          box-shadow: 0 0 0 6px rgba(0,163,255,0.15), 0 0 40px rgba(0,163,255,0.6);
+          box-shadow: 0 0 0 6px rgba(255,255,255,0.15);
         }
 
         .pf-overlay {
@@ -332,23 +331,22 @@ const Portfolio = () => {
         .pf-meta-text { transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1); }
         .pf-card:hover .pf-meta-text { transform: translateX(6px); }
         .pf-name {
-          color: #FFFFFF; font-family: 'Kantumruy Pro', sans-serif;
+          color: #0A0A0A; font-family: 'Kantumruy Pro', sans-serif;
           font-size: 1.2rem; font-weight: 700; margin: 0 0 0.2rem;
         }
         .pf-category {
           display: flex; align-items: center; gap: 8px; margin: 0;
-          color: #888888; font-family: 'Hind', sans-serif; font-size: 0.85rem;
+          color: #666666; font-family: 'Hind', sans-serif; font-size: 0.85rem;
         }
         .pf-category-dot { width: 5px; height: 5px; border-radius: 50%; background: #00A3FF; }
         .pf-arrow {
           width: 38px; height: 38px; flex-shrink: 0; border-radius: 50%;
-          border: 1px solid #333333; color: #FFFFFF;
+          border: 1px solid #D4D4D4; color: #0A0A0A;
           display: flex; align-items: center; justify-content: center;
-          transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s, border-color 0.3s, color 0.3s;
+          transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), background 0.3s, border-color 0.3s, color 0.3s;
         }
         .pf-card:hover .pf-arrow {
-          transform: rotate(45deg); background: #00A3FF; border-color: #00A3FF; color: #000000;
-          box-shadow: 0 0 20px rgba(0,163,255,0.6);
+          transform: rotate(45deg); background: #0A0A0A; border-color: #0A0A0A; color: #FFFFFF;
         }
 
         .pf-more { display: flex; justify-content: center; width: 100%; }

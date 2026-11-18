@@ -32,17 +32,17 @@ const globalStyles = `
   [data-reveal] {
     opacity: 0;
     transition:
-      opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0s),
-      transform 0.9s cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0s),
-      filter 0.9s ease var(--d, 0s);
+      opacity 1s cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0s),
+      transform 1s cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0s),
+      filter 1s ease var(--d, 0s);
     will-change: opacity, transform;
   }
-  [data-reveal="up"]    { transform: translateY(48px); }
-  [data-reveal="down"]  { transform: translateY(-32px); }
-  [data-reveal="left"]  { transform: translateX(-60px); }
-  [data-reveal="right"] { transform: translateX(60px); }
-  [data-reveal="zoom"]  { transform: scale(0.88) translateY(24px); }
-  [data-reveal="blur"]  { transform: translateY(20px); filter: blur(12px); }
+  [data-reveal="up"]    { transform: translateY(22px); }
+  [data-reveal="down"]  { transform: translateY(-16px); }
+  [data-reveal="left"]  { transform: translateX(-24px); }
+  [data-reveal="right"] { transform: translateX(24px); }
+  [data-reveal="zoom"]  { transform: translateY(18px); }
+  [data-reveal="blur"]  { transform: translateY(12px); filter: blur(6px); }
   [data-reveal][data-visible="true"] { opacity: 1; transform: none; filter: none; }
 
   /* ---------- Scroll progress + cursor glow ---------- */
@@ -118,6 +118,26 @@ const globalStyles = `
   .ax-btn--solid:hover { box-shadow: 0 0 0 1px #FFFFFF, 0 0 32px rgba(0, 163, 255, 0.75); }
   .ax-btn--solid:hover::after { animation: axShine 0.8s ease forwards; }
   @keyframes axShine { to { left: 125%; } }
+
+  /* Outline button for white sections */
+  .ax-btn--ink { background: transparent; color: #0A0A0A; border: 1px solid #0A0A0A; }
+  .ax-btn--ink::before {
+    content: ''; position: absolute; inset: 0; z-index: -1; border-radius: inherit;
+    background: #0A0A0A; transform: translateY(101%);
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .ax-btn--ink:hover { color: #FFFFFF; box-shadow: 0 10px 34px -10px rgba(0, 163, 255, 0.6); }
+  .ax-btn--ink:hover::before { transform: translateY(0); }
+
+  /* Dark versions for white sections */
+  .ax-link.ax-link--ink { color: #0A0A0A; }
+  .ax-shimmer--ink {
+    background: linear-gradient(90deg, #0A0A0A 0%, #0A0A0A 38%, #00A3FF 50%, #0A0A0A 62%, #0A0A0A 100%);
+    background-size: 250% 100%;
+    -webkit-background-clip: text; background-clip: text;
+    color: transparent; -webkit-text-fill-color: transparent;
+    animation: axShimmer 6s linear infinite;
+  }
 
   /* ---------- Underline link ---------- */
   .ax-link {
@@ -238,13 +258,14 @@ const Home = () => {
       <div ref={glowRef} className="ax-cursor-glow" aria-hidden="true" />
 
       <Hero />
-      <Brands />
+      {/* Sections alternate: white / black */}
       <WhatWeDo />
-      <Portfolio />
       <HowWeWork />
+      <Portfolio />
       <Testimonials />
       <Team />
       <FAQ />
+      <Brands />
 
       <style>{globalStyles}</style>
     </main>

@@ -18,22 +18,16 @@ const services = [
   { icon: iconAI, title: 'AI Automation', desc: 'Implementing smart, automated workflows and AI-driven solutions to save you time, reduce costs, and eliminate manual effort.' },
 ];
 
-// One service card – blue spotlight follows the mouse, rotating border on hover
+// One service card – bar fills along the bottom when it appears,
+// black fill rises from the bottom on hover and the card turns to white text (like the About stats cards)
 const ServiceCard = ({ service, index }) => {
-  const handleMove = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    e.currentTarget.style.setProperty('--mx', `${e.clientX - rect.left}px`);
-    e.currentTarget.style.setProperty('--my', `${e.clientY - rect.top}px`);
-  };
-
   return (
     <div data-reveal="up" style={{ '--d': `${(index % 3) * 0.12 + Math.floor(index / 3) * 0.1}s` }}>
-      <article className="wwd-card" onMouseMove={handleMove}>
-        <span className="wwd-card-border" aria-hidden="true" />
+      <article className="wwd-card">
 
         <div className="wwd-card-top">
           <div className="wwd-card-head">
-            <div className="wwd-icon" style={{ animationDelay: `${index * 0.4}s` }}>
+            <div className="wwd-icon">
               <img src={service.icon} alt="" />
             </div>
             <h3 className="wwd-card-title">{service.title}</h3>
@@ -77,18 +71,16 @@ const WhatWeDo = () => {
           </div>
 
           <div data-reveal="up">
-            <Link to="/services" className="ax-btn ax-btn--outline wwd-btn">
+            <Link to="/services" className="ax-btn ax-btn--ink wwd-btn">
               Learn More <span className="ax-btn-arrow">→︎</span>
             </Link>
           </div>
         </div>
 
         <style>{`
-          @property --wwd-angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
-
-          .wwd-outer { background: #FFFFFF; padding: 0 0.15rem; }
+          .wwd-outer { background: #FFFFFF; padding: 0; }
           .wwd-section {
-            position: relative; background: #000000; padding: 5rem 5%;
+            position: relative; background: #FFFFFF; padding: 5rem 5%;
             display: flex; flex-direction: column; align-items: center; overflow: hidden;
           }
 
@@ -96,8 +88,8 @@ const WhatWeDo = () => {
           .wwd-gridbg {
             position: absolute; inset: 0; z-index: 0; pointer-events: none;
             background-image:
-              linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+              linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px);
             background-size: 56px 56px;
             -webkit-mask-image: radial-gradient(ellipse 60% 45% at 50% 0%, #000, transparent 70%);
                     mask-image: radial-gradient(ellipse 60% 45% at 50% 0%, #000, transparent 70%);
@@ -106,12 +98,12 @@ const WhatWeDo = () => {
           .wwd-orb { position: absolute; border-radius: 50%; pointer-events: none; z-index: 0; }
           .wwd-orb--1 {
             top: 20%; left: 20%; width: 600px; height: 600px;
-            background: radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(0,0,0,0.03) 0%, transparent 70%);
             animation: wwdFloat 15s ease-in-out infinite alternate;
           }
           .wwd-orb--2 {
             bottom: 5%; right: 5%; width: 560px; height: 560px;
-            background: radial-gradient(circle, rgba(0,163,255,0.12) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(0,0,0,0.04) 0%, transparent 70%);
             animation: wwdFloat 20s ease-in-out infinite alternate-reverse;
           }
 
@@ -121,10 +113,10 @@ const WhatWeDo = () => {
           }
           .wwd-header { align-self: flex-start; margin-bottom: 3rem; }
           .wwd-title {
-            color: #FFFFFF; font-family: 'Hind', sans-serif;
+            color: #0A0A0A; font-family: 'Hind', sans-serif;
             font-size: 3.5rem; font-weight: 700; line-height: 1.1; margin: 0;
           }
-          .wwd-title-dot { color: #00A3FF; text-shadow: 0 0 18px rgba(0,163,255,0.8); }
+          .wwd-title-dot { color: #00A3FF; }
 
           .wwd-grid {
             display: grid; grid-template-columns: repeat(3, 1fr);
@@ -136,75 +128,59 @@ const WhatWeDo = () => {
             position: relative; isolation: isolate; overflow: hidden; box-sizing: border-box;
             display: flex; flex-direction: column; justify-content: flex-start; gap: 1.5rem;
             height: 100%; padding: 2rem; border-radius: 16px;
-            background: #0A0A0A; border: 1px solid #444444; text-decoration: none; cursor: default;
-            transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.4s ease, box-shadow 0.5s ease;
+            background: #FFFFFF; border: 1px solid #E2E2E2; cursor: default;
+            transition: border-color 0.4s ease;
           }
+          /* Black fill that rises from the bottom on hover – the card inverts to white text */
           .wwd-card::before {
             content: ''; position: absolute; inset: 0; z-index: -1;
-            background: radial-gradient(380px circle at var(--mx, 50%) var(--my, 50%), rgba(0,163,255,0.16), transparent 45%);
-            opacity: 0; transition: opacity 0.4s ease;
+            background: #0A0A0A;
+            transform: scaleY(0); transform-origin: bottom;
+            transition: transform 0.5s cubic-bezier(0.7, 0, 0.3, 1);
           }
-          .wwd-card-border {
-            position: absolute; inset: 0; border-radius: inherit; padding: 1px; pointer-events: none;
-            background: conic-gradient(from var(--wwd-angle), transparent 0 65%, #00A3FF 82%, #FFFFFF 90%, transparent 100%);
-            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-            -webkit-mask-composite: xor;
-                    mask-composite: exclude;
-            opacity: 0; transition: opacity 0.4s ease;
-            animation: wwdSpin 4s linear infinite;
-          }
-          .wwd-card:hover {
-            transform: translateY(-8px); border-color: rgba(0,163,255,0.25);
-            box-shadow: 0 24px 60px -24px rgba(0,163,255,0.55);
-          }
-          .wwd-card:hover::before, .wwd-card:hover .wwd-card-border { opacity: 1; }
+          .wwd-card:hover::before { transform: scaleY(1); }
+          .wwd-card:hover { border-color: #0A0A0A; }
 
           .wwd-card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
           .wwd-card-head { display: flex; align-items: center; gap: 1rem; }
 
-          .wwd-icon { width: 52px; height: 52px; flex-shrink: 0; animation: wwdBob 5s ease-in-out infinite; }
-          .wwd-icon img {
-            width: 100%; height: 100%; object-fit: contain;
-            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.4s ease;
-          }
-          .wwd-card:hover .wwd-icon img {
-            transform: scale(1.12) rotate(-6deg);
-            filter: drop-shadow(0 0 12px rgba(0,163,255,0.8));
-          }
+          .wwd-icon { width: 52px; height: 52px; flex-shrink: 0; }
+          .wwd-icon img { width: 100%; height: 100%; object-fit: contain; filter: invert(1); transition: filter 0.4s ease; }
+          .wwd-card:hover .wwd-icon img { filter: invert(0); }
 
           .wwd-card-title {
-            color: #FFFFFF; font-family: 'Hind', sans-serif;
+            color: #0A0A0A; font-family: 'Hind', sans-serif;
             font-size: 1.2rem; font-weight: 600; margin: 0;
+            transition: color 0.4s ease;
           }
+          .wwd-card:hover .wwd-card-title { color: #FFFFFF; }
 
-          .wwd-card-corner { position: relative; width: 30px; height: 24px; flex-shrink: 0; overflow: hidden; }
-          .wwd-card-num, .wwd-card-arrow {
-            position: absolute; right: 0; top: 0;
-            transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease;
+          .wwd-card-corner { position: relative; flex-shrink: 0; }
+          .wwd-card-num {
+            font-family: monospace, sans-serif; color: #9A9A9A; font-size: 0.85rem; letter-spacing: 2px;
+            transition: color 0.4s ease;
           }
-          .wwd-card-num { font-family: 'Gowun Dodum', sans-serif; color: #555555; font-size: 0.85rem; }
-          .wwd-card-arrow { color: #00A3FF; font-size: 1.1rem; transform: translate(-14px, 14px); opacity: 0; }
-          .wwd-card:hover .wwd-card-num { color: #00A3FF; }
-          
+          .wwd-card:hover .wwd-card-num { color: #888888; }
+
           .wwd-card-desc {
-            color: #888888; font-family: 'Hind', sans-serif;
+            color: #555555; font-family: 'Hind', sans-serif;
             font-size: 0.95rem; line-height: 1.6; margin: 0;
             transition: color 0.4s ease;
           }
-          .wwd-card:hover .wwd-card-desc { color: #cfcfcf; }
+          .wwd-card:hover .wwd-card-desc { color: #BDBDBD; }
 
+          /* Bar that fills along the bottom when the card scrolls in */
           .wwd-card-bar {
-            position: absolute; left: 0; bottom: 0; height: 2px; width: 100%;
-            background: linear-gradient(90deg, #00A3FF, transparent);
+            position: absolute; left: 0; bottom: 0; height: 3px; width: 100%;
+            background: #0A0A0A;
             transform: scaleX(0); transform-origin: left;
-            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+            transition: transform 1.4s cubic-bezier(0.6, 0, 0.2, 1) calc(var(--d, 0s) + 0.4s), background-color 0.4s ease;
           }
-          .wwd-card:hover .wwd-card-bar { transform: scaleX(1); }
+          [data-visible="true"] > .wwd-card .wwd-card-bar { transform: scaleX(1); }
+          .wwd-card:hover .wwd-card-bar { background: #FFFFFF; }
 
           .wwd-btn { padding: 12px 40px; font-size: 1rem; }
 
-          @keyframes wwdSpin  { to { --wwd-angle: 360deg; } }
-          @keyframes wwdBob   { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
           @keyframes wwdPan   { to { background-position: 0 56px, 56px 0; } }
           @keyframes wwdFloat {
             0%   { transform: translate(0, 0) scale(1); opacity: 0.5; }

@@ -84,15 +84,15 @@ const FAQ = () => {
         </div>
 
         <style>{`
-          .faq-outer { background: #FFFFFF; padding: 0 0.15rem; }
+          .faq-outer { background: #000000; padding: 0; }
           .faq-section {
-            position: relative; background: #000000; padding: 2rem 5% 5rem;
+            position: relative; background: #000000; padding: 5rem 5% 5rem;
             display: flex; flex-direction: column; align-items: center; overflow: hidden;
           }
           .faq-glow {
             position: absolute; top: -220px; left: 50%; width: 760px; height: 440px;
             transform: translateX(-50%); border-radius: 50%; pointer-events: none;
-            background: radial-gradient(ellipse, rgba(0,163,255,0.14), transparent 70%);
+            background: radial-gradient(ellipse, rgba(255,255,255,0.06), transparent 70%);
             animation: faqBreath 6s ease-in-out infinite;
           }
 
@@ -155,8 +155,7 @@ const FAQ = () => {
           .faq-icon span:last-child { transform: rotate(90deg); }
           .faq-q:hover .faq-icon { border-color: #FFFFFF; transform: scale(1.08); }
           .faq-item.is-open .faq-icon {
-            background: #00A3FF; border-color: #00A3FF; transform: rotate(180deg);
-            box-shadow: 0 0 22px rgba(0,163,255,0.6);
+            background: #FFFFFF; border-color: #FFFFFF; transform: rotate(180deg);
           }
           .faq-item.is-open .faq-icon span { background: #000000; }
           .faq-item.is-open .faq-icon span:last-child { transform: rotate(0deg); }

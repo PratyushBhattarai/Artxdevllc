@@ -44,14 +44,13 @@ const TeamCard = ({ member, index }) => (
         <p className="tm-desc">{member.desc}</p>
       </div>
 
-      {/* Social circles + arrow */}
+      {/* Social circles */}
       <div className="tm-foot">
         <div className="tm-socials">
           {[0, 1, 2].map((i) => (
             <span key={i} className="tm-social" style={{ '--i': i }} />
           ))}
         </div>
-        <span className="tm-arrow" aria-hidden="true">↗︎</span>
       </div>
 
     </article>
@@ -69,10 +68,10 @@ const Team = () => {
         {/* Header Row */}
         <div className="tm-header">
           <h2 className="tm-heading" data-reveal="up" style={{ '--d': '0.1s' }}>
-            The people behind <span className="ax-shimmer">Artx Dev</span> success
+            The people behind <span className="ax-shimmer--ink">Artx Dev</span> success
           </h2>
           <div data-reveal="right">
-            <Link to="/team" className="ax-link">
+            <Link to="/team" className="ax-link ax-link--ink">
               Learn More <span className="ax-link-arrow ax-link-arrow--diag">↗︎</span>
             </Link>
           </div>
@@ -86,16 +85,15 @@ const Team = () => {
         </div>
 
         <style>{`
-          .tm-outer { background: #FFFFFF; padding: 0 0.15rem; }
+          .tm-outer { background: #FFFFFF; padding: 0; }
           .tm-section {
-            position: relative; background: #000000; padding: 5rem 5%;
+            position: relative; background: #FFFFFF; padding: 5rem 5%;
             display: flex; flex-direction: column; overflow: hidden;
-            border-top: 1px solid #C0C0C0; border-bottom: 1px solid #C0C0C0;
           }
           .tm-glow {
             position: absolute; top: 30%; left: 50%; width: 900px; height: 500px;
             transform: translateX(-50%); border-radius: 50%; pointer-events: none;
-            background: radial-gradient(ellipse, rgba(0,163,255,0.08), transparent 65%);
+            background: radial-gradient(ellipse, rgba(0,0,0,0.03), transparent 65%);
             animation: tmBreath 8s ease-in-out infinite;
           }
 
@@ -104,7 +102,7 @@ const Team = () => {
             gap: 1.5rem; width: 100%; margin-bottom: 3rem; flex-wrap: wrap;
           }
           .tm-heading {
-            color: #FFFFFF; font-family: 'Hanuman', serif;
+            color: #0A0A0A; font-family: 'Hanuman', serif;
             font-size: 3rem; font-weight: 400; line-height: 1.2; margin: 0;
           }
 
@@ -117,18 +115,19 @@ const Team = () => {
           .tm-card {
             position: relative; overflow: hidden; height: 100%; box-sizing: border-box;
             display: flex; flex-direction: column; padding: 1rem; cursor: pointer;
-            background: #121212; border: 1px solid #333333; border-radius: 16px;
+            background: #0A0A0A; border: 1px solid #0A0A0A; border-radius: 16px;
+            box-shadow: 0 18px 40px -26px rgba(0,0,0,0.55);
             transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.4s ease, box-shadow 0.5s ease;
           }
           .tm-card::before {
             content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
-            background: linear-gradient(90deg, transparent, #00A3FF, transparent);
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
             transform: translateX(-100%); transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
           }
           .tm-card:hover::before { transform: translateX(100%); }
           .tm-card:hover {
-            transform: translateY(-8px); border-color: rgba(0,163,255,0.55);
-            box-shadow: 0 26px 60px -28px rgba(0,163,255,0.6);
+            transform: translateY(-4px);
+            box-shadow: 0 26px 50px -24px rgba(0,0,0,0.6);
           }
 
           .tm-card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
@@ -164,7 +163,7 @@ const Team = () => {
           }
           .tm-card:hover .tm-silhouette {
             transform: scale(1.05) translateY(-2px);
-            filter: drop-shadow(0 0 14px rgba(0,163,255,0.4));
+            filter: none;
           }
 
           /* Info */
@@ -187,13 +186,8 @@ const Team = () => {
             width: 18px; height: 18px; border-radius: 50%; border: 1px solid #555555; box-sizing: border-box;
             transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) calc(var(--i) * 0.06s);
           }
-          .tm-card:hover .tm-social { border-color: #00A3FF; background: rgba(0,163,255,0.15); transform: translateY(-3px); }
-          .tm-social:hover { background: #00A3FF !important; box-shadow: 0 0 10px #00A3FF; }
-          .tm-arrow {
-            display: inline-block; color: #888888; font-size: 1.2rem;
-            transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.3s ease;
-          }
-          .tm-card:hover .tm-arrow { color: #FFFFFF; transform: rotate(45deg); }
+          .tm-card:hover .tm-social { border-color: #888888; }
+          .tm-social:hover { background: #FFFFFF !important; }
 
           @keyframes tmBreath { 0%,100% { opacity: 0.6; } 50% { opacity: 1; } }
           @keyframes tmPulse {

@@ -363,7 +363,7 @@ const PayNowModal = ({ open, onClose }) => {
           position: relative; overflow: hidden; isolation: isolate; box-sizing: border-box;
           display: flex; width: 100%; align-items: center; justify-content: center; gap: 8px;
           padding: 16px 20px; border: none; border-radius: 16px; cursor: pointer;
-          background: linear-gradient(135deg, #00A3FF 0%, #0066FF 100%); color: #FFF;
+          background: #FFFFFF; color: #000000;
           font-family: inherit; font-size: 1rem; font-weight: 700;
           box-shadow: 0 14px 30px -12px rgba(var(--pn-blue-rgb), 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.25);
           transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;

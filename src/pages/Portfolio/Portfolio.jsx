@@ -272,9 +272,9 @@ const PortfolioPage = () => {
         .pp-other-initials {
           display: grid; place-items: center;
           min-width: 54px; height: 54px; padding: 0 10px; box-sizing: border-box;
-          border-radius: 14px; background: #00A3FF; color: #000000;
+          border-radius: 14px; background: #FFFFFF; color: #000000;
           font-family: 'Inter', sans-serif; font-weight: 800; font-size: 1.15rem; letter-spacing: 1px;
-          box-shadow: 0 0 24px rgba(0, 163, 255, 0.45);
+          box-shadow: 0 8px 24px -10px rgba(0, 163, 255, 0.6);
         }
         .pp-other-wordmark {
           color: #FFFFFF; font-family: 'Inter', sans-serif; font-weight: 700;

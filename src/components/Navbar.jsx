@@ -670,10 +670,10 @@ const Navbar = () => {
         .nv-drop-all {
           margin-top: auto; display: inline-flex; justify-content: center; align-items: center; gap: 6px;
           padding: 10px 14px; border-radius: 30px;
-          background: #00A3FF; color: #000000; font-size: 13.5px; font-weight: 600; text-decoration: none;
+          background: #FFFFFF; color: #000000; font-size: 13.5px; font-weight: 600; text-decoration: none;
           transition: background-color 0.3s ease, transform 0.3s ease;
         }
-        .nv-drop-all:hover { background: #FFFFFF; transform: translateY(-2px); }
+        .nv-drop-all:hover { background: #00A3FF; transform: translateY(-2px); }
 
         @keyframes nvGlow { 0%, 100% { transform: scale(0.9); opacity: 0.7; } 50% { transform: scale(1.15); opacity: 1; } }
 

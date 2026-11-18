@@ -5,9 +5,9 @@
    ========================================= */
 
 .bm-page {
-  --accent: #2F6BFF;
-  --accent-rgb: 47, 107, 255;
-  --on-accent: #ffffff;
+  --accent: #00A3FF;
+  --accent-rgb: 0, 163, 255;
+  --on-accent: #000000;
   --card: #0d0d0d;
   --line: #262626;
   --muted: #a1a1aa;
@@ -234,7 +234,7 @@
 .bm-stepper .is-done .bm-step-num {
   background: var(--accent);
   border-color: var(--accent);
-  color: #fff;
+  color: #000;
 }
 
 .bm-stepper .is-current .bm-step-num {
@@ -504,14 +504,14 @@
 .bm-cal-day.is-today { outline: 1px dashed #555; outline-offset: -4px; }
 
 .bm-cal-day.is-selected {
-  background: var(--accent);
+  background: #ffffff;
   border-color: var(--accent);
-  color: #fff;
+  color: #000;
   font-weight: 700;
   box-shadow: 0 8px 24px rgba(var(--accent-rgb), 0.45);
 }
 
-.bm-cal-day.is-selected::after { background: #fff; }
+.bm-cal-day.is-selected::after { background: var(--accent); }
 
 .bm-cal-legend {
   display: flex;
@@ -590,8 +590,9 @@
 .bm-slot:hover { border-color: var(--accent); transform: translateY(-2px); }
 
 .bm-slot.is-selected {
-  background: var(--accent);
+  background: #ffffff;
   border-color: var(--accent);
+  color: #000;
   box-shadow: 0 8px 22px rgba(var(--accent-rgb), 0.4);
 }
 
@@ -690,9 +691,9 @@ select.bm-input option { background: #000; }
 .bm-pick:hover { border-color: #555; transform: translateY(-2px); }
 
 .bm-pick.is-selected {
-  background: var(--accent);
+  background: #ffffff;
   border-color: var(--accent);
-  color: #fff;
+  color: #000;
 }
 
 /* =========================================
@@ -825,14 +826,14 @@ select.bm-input option { background: #000; }
 .bm-btn:hover:not(:disabled)::before { transform: translateX(0); }
 
 .bm-btn-accent {
-  background: var(--accent);
-  color: var(--on-accent);
-  border-color: var(--accent);
-  box-shadow: 0 0 30px rgba(var(--accent-rgb), 0.35);
+  background: #ffffff;
+  color: #000000;
+  border-color: #ffffff;
+  box-shadow: 0 10px 30px -12px rgba(var(--accent-rgb), 0.6);
 }
 
-.bm-btn-accent::before { background: #fff; }
-.bm-btn-accent:hover:not(:disabled) { color: #000; }
+.bm-btn-accent::before { background: var(--accent); }
+.bm-btn-accent:hover:not(:disabled) { color: #000; border-color: var(--accent); }
 
 .bm-btn-accent.is-disabled { opacity: 0.45; box-shadow: none; }
 

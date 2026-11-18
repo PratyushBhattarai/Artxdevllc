@@ -17,15 +17,6 @@ const resetTilt = (e) => {
   e.currentTarget.style.setProperty('--ry', '0deg');
 };
 
-const MARQUEE_ITEMS = [
-  'Web Design',
-  'Web Development',
-  'Mobile Apps',
-  'UI / UX',
-  'Practical AI',
-  'Branding',
-];
-
 const AboutHero = () => {
   return (
     <>
@@ -95,19 +86,6 @@ const AboutHero = () => {
           <i />
         </div>
       </section>
-
-      <div className="about-marquee" aria-hidden="true">
-        <div className="marquee-track">
-          {[...MARQUEE_ITEMS, ...MARQUEE_ITEMS].map((item, i) => (
-            <span key={i} className="marquee-item">
-              {item}{' '}
-              <span className="marquee-star">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
-              </span>
-            </span>
-          ))}
-        </div>
-      </div>
     </>
   );
 };

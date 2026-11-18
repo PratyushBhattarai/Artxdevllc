@@ -33,20 +33,19 @@ const Testimonials = () => {
       </section>
 
       <style>{`
-        .ts-outer { background: #FFFFFF; padding: 0 0.15rem; }
+        .ts-outer { background: #000000; padding: 0; }
         .ts-section {
-          position: relative; background: #000000; padding: 5rem 5%;
+          position: relative; background: #000000; padding: 5rem 5% 4rem;
           display: flex; flex-direction: column; overflow: hidden;
-          min-height: 60vh; /* Ensures the section has good height */
         }
         .ts-glow {
           position: absolute; bottom: -250px; left: -150px; width: 650px; height: 650px;
           border-radius: 50%; pointer-events: none;
-          background: radial-gradient(circle, rgba(0,163,255,0.12), transparent 65%);
+          background: radial-gradient(circle, rgba(255,255,255,0.05), transparent 65%);
           animation: tsGlow 12s ease-in-out infinite alternate;
         }
 
-        .ts-header { position: relative; margin-bottom: 3rem; }
+        .ts-header { position: relative; margin-bottom: 1.5rem; }
         .ts-title {
           color: #FFFFFF; font-family: 'Inknut Antiqua', serif;
           font-size: 3.5rem; font-weight: 400; line-height: 1.2; margin: 0;
@@ -60,7 +59,7 @@ const Testimonials = () => {
           align-items: center;
           justify-content: center;
           text-align: center;
-          padding: 4rem 2rem;
+          padding: 2rem 2rem 1rem;
           position: relative;
           z-index: 1;
         }

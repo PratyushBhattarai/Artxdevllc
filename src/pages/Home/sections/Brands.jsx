@@ -39,12 +39,12 @@ const Brands = () => {
 
       <style>{`
         .br-section {
-          background: #FFFFFF; padding: 3rem 0;
+          background: #FFFFFF; padding: 1.6rem 0 1.4rem;
           display: flex; flex-direction: column; align-items: center;
-          border-bottom: 1px solid #E5E5E5; overflow: hidden;
+          border-top: 1px solid #E5E5E5; border-bottom: 1px solid #E5E5E5; overflow: hidden;
         }
 
-        .br-head { display: flex; align-items: center; gap: 1rem; margin-bottom: 2.5rem; }
+        .br-head { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.9rem; }
         .br-line {
           width: 80px; height: 1px;
           background: linear-gradient(90deg, transparent, #000000);
@@ -70,20 +70,20 @@ const Brands = () => {
                   mask-image: linear-gradient(90deg, transparent 0, #000 12%, #000 88%, transparent 100%);
         }
         .br-track {
-          display: flex; align-items: center; gap: 4rem;
-          padding: 2rem 4rem 2rem 0; width: max-content;
-          animation: brScroll 30s linear infinite;
+          display: flex; align-items: center; gap: 3.25rem;
+          padding: 0.6rem 3.25rem 0.8rem 0; width: max-content;
+          animation: brScroll 32s linear infinite;
         }
         .br-viewport:hover .br-track { animation-play-state: paused; }
 
         .br-item {
           position: relative; flex-shrink: 0;
           display: flex; align-items: center; justify-content: center;
-          height: 70px; width: 120px; cursor: pointer;
+          height: 44px; width: 96px; cursor: pointer;
         }
         /* Electric blue underline on hover */
         .br-item::after {
-          content: ''; position: absolute; left: 15%; right: 15%; bottom: -22px; height: 2px;
+          content: ''; position: absolute; left: 15%; right: 15%; bottom: -10px; height: 2px;
           border-radius: 2px; background: #00A3FF; box-shadow: 0 0 12px #00A3FF;
           transform: scaleX(0); transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
         }
@@ -91,12 +91,18 @@ const Brands = () => {
 
         .br-logo {
           max-height: 100%; max-width: 100%; object-fit: contain;
-          transform: scale(1.4);
+          transform: scale(1.3);
           transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.45s ease;
         }
         .br-item:hover .br-logo {
-          transform: scale(1.55) translateY(-4px);
+          transform: scale(1.45) translateY(-3px);
           filter: drop-shadow(0 8px 16px rgba(0, 163, 255, 0.35));
+        }
+
+        @media (max-width: 600px) {
+          .br-section { padding: 1.2rem 0 1rem; }
+          .br-track { gap: 2.25rem; padding-right: 2.25rem; }
+          .br-item { height: 34px; width: 76px; }
         }
 
         @keyframes brScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
