@@ -80,7 +80,8 @@ const HeroRobot = () => {
 
       <style>{`
         .rb {
-          position: relative; width: min(34vw, 460px); aspect-ratio: 3 / 4;
+          /* sized by the screen height so the whole hero fits on one screen */
+          position: relative; height: min(calc(100svh - 290px), 600px); width: auto; max-width: 34vw; aspect-ratio: 3 / 4;
           flex-shrink: 0;
         }
         .rb-canvas { position: absolute; inset: 0; z-index: 1; }

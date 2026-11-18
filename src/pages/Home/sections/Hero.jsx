@@ -180,9 +180,10 @@ const Hero = () => {
         .hx {
           position: relative; overflow: hidden; isolation: isolate;
           background: #000000;
-          min-height: calc(100svh - 90px); max-height: 900px;
+          /* exactly one screen under the navbar, so the services strip stays visible */
+          height: calc(100svh - 98px); min-height: 500px; max-height: 940px;
           display: flex; align-items: center; justify-content: center;
-          padding: 5rem 6% 7rem; box-sizing: border-box;
+          padding: 3rem 6% 5.5rem; box-sizing: border-box;
           border-bottom: 6px solid #FFFFFF; /* white band between the hero and What We Do */
         }
 
@@ -230,17 +231,20 @@ const Hero = () => {
         /* ---------- Layout: text left, robot right ---------- */
         .hx-layout {
           position: relative; z-index: 2; width: 100%; max-width: 1280px;
-          display: grid; grid-template-columns: 1.2fr 0.8fr; align-items: center; gap: 2rem;
+          display: grid; grid-template-columns: 1.2fr 0.8fr; align-items: stretch; gap: 2rem;
         }
         .hx-robot { display: flex; justify-content: center; }
+        /* text column is as tall as the robot: pill at the top (antenna),
+           buttons at the bottom (feet), headline in between */
         .hx-inner {
           position: relative; z-index: 2; width: 100%;
-          display: flex; flex-direction: column; align-items: flex-start; text-align: left;
+          display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between;
+          text-align: left; padding: 4vh 0 4vh; box-sizing: border-box;
         }
 
         .hx-pill {
           display: inline-flex; align-items: center; gap: 10px;
-          padding: 8px 18px; margin-bottom: 2rem; border-radius: 999px;
+          padding: 8px 18px; margin-bottom: 0; border-radius: 999px;
           border: 1px solid rgba(255, 255, 255, 0.18);
           background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
           -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
@@ -251,9 +255,9 @@ const Hero = () => {
         .hx-pill-dot { width: 7px; height: 7px; border-radius: 50%; background: #00A3FF; animation: hxDot 1.8s infinite; }
 
         .hx-title {
-          margin: 0 0 2.6rem; color: #FFFFFF;
+          margin: 1.4rem 0 1.6rem; color: #FFFFFF;
           font-family: 'Kantumruy Pro', sans-serif; font-weight: 600;
-          font-size: clamp(2.6rem, 5vw, 4.8rem); line-height: 1.02; letter-spacing: -0.035em;
+          font-size: clamp(2.4rem, min(5vw, 8vh), 5.4rem); line-height: 1.12; letter-spacing: -0.035em;
         }
         .hx-line { display: block; }
         .hx-word-mask { display: inline-block; overflow: hidden; padding: 0 0.06em 0.14em 0; margin: 0 0.18em -0.14em 0; vertical-align: top; }
@@ -336,13 +340,15 @@ const Hero = () => {
 
         /* ---------- Tablet & phone ---------- */
         @media (max-width: 900px) {
-          .hx { min-height: 0; max-height: none; padding: 5rem 6% 7rem; }
+          .hx { height: auto; min-height: 0; max-height: none; padding: 5rem 6% 7rem; }
           .hx-spot { display: none; }
           .hx-grid { --cell: 44px; }
           .hx-layout { grid-template-columns: 1fr; gap: 2.5rem; justify-items: center; }
-          .hx-inner { align-items: center; text-align: center; }
+          .hx-inner { align-items: center; text-align: center; justify-content: flex-start; padding: 0; }
+          .hx-pill { margin-bottom: 1.5rem; }
+          .hx-title { margin-bottom: 2rem; }
           .hx-actions { justify-content: center; }
-          .rb { width: min(56vw, 260px); }
+          .rb { width: min(56vw, 260px); height: auto; max-width: none; }
         }
         @media (max-width: 560px) {
           .hx { padding: 4.5rem 5% 6rem; min-height: min(640px, calc(100svh - 80px)); }
