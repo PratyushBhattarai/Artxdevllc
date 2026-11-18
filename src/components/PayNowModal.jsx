@@ -1,7 +1,7 @@
 // src/components/PayNowModal.jsx
 //
 // "Pay Now" dialog opened from the navbar (showcase only).
-// 1) asks for an amount  2) "Proceed" → shows a "coming soon" screen.
+// 1) asks for an amount  2) "Proceed" →︎ shows a "coming soon" screen.
 // When Stripe is added later, only startCheckout() in payments.js changes.
 
 import { useEffect, useRef, useState } from 'react';
@@ -162,7 +162,7 @@ const PayNowModal = ({ open, onClose }) => {
               {stage === 'processing' ? (
                 <><span className="pn-spinner" /> Processing…</>
               ) : (
-                <>Proceed to pay {value > 0 && !amountError ? pretty : ''} <span className="pn-arrow" aria-hidden="true">→</span></>
+                <>Proceed to pay {value > 0 && !amountError ? pretty : ''} <span className="pn-arrow" aria-hidden="true">→︎</span></>
               )}
             </button>
 

@@ -20,7 +20,7 @@ const CTA = () => {
 
         <div className="cta-actions reveal" style={{ '--d': '300ms' }}>
           <Link to="/book-meeting" className="btn-cta">
-            Start a project <span className="arrow">→</span>
+            Start a project <span className="arrow">→︎</span>
           </Link>
           <a href="mailto:Artxdevllc@gmail.com" className="cta-email">
             Artxdevllc@gmail.com

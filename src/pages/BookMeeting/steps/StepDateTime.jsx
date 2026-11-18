@@ -101,7 +101,7 @@ const StepDateTime = ({ booking, update }) => {
           <div className="bm-cal-head">
             <button type="button" className="bm-cal-nav" onClick={() => shift(-1)} disabled={!canPrev} aria-label="Previous month">←</button>
             <span key={monthLabel} className="bm-cal-month">{monthLabel}</span>
-            <button type="button" className="bm-cal-nav" onClick={() => shift(1)} disabled={!canNext} aria-label="Next month">→</button>
+            <button type="button" className="bm-cal-nav" onClick={() => shift(1)} disabled={!canNext} aria-label="Next month">→︎</button>
           </div>
 
           <div className="bm-cal-grid">

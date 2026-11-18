@@ -125,7 +125,7 @@ const CoreServices = () => {
                       <span key={t} className="svc-tag">{t}</span>
                     ))}
                   </div>
-                  <span className="svc-core-arrow" aria-hidden="true">↗</span>
+                  <span className="svc-core-arrow" aria-hidden="true">↗︎</span>
                 </div>
 
                 {/* Detailed description – slides open below the row */}
@@ -149,7 +149,7 @@ const CoreServices = () => {
                         className="svc-core-cta"
                         tabIndex={isOpen ? 0 : -1}
                       >
-                        Discuss this service <span aria-hidden="true">→</span>
+                        Discuss this service <span aria-hidden="true">→︎</span>
                       </Link>
                     </div>
                   </div>

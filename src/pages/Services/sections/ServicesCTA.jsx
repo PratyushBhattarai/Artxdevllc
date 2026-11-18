@@ -25,7 +25,7 @@ const ServicesCTA = () => {
 
         <div className="svc-hero-actions svc-reveal" style={{ '--d': '350ms' }}>
           <Link to="/book-meeting" className="svc-btn svc-btn-accent">
-            Start your project <span className="svc-arrow">→</span>
+            Start your project <span className="svc-arrow">→︎</span>
           </Link>
           <Link to="/contact" className="svc-btn svc-btn-ghost">
             Contact us

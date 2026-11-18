@@ -278,7 +278,7 @@ const Packages = () => {
               </ul>
 
               <Link to={planLink(p, group)} className={`svc-btn ${p.featured ? 'svc-btn-accent' : 'svc-btn-light'} svc-btn-block`}>
-                {p.cta} <span className="svc-arrow">→</span>
+                {p.cta} <span className="svc-arrow">→︎</span>
               </Link>
             </div>
           ))}

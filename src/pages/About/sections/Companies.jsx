@@ -62,7 +62,7 @@ const Companies = () => {
 
               <div className="card-footer">
                 <p>{c.address}</p>
-                <span className="card-arrow">↗</span>
+                <span className="card-arrow">↗︎</span>
               </div>
             </div>
           ))}

@@ -54,7 +54,7 @@ const AboutHero = () => {
             </p>
 
             <Link to="/book-meeting" className="btn-solid-light">
-              Start project <span className="arrow">→</span>
+              Start project <span className="arrow">→︎</span>
             </Link>
           </div>
 

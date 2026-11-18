@@ -34,7 +34,7 @@ const ServicesHero = () => {
 
           <div className="svc-hero-actions">
             <a href="#packages" className="svc-btn svc-btn-accent">
-              View packages <span className="svc-arrow">→</span>
+              View packages <span className="svc-arrow">→︎</span>
             </a>
             <Link to="/book-meeting" className="svc-btn svc-btn-ghost">
               Book a free call

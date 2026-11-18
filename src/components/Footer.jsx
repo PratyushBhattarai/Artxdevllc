@@ -296,7 +296,7 @@ const Footer = () => {
         }
         /* Blue arrow appears on the left */
         .ft-link::before {
-          content: '→'; position: absolute; left: 0; top: 0;
+          content: '→︎'; position: absolute; left: 0; top: 0;
           color: #00A3FF; opacity: 0; transform: translateX(-6px);
           transition: opacity 0.3s ease, transform 0.35s ease;
         }

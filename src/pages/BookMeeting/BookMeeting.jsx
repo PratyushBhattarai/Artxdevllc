@@ -176,9 +176,9 @@ const BookMeeting = () => {
                       {status === 'sending' ? (
                         <><span className="bm-spinner" /> Booking…</>
                       ) : step === STEPS.length - 1 ? (
-                        <>Confirm booking <span className="bm-arrow">→</span></>
+                        <>Confirm booking <span className="bm-arrow">→︎</span></>
                       ) : (
-                        <>Continue <span className="bm-arrow">→</span></>
+                        <>Continue <span className="bm-arrow">→︎</span></>
                       )}
                     </button>
                   </div>

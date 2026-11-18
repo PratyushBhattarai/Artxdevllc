@@ -284,7 +284,7 @@ const Navbar = () => {
                           onClick={handleDropdownClick}
                           tabIndex={servicesOpen ? 0 : -1}
                         >
-                          {q.label} <span aria-hidden="true">→</span>
+                          {q.label} <span aria-hidden="true">→︎</span>
                         </Link>
                       ))}
                       <Link
@@ -294,7 +294,7 @@ const Navbar = () => {
                         onClick={(e) => { handleDropdownClick(e); scrollToTop(); }}
                         tabIndex={servicesOpen ? 0 : -1}
                       >
-                        View all services <span aria-hidden="true">↗</span>
+                        View all services <span aria-hidden="true">↗︎</span>
                       </Link>
                     </div>
                   </div>
@@ -323,7 +323,7 @@ const Navbar = () => {
 
           <Link to="/book-meeting" onClick={handleNavClick} className="nv-book">
             <span className="nv-book-text">Book a Meeting</span>
-            <span className="nv-book-arrow" aria-hidden="true">↗</span>
+            <span className="nv-book-arrow" aria-hidden="true">↗︎</span>
           </Link>
         </div>
 
@@ -425,7 +425,7 @@ const Navbar = () => {
                         onClick={handleNavClick}
                         tabIndex={menuOpen && mobileServicesOpen ? 0 : -1}
                       >
-                        View all services ↗
+                        View all services ↗︎
                       </Link>
                     </div>
                   </div>
@@ -441,7 +441,7 @@ const Navbar = () => {
           </button>
           <Link to="/book-meeting" onClick={handleNavClick} className="nv-book nv-book--panel" tabIndex={menuOpen ? 0 : -1}>
             <span className="nv-book-text">Book a Meeting</span>
-            <span className="nv-book-arrow" aria-hidden="true">↗</span>
+            <span className="nv-book-arrow" aria-hidden="true">↗︎</span>
           </Link>
         </div>
       </div>
@@ -831,7 +831,7 @@ const Navbar = () => {
           transform: rotate(180deg); background: #00A3FF; border-color: #00A3FF; color: #000000;
         }
 
-        /* smooth open/close height using grid rows 0fr → 1fr */
+        /* smooth open/close height using grid rows 0fr →︎ 1fr */
         .nv-panel-sub {
           display: grid; grid-template-rows: 0fr;
           transition: grid-template-rows 0.5s cubic-bezier(0.22, 1, 0.36, 1);

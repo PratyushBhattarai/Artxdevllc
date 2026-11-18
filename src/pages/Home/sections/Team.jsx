@@ -51,7 +51,7 @@ const TeamCard = ({ member, index }) => (
             <span key={i} className="tm-social" style={{ '--i': i }} />
           ))}
         </div>
-        <span className="tm-arrow" aria-hidden="true">↗</span>
+        <span className="tm-arrow" aria-hidden="true">↗︎</span>
       </div>
 
     </article>
@@ -73,7 +73,7 @@ const Team = () => {
           </h2>
           <div data-reveal="right">
             <Link to="/team" className="ax-link">
-              Learn More <span className="ax-link-arrow ax-link-arrow--diag">↗</span>
+              Learn More <span className="ax-link-arrow ax-link-arrow--diag">↗︎</span>
             </Link>
           </div>
         </div>

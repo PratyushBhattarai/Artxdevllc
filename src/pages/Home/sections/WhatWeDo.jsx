@@ -78,7 +78,7 @@ const WhatWeDo = () => {
 
           <div data-reveal="up">
             <Link to="/services" className="ax-btn ax-btn--outline wwd-btn">
-              Learn More <span className="ax-btn-arrow">→</span>
+              Learn More <span className="ax-btn-arrow">→︎</span>
             </Link>
           </div>
         </div>

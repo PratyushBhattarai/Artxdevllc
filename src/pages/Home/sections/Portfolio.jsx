@@ -6,9 +6,9 @@ import { Link } from 'react-router-dom';
 /*
   =========================================
   ADDING A PREVIEW TO A PROJECT:
-  - GIF  → put it in public/gifs/ and set 'gifUrl'  (e.g. '/gifs/name.gif').
+  - GIF  →︎ put it in public/gifs/ and set 'gifUrl'  (e.g. '/gifs/name.gif').
            It loops on its own – no hover, no sound or timeline controls.
-  - Video → put it in public/videos/ and set 'videoUrl'.
+  - Video →︎ put it in public/videos/ and set 'videoUrl'.
            The card plays a muted preview on hover; the popup has controls.
   If both are set, the GIF is used.
   =========================================
@@ -108,7 +108,7 @@ const ProjectCard = ({ project, index, onOpen }) => {
             <h3 className="pf-name">{project.title}</h3>
             <p className="pf-category"><span className="pf-category-dot" />{project.category}</p>
           </div>
-          <span className="pf-arrow" aria-hidden="true">↗</span>
+          <span className="pf-arrow" aria-hidden="true">↗︎</span>
         </div>
       </article>
     </div>
@@ -147,7 +147,7 @@ const Portfolio = () => {
           </div>
           <div data-reveal="right">
             <Link to="/portfolio" className="ax-link">
-              All Projects <span className="ax-link-arrow">→</span>
+              All Projects <span className="ax-link-arrow">→︎</span>
             </Link>
           </div>
         </div>
@@ -162,7 +162,7 @@ const Portfolio = () => {
         {/* See More Button */}
         <div className="pf-more" data-reveal="up">
           <Link to="/portfolio" className="ax-btn ax-btn--outline">
-            See More <span className="ax-btn-arrow">→</span>
+            See More <span className="ax-btn-arrow">→︎</span>
           </Link>
         </div>
       </section>
@@ -205,7 +205,7 @@ const Portfolio = () => {
                 rel="noopener noreferrer"
                 className="ax-btn ax-btn--solid pf-visit"
               >
-                Visit Website <span className="ax-btn-arrow">↗</span>
+                Visit Website <span className="ax-btn-arrow">↗︎</span>
               </a>
             </div>
 

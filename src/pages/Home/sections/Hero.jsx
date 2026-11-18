@@ -143,10 +143,10 @@ const Hero = () => {
 
           <div className="hx-actions">
             <Link to="/contact" className="ax-btn ax-btn--solid hx-cta">
-              Start a project <span className="ax-btn-arrow">→</span>
+              Start a project <span className="ax-btn-arrow">→︎</span>
             </Link>
             <Link to="/portfolio" className="ax-link hx-link">
-              See Our Work <span className="ax-link-arrow">→</span>
+              See Our Work <span className="ax-link-arrow">→︎</span>
             </Link>
           </div>
         </div>

@@ -163,7 +163,7 @@ const PortfolioPage = () => {
                     <span className="pp-other-name">{p.name}</span>
                     <span className="pp-other-domain" title={prettyDomain(p.url)}>{prettyDomain(p.url)}</span>
                   </span>
-                  <span className="pp-other-arrow" aria-hidden="true">↗</span>
+                  <span className="pp-other-arrow" aria-hidden="true">↗︎</span>
                 </a>
               ))}
             </div>
@@ -175,7 +175,7 @@ const PortfolioPage = () => {
             <p className="ax-eyebrow">Your project next</p>
             <h2 className="pp-cta-title">Have a project in <span className="ax-shimmer">mind?</span></h2>
             <Link to="/contact" className="ax-btn ax-btn--solid">
-              Start a project <span className="ax-btn-arrow">→</span>
+              Start a project <span className="ax-btn-arrow">→︎</span>
             </Link>
           </div>
 
