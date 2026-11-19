@@ -7,6 +7,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { CURRENCIES, formatMoney, startCheckout } from './payments';
+import Arrow from './Arrow';
 
 // 3D tilt of the payment card following the mouse
 const tilt = (e) => {
@@ -162,7 +163,7 @@ const PayNowModal = ({ open, onClose }) => {
               {stage === 'processing' ? (
                 <><span className="pn-spinner" /> Processing…</>
               ) : (
-                <>Proceed to pay {value > 0 && !amountError ? pretty : ''} <span className="pn-arrow" aria-hidden="true">→︎</span></>
+                <>Proceed to pay {value > 0 && !amountError ? pretty : ''} <span className="pn-arrow" aria-hidden="true"><Arrow /></span></>
               )}
             </button>
 
@@ -184,7 +185,7 @@ const PayNowModal = ({ open, onClose }) => {
               <span className="pn-submit-shine" aria-hidden="true" />
               Got it
             </button>
-            <button type="button" className="pn-back" onClick={() => setStage('form')}>← Change amount</button>
+            <button type="button" className="pn-back" onClick={() => setStage('form')}><Arrow dir="left" /> Change amount</button>
           </div>
         )}
       </div>

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
+import Arrow from '../../../components/Arrow';
 
 // gifUrl (looping GIF) takes priority over videoUrl when both are set
 const ProjectSection = ({ title, description, gifUrl, videoUrl, projectLink, category, index = 0 }) => {
@@ -94,7 +95,7 @@ const ProjectSection = ({ title, description, gifUrl, videoUrl, projectLink, cat
             <p className="ps-category"><span className="ps-category-dot" />{category}</p>
             <h3 className="ps-title">{title}</h3>
           </div>
-          <span className="ps-arrow" aria-hidden="true">↗︎</span>
+          <span className="ps-arrow" aria-hidden="true"><Arrow dir="up-right" /></span>
         </div>
       </article>
 
@@ -131,7 +132,7 @@ const ProjectSection = ({ title, description, gifUrl, videoUrl, projectLink, cat
                 rel="noopener noreferrer"
                 className="ax-btn ax-btn--solid ps-visit"
               >
-                Visit Website <span className="ax-btn-arrow">↗︎</span>
+                Visit Website <span className="ax-btn-arrow"><Arrow dir="up-right" /></span>
               </a>
             </div>
 

@@ -8,6 +8,7 @@ import iconWebApps from '../../../assets/icon-web-apps.png';
 import iconApp from '../../../assets/icon-app.png';
 import iconMarketing from '../../../assets/icon-marketing.png';
 import iconAI from '../../../assets/icon-ai.png';
+import Arrow from '../../../components/Arrow';
 
 const services = [
   { icon: iconWebDesign, title: 'Website Design', desc: 'We craft beautiful, user-centric interfaces that are strategically designed to convert visitors into loyal customers and elevate your brand.' },
@@ -72,7 +73,7 @@ const WhatWeDo = () => {
 
           <div data-reveal="up">
             <Link to="/services" className="ax-btn ax-btn--ink wwd-btn">
-              Learn More <span className="ax-btn-arrow">→︎</span>
+              Learn More <span className="ax-btn-arrow"><Arrow /></span>
             </Link>
           </div>
         </div>
@@ -129,6 +130,9 @@ const WhatWeDo = () => {
             display: flex; flex-direction: column; justify-content: flex-start; gap: 1.5rem;
             height: 100%; padding: 2rem; border-radius: 16px;
             background: #FFFFFF; border: 1px solid #E2E2E2; cursor: default;
+            /* keeps the rising fill inside the rounded corners on iPhone Safari */
+            -webkit-transform: translateZ(0); transform: translateZ(0);
+            -webkit-mask-image: -webkit-radial-gradient(white, black);
             transition: border-color 0.4s ease;
           }
           /* Black fill that rises from the bottom on hover – the card inverts to white text */
@@ -138,37 +142,32 @@ const WhatWeDo = () => {
             transform: scaleY(0); transform-origin: bottom;
             transition: transform 0.5s cubic-bezier(0.7, 0, 0.3, 1);
           }
-          .wwd-card:hover::before { transform: scaleY(1); }
-          .wwd-card:hover { border-color: #0A0A0A; }
-
+          @media (hover: hover) and (pointer: fine) { .wwd-card:hover::before { transform: scaleY(1); } }
+          @media (hover: hover) and (pointer: fine) { .wwd-card:hover { border-color: #0A0A0A; } }
           .wwd-card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
           .wwd-card-head { display: flex; align-items: center; gap: 1rem; }
 
           .wwd-icon { width: 52px; height: 52px; flex-shrink: 0; }
           .wwd-icon img { width: 100%; height: 100%; object-fit: contain; filter: invert(1); transition: filter 0.4s ease; }
-          .wwd-card:hover .wwd-icon img { filter: invert(0); }
-
+          @media (hover: hover) and (pointer: fine) { .wwd-card:hover .wwd-icon img { filter: invert(0); } }
           .wwd-card-title {
             color: #0A0A0A; font-family: 'Hind', sans-serif;
             font-size: 1.2rem; font-weight: 600; margin: 0;
             transition: color 0.4s ease;
           }
-          .wwd-card:hover .wwd-card-title { color: #FFFFFF; }
-
+          @media (hover: hover) and (pointer: fine) { .wwd-card:hover .wwd-card-title { color: #FFFFFF; } }
           .wwd-card-corner { position: relative; flex-shrink: 0; }
           .wwd-card-num {
             font-family: monospace, sans-serif; color: #9A9A9A; font-size: 0.85rem; letter-spacing: 2px;
             transition: color 0.4s ease;
           }
-          .wwd-card:hover .wwd-card-num { color: #888888; }
-
+          @media (hover: hover) and (pointer: fine) { .wwd-card:hover .wwd-card-num { color: #888888; } }
           .wwd-card-desc {
             color: #555555; font-family: 'Hind', sans-serif;
             font-size: 0.95rem; line-height: 1.6; margin: 0;
             transition: color 0.4s ease;
           }
-          .wwd-card:hover .wwd-card-desc { color: #BDBDBD; }
-
+          @media (hover: hover) and (pointer: fine) { .wwd-card:hover .wwd-card-desc { color: #BDBDBD; } }
           /* Bar that fills along the bottom when the card scrolls in */
           .wwd-card-bar {
             position: absolute; left: 0; bottom: 0; height: 3px; width: 100%;
@@ -177,8 +176,7 @@ const WhatWeDo = () => {
             transition: transform 1.4s cubic-bezier(0.6, 0, 0.2, 1) calc(var(--d, 0s) + 0.4s), background-color 0.4s ease;
           }
           [data-visible="true"] > .wwd-card .wwd-card-bar { transform: scaleX(1); }
-          .wwd-card:hover .wwd-card-bar { background: #FFFFFF; }
-
+          @media (hover: hover) and (pointer: fine) { .wwd-card:hover .wwd-card-bar { background: #FFFFFF; } }
           .wwd-btn { padding: 12px 40px; font-size: 1rem; }
 
           @keyframes wwdPan   { to { background-position: 0 56px, 56px 0; } }

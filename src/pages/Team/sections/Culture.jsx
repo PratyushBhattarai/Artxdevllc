@@ -71,7 +71,7 @@ const Culture = () => {
             transition: border-color 0.4s ease, box-shadow 0.5s ease;
           }
           .cu-cell--big .cu-photo { height: 400px; }
-          .cu-photo:hover { border-color: rgba(0,163,255,0.5); box-shadow: 0 30px 70px -30px rgba(0,163,255,0.55); }
+          .cu-photo:hover { border-color: #3A3A3A; }
 
           .cu-photo img {
             width: 100%; height: 100%; object-fit: cover; display: block;

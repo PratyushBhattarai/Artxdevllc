@@ -1,6 +1,7 @@
 // src/pages/BookMeeting/steps/StepDateTime.jsx
 import React, { useMemo, useState } from 'react';
 import { MEETING_TYPES, TIME_ZONES, MAX_DAYS_AHEAD, OFFICE_TIME_ZONE } from '../bookingConfig';
+import Arrow from '../../../components/Arrow';
 import {
   dayKeyIn,
   toDayKey,
@@ -99,9 +100,9 @@ const StepDateTime = ({ booking, update }) => {
         {/* Calendar */}
         <div className="bm-cal">
           <div className="bm-cal-head">
-            <button type="button" className="bm-cal-nav" onClick={() => shift(-1)} disabled={!canPrev} aria-label="Previous month">←</button>
+            <button type="button" className="bm-cal-nav" onClick={() => shift(-1)} disabled={!canPrev} aria-label="Previous month"><Arrow dir="left" /></button>
             <span key={monthLabel} className="bm-cal-month">{monthLabel}</span>
-            <button type="button" className="bm-cal-nav" onClick={() => shift(1)} disabled={!canNext} aria-label="Next month">→︎</button>
+            <button type="button" className="bm-cal-nav" onClick={() => shift(1)} disabled={!canNext} aria-label="Next month"><Arrow /></button>
           </div>
 
           <div className="bm-cal-grid">

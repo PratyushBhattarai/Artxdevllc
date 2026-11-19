@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import CountUp from './CountUp';
+import Arrow from '../../../components/Arrow';
 
 /*
   Edit packages, prices and features here.
@@ -278,7 +279,7 @@ const Packages = () => {
               </ul>
 
               <Link to={planLink(p, group)} className={`svc-btn ${p.featured ? 'svc-btn-accent' : 'svc-btn-light'} svc-btn-block`}>
-                {p.cta} <span className="svc-arrow">→︎</span>
+                {p.cta} <span className="svc-arrow"><Arrow /></span>
               </Link>
             </div>
           ))}

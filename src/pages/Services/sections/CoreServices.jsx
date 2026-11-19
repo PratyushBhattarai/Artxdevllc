@@ -1,6 +1,7 @@
 // src/pages/Services/sections/CoreServices.jsx
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import Arrow from '../../../components/Arrow';
 
 // Edit the list of core services here.
 //   desc     – short line shown in the row
@@ -125,7 +126,7 @@ const CoreServices = () => {
                       <span key={t} className="svc-tag">{t}</span>
                     ))}
                   </div>
-                  <span className="svc-core-arrow" aria-hidden="true">↗︎</span>
+                  <span className="svc-core-arrow" aria-hidden="true"><Arrow dir="up-right" /></span>
                 </div>
 
                 {/* Detailed description – slides open below the row */}
@@ -149,7 +150,7 @@ const CoreServices = () => {
                         className="svc-core-cta"
                         tabIndex={isOpen ? 0 : -1}
                       >
-                        Discuss this service <span aria-hidden="true">→︎</span>
+                        Discuss this service <span aria-hidden="true"><Arrow /></span>
                       </Link>
                     </div>
                   </div>

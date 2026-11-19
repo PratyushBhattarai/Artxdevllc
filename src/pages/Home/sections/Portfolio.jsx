@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import Arrow from '../../../components/Arrow';
 
 /*
   =========================================
@@ -108,7 +109,7 @@ const ProjectCard = ({ project, index, onOpen }) => {
             <h3 className="pf-name">{project.title}</h3>
             <p className="pf-category"><span className="pf-category-dot" />{project.category}</p>
           </div>
-          <span className="pf-arrow" aria-hidden="true">↗︎</span>
+          <span className="pf-arrow" aria-hidden="true"><Arrow dir="up-right" /></span>
         </div>
       </article>
     </div>
@@ -147,7 +148,7 @@ const Portfolio = () => {
           </div>
           <div data-reveal="right">
             <Link to="/portfolio" className="ax-link ax-link--ink">
-              All Projects <span className="ax-link-arrow">→︎</span>
+              All Projects <span className="ax-link-arrow"><Arrow /></span>
             </Link>
           </div>
         </div>
@@ -162,7 +163,7 @@ const Portfolio = () => {
         {/* See More Button */}
         <div className="pf-more" data-reveal="up">
           <Link to="/portfolio" className="ax-btn ax-btn--ink">
-            See More <span className="ax-btn-arrow">→︎</span>
+            See More <span className="ax-btn-arrow"><Arrow /></span>
           </Link>
         </div>
       </section>
@@ -205,7 +206,7 @@ const Portfolio = () => {
                 rel="noopener noreferrer"
                 className="ax-btn ax-btn--solid pf-visit"
               >
-                Visit Website <span className="ax-btn-arrow">↗︎</span>
+                Visit Website <span className="ax-btn-arrow"><Arrow dir="up-right" /></span>
               </a>
             </div>
 

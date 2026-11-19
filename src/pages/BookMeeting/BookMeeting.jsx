@@ -10,6 +10,7 @@ import StepDetails from './steps/StepDetails';
 import { detailsErrors } from './validation';
 import StepReview from './steps/StepReview';
 import SuccessView from './steps/SuccessView';
+import Arrow from '../../components/Arrow';
 
 const STEPS = ['Meeting', 'Date & time', 'Your details', 'Confirm'];
 
@@ -160,7 +161,7 @@ const BookMeeting = () => {
                 <div className="bm-actions">
                   {step > 0 ? (
                     <button type="button" className="bm-btn bm-btn-ghost" onClick={() => goTo(step - 1)}>
-                      ← Back
+                      <Arrow dir="left" /> Back
                     </button>
                   ) : (
                     <span />
@@ -176,9 +177,9 @@ const BookMeeting = () => {
                       {status === 'sending' ? (
                         <><span className="bm-spinner" /> Booking…</>
                       ) : step === STEPS.length - 1 ? (
-                        <>Confirm booking <span className="bm-arrow">→︎</span></>
+                        <>Confirm booking <span className="bm-arrow"><Arrow /></span></>
                       ) : (
-                        <>Continue <span className="bm-arrow">→︎</span></>
+                        <>Continue <span className="bm-arrow"><Arrow /></span></>
                       )}
                     </button>
                   </div>

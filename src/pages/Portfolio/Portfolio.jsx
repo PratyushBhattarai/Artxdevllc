@@ -15,15 +15,24 @@ import logoCarolinaStump from '../../assets/barnd8.png';
 // Logos taken from each company's own website
 import logoDeConstruction from '../../assets/de-construction-logo.png';
 import logoTotalLandscape from '../../assets/total-landscape-solutions-logo.png';
+import Arrow from '../../components/Arrow';
 
-// "Other projects we've built" – logo + link only (no video needed)
+// "Other projects we've built" – logo + short description; clicking a card opens the live website
 const otherProjects = [
-  { name: 'Trikore Services', url: 'https://www.trikoreservices.com/', logo: logoTrikore },
-  { name: 'Sam Landscaping SVCS', url: 'https://landscapinginsandiego.com/', logo: logoSamLandscaping },
-  { name: 'Habiff Builders Group', url: 'https://hbgtexas.com/', logo: logoHabiff },
-  { name: 'Carolina Stump Services', url: 'https://carolinastumpservices.com/', logo: logoCarolinaStump },
-  { name: 'DE Construction', url: 'https://deconstructionph.com/', logo: logoDeConstruction },
-  { name: 'Total Landscape Solutions', url: 'https://www.totallandscapesolution.com/', logo: logoTotalLandscape },
+  { name: 'Trikore Services', url: 'https://www.trikoreservices.com/', logo: logoTrikore,
+    desc: 'A clean, modern business website that presents their services clearly and makes it easy for customers to get in touch.' },
+  { name: 'Sam Landscaping SVCS', url: 'https://landscapinginsandiego.com/', logo: logoSamLandscaping,
+    desc: 'A landscaping website for San Diego homeowners – services, past work and a quick way to request a free estimate.' },
+  { name: 'Habiff Builders Group', url: 'https://hbgtexas.com/', logo: logoHabiff,
+    desc: 'A professional site for a Texas builders group, showcasing their construction projects and building services.' },
+  { name: 'Carolina Stump Services', url: 'https://carolinastumpservices.com/', logo: logoCarolinaStump,
+    desc: 'A simple, fast website for a stump grinding and removal company, built to bring in local service calls.' },
+  { name: 'DE Construction', url: 'https://deconstructionph.com/', logo: logoDeConstruction,
+    desc: 'A construction company website presenting their services, completed projects and contact details in one place.' },
+  { name: 'Total Landscape Solutions', url: 'https://www.totallandscapesolution.com/', logo: logoTotalLandscape,
+    desc: 'A landscaping and outdoor services website with clear service pages and an easy quote request for new clients.' },
+  { name: "Mitchell's Handyman Service", url: 'https://mitchellshandymanservice.com/', mark: 'MHS',
+    desc: 'A website for a trusted handyman in Richlands, NC – drywall, painting, decks, fencing and pressure washing, with a project gallery and quick quote requests.' },
   // A project without a logo file shows a name tile instead. Add  logo: yourImport  to use an image,
   // and optionally  mark: 'AB'  to choose the letters on the name tile.
 ];
@@ -31,8 +40,6 @@ const otherProjects = [
 // "Total Landscape Solutions" -> "TLS" (used when there's no logo image)
 const initials = (name) => name.split(/\s+/).map((w) => w[0]).join('').slice(0, 3).toUpperCase();
 
-// "https://www.example.com/" -> "example.com"
-const prettyDomain = (url) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
 
 const projects = [
   {
@@ -62,13 +69,6 @@ const projects = [
     description: "An online apparel store for Indiana State Apparel – tees, hoodies and sweatshirts printed fresh and shipped nationwide – with storytelling about Indiana's lakes, forests and wetlands.",
     videoUrl: '/videos/Indiana.mp4',
     projectLink: 'https://indianastateapparel.com',
-  },
-  {
-    title: 'Mitchells handyman service',
-    category: 'Website',
-    description: 'A website for a trusted handyman in Richlands, NC – presenting drywall, painting, decks, fencing and pressure-washing services, a project gallery and a simple request-a-quote process.',
-    videoUrl: '/videos/mitchellshandymanservice.mp4',
-    projectLink: 'https://mitchellshandymanservice.com',
   },
 ];
 
@@ -129,12 +129,17 @@ const PortfolioPage = () => {
             ))}
           </div>
 
-          {/* Other projects – logos that link to the live websites */}
+        </section>
+      </div>
+
+      <div className="pp-outer pp-outer--dark">
+        <section className="pp-section pp-section--dark">
+          {/* Other projects – logo + short description */}
           <div className="pp-other">
             <div className="pp-other-head" data-reveal="up">
               <p className="ax-eyebrow">More work</p>
               <h2 className="pp-other-title">Other projects we've built</h2>
-              <p className="pp-other-sub">A few more websites we've designed and developed. Tap a logo to visit the live site.</p>
+              <p className="pp-other-sub">A few more websites we've designed and developed. Click a card to visit the live site.</p>
             </div>
 
             <div className="pp-other-grid">
@@ -161,9 +166,9 @@ const PortfolioPage = () => {
                   </span>
                   <span className="pp-other-info">
                     <span className="pp-other-name">{p.name}</span>
-                    <span className="pp-other-domain" title={prettyDomain(p.url)}>{prettyDomain(p.url)}</span>
+                    <span className="pp-other-desc">{p.desc}</span>
                   </span>
-                  <span className="pp-other-arrow" aria-hidden="true">↗︎</span>
+                  <span className="pp-other-arrow" aria-hidden="true"><Arrow dir="up-right" /></span>
                 </a>
               ))}
             </div>
@@ -175,7 +180,7 @@ const PortfolioPage = () => {
             <p className="ax-eyebrow">Your project next</p>
             <h2 className="pp-cta-title">Have a project in <span className="ax-shimmer">mind?</span></h2>
             <Link to="/contact" className="ax-btn ax-btn--solid">
-              Start a project <span className="ax-btn-arrow">→︎</span>
+              Start a project <span className="ax-btn-arrow"><Arrow /></span>
             </Link>
           </div>
 
@@ -183,11 +188,20 @@ const PortfolioPage = () => {
       </div>
 
       <style>{projectSectionStyles + `
-        .pp-outer { background: #FFFFFF; padding: 0 0.15rem; }
-        .pp-section {
-          position: relative; background: #000000; padding: 4rem 5%;
-          border-top: 1px solid #333333;
+        .pp-outer { background: #FFFFFF; }
+        .pp-section { position: relative; background: #FFFFFF; padding: 4.5rem 5% 5rem; }
+        .pp-outer--dark { background: #000000; }
+        .pp-section--dark { background: #000000; padding: 5rem 5% 5rem; }
+
+        /* project cards on white */
+        .pp-section:not(.pp-section--dark) .ps-title { color: #0A0A0A; }
+        .pp-section:not(.pp-section--dark) .ps-category { color: #777777; }
+        .pp-section:not(.pp-section--dark) .ps-media { border-color: #E5E5E5; }
+        .pp-section:not(.pp-section--dark) .ps-arrow { border-color: #D4D4D4; color: #0A0A0A; }
+        .pp-section:not(.pp-section--dark) .ps-card:hover .ps-arrow {
+          background: #0A0A0A; border-color: #0A0A0A; color: #FFFFFF; box-shadow: none;
         }
+        .pp-section:not(.pp-section--dark) .ps-media:hover { border-color: #0A0A0A; box-shadow: 0 24px 50px -28px rgba(0,0,0,0.5); }
 
         /* Filters */
         .pp-toolbar {
@@ -198,25 +212,24 @@ const PortfolioPage = () => {
         .pp-filter {
           display: inline-flex; align-items: center; gap: 8px;
           padding: 8px 16px; border-radius: 30px; cursor: pointer;
-          background: transparent; border: 1px solid #333333; color: #BBBBBB;
+          background: transparent; border: 1px solid #DADADA; color: #444444;
           font-family: 'Hind', sans-serif; font-size: 0.85rem;
           transition: background 0.35s ease, color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease, transform 0.2s ease;
         }
-        .pp-filter:hover { border-color: #00A3FF; color: #FFFFFF; }
+        .pp-filter:hover { border-color: #0A0A0A; color: #0A0A0A; }
         .pp-filter:active { transform: scale(0.96); }
         .pp-filter.is-active {
-          background: #FFFFFF; border-color: #FFFFFF; color: #000000; font-weight: 600;
-          box-shadow: 0 0 24px -4px rgba(0,163,255,0.7);
+          background: #0A0A0A; border-color: #0A0A0A; color: #FFFFFF; font-weight: 600;
         }
         .pp-filter-count {
           min-width: 20px; height: 20px; padding: 0 6px; box-sizing: border-box; border-radius: 10px;
           display: inline-flex; align-items: center; justify-content: center;
-          background: #1F1F1F; color: #888888; font-size: 0.7rem;
+          background: #EFEFEF; color: #777777; font-size: 0.7rem;
           transition: background 0.35s ease, color 0.35s ease;
         }
-        .pp-filter.is-active .pp-filter-count { background: #00A3FF; color: #000000; }
+        .pp-filter.is-active .pp-filter-count { background: #FFFFFF; color: #0A0A0A; }
         .pp-showing { margin: 0; color: #777777; font-family: 'Hind', sans-serif; font-size: 0.85rem; }
-        .pp-showing strong { color: #00A3FF; }
+        .pp-showing strong { color: #0A0A0A; }
 
         /* Grid */
         .pp-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 3rem; }
@@ -227,7 +240,7 @@ const PortfolioPage = () => {
         }
 
         /* Other projects (logo links) */
-        .pp-other { margin-top: 5.5rem; }
+        .pp-other { margin-top: 0; }
         .pp-other-head { margin-bottom: 2.25rem; }
         .pp-other-title {
           color: #FFFFFF; font-family: 'Inknut Antiqua', serif; font-weight: 400;
@@ -243,10 +256,7 @@ const PortfolioPage = () => {
           color: #FFFFFF; text-decoration: none;
           transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.35s ease, box-shadow 0.45s ease;
         }
-        .pp-other-card:hover, .pp-other-card:focus-visible {
-          transform: translateY(-8px); border-color: #00A3FF; outline: none;
-          box-shadow: 0 22px 44px -18px rgba(0, 163, 255, 0.55);
-        }
+        .pp-other-card:hover { transform: translateY(-4px); border-color: #3A3A3A; }
         /* white tile so every logo (light or dark) looks clean */
         .pp-other-logo {
           display: flex; align-items: center; justify-content: center;
@@ -280,21 +290,24 @@ const PortfolioPage = () => {
           color: #FFFFFF; font-family: 'Inter', sans-serif; font-weight: 700;
           font-size: 0.82rem; letter-spacing: 1.5px; text-transform: uppercase; line-height: 1.3;
         }
-        .pp-other-info { display: flex; flex-direction: column; gap: 4px; padding: 0 4px; padding-right: 36px; min-width: 0; }
+        .pp-other-info { display: flex; flex-direction: column; gap: 6px; padding: 0 4px; min-width: 0; }
+        .pp-other-card { cursor: pointer; }
+        .pp-other-card:focus-visible { outline: 2px solid #FFFFFF; outline-offset: 3px; }
         .pp-other-name { font-family: 'Hind', sans-serif; font-weight: 600; font-size: 1.02rem; line-height: 1.3; }
-        .pp-other-domain {
-          font-family: 'Hind', sans-serif; font-size: 0.82rem; color: #00A3FF;
-          white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0;
+        /* short description – 3 lines */
+        .pp-other-desc {
+          font-family: 'Hind', sans-serif; font-size: 0.86rem; line-height: 1.5; color: #9A9A9A;
+          display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
         }
         .pp-other-arrow {
-          position: absolute; right: 16px; bottom: 18px;
+          position: absolute; top: 22px; right: 22px; z-index: 2;
           width: 30px; height: 30px; border-radius: 50%;
           display: grid; place-items: center; font-size: 0.9rem;
-          border: 1px solid #333333; color: #FFFFFF;
+          background: rgba(0,0,0,0.7); border: 1px solid rgba(255,255,255,0.2); color: #FFFFFF;
           transition: background 0.35s ease, border-color 0.35s ease, color 0.35s ease, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
         }
         .pp-other-card:hover .pp-other-arrow {
-          background: #00A3FF; border-color: #00A3FF; color: #000000; transform: rotate(45deg);
+          background: #FFFFFF; border-color: #FFFFFF; color: #000000; transform: rotate(45deg);
         }
 
         /* CTA */
@@ -307,7 +320,7 @@ const PortfolioPage = () => {
         .pp-cta-glow {
           position: absolute; bottom: -180px; left: 50%; width: 700px; height: 360px;
           transform: translateX(-50%); border-radius: 50%; pointer-events: none;
-          background: radial-gradient(ellipse, rgba(0,163,255,0.22), transparent 70%);
+          background: radial-gradient(ellipse, rgba(255,255,255,0.08), transparent 70%);
           animation: ppBreath 6s ease-in-out infinite;
         }
         .pp-cta > *:not(.pp-cta-glow) { position: relative; }
@@ -331,9 +344,7 @@ const PortfolioPage = () => {
           .pp-other-card { padding: 10px 10px 14px; border-radius: 14px; }
           .pp-other-logo { height: 110px; padding: 10px; }
           .pp-other-name { font-size: 0.92rem; }
-          .pp-other-domain { font-size: 0.74rem; }
-          .pp-other-info { padding-right: 0; }
-          .pp-other-arrow { width: 24px; height: 24px; top: 16px; right: 16px; bottom: auto; font-size: 0.75rem; background: rgba(0,0,0,0.55); border-color: rgba(255,255,255,0.25); }
+          .pp-other-desc { font-size: 0.78rem; }
         }
       `}</style>
     </main>

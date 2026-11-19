@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import Arrow from '../../../components/Arrow';
 
 // ==========================================
 // 🔴 ADD YOUR QUESTIONS AND ANSWERS HERE 🔴
@@ -79,7 +80,7 @@ const FAQ = () => {
         <div className="faq-cta" data-reveal="up">
           <p>Still have questions?</p>
           <Link to="/contact" className="ax-btn ax-btn--outline">
-            Talk to us <span className="ax-btn-arrow">→︎</span>
+            Talk to us <span className="ax-btn-arrow"><Arrow /></span>
           </Link>
         </div>
 

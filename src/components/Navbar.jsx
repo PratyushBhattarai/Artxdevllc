@@ -6,6 +6,7 @@ import logo from '../assets/logo.png';
 import arrowDown from '../assets/Polygon 1.png';
 import PayNowModal from './PayNowModal';
 import { useRegion } from '../context/RegionContext';
+import Arrow from './Arrow';
 
 const cardIcon = (
   <svg viewBox="0 0 24 24" aria-hidden="true" className="nv-pay-icon">
@@ -284,7 +285,7 @@ const Navbar = () => {
                           onClick={handleDropdownClick}
                           tabIndex={servicesOpen ? 0 : -1}
                         >
-                          {q.label} <span aria-hidden="true">→︎</span>
+                          {q.label} <span aria-hidden="true"><Arrow /></span>
                         </Link>
                       ))}
                       <Link
@@ -294,7 +295,7 @@ const Navbar = () => {
                         onClick={(e) => { handleDropdownClick(e); scrollToTop(); }}
                         tabIndex={servicesOpen ? 0 : -1}
                       >
-                        View all services <span aria-hidden="true">↗︎</span>
+                        View all services <span aria-hidden="true"><Arrow dir="up-right" /></span>
                       </Link>
                     </div>
                   </div>
@@ -323,7 +324,7 @@ const Navbar = () => {
 
           <Link to="/book-meeting" onClick={handleNavClick} className="nv-book">
             <span className="nv-book-text">Book a Meeting</span>
-            <span className="nv-book-arrow" aria-hidden="true">↗︎</span>
+            <span className="nv-book-arrow" aria-hidden="true"><Arrow dir="up-right" /></span>
           </Link>
         </div>
 
@@ -425,7 +426,7 @@ const Navbar = () => {
                         onClick={handleNavClick}
                         tabIndex={menuOpen && mobileServicesOpen ? 0 : -1}
                       >
-                        View all services ↗︎
+                        View all services <Arrow dir="up-right" />
                       </Link>
                     </div>
                   </div>
@@ -441,7 +442,7 @@ const Navbar = () => {
           </button>
           <Link to="/book-meeting" onClick={handleNavClick} className="nv-book nv-book--panel" tabIndex={menuOpen ? 0 : -1}>
             <span className="nv-book-text">Book a Meeting</span>
-            <span className="nv-book-arrow" aria-hidden="true">↗︎</span>
+            <span className="nv-book-arrow" aria-hidden="true"><Arrow dir="up-right" /></span>
           </Link>
         </div>
       </div>

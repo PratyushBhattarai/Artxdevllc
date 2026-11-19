@@ -1,6 +1,7 @@
 // src/pages/Services/sections/ServicesCTA.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Arrow from '../../../components/Arrow';
 
 const ServicesCTA = () => {
   return (
@@ -25,7 +26,7 @@ const ServicesCTA = () => {
 
         <div className="svc-hero-actions svc-reveal" style={{ '--d': '350ms' }}>
           <Link to="/book-meeting" className="svc-btn svc-btn-accent">
-            Start your project <span className="svc-arrow">→︎</span>
+            Start your project <span className="svc-arrow"><Arrow /></span>
           </Link>
           <Link to="/contact" className="svc-btn svc-btn-ghost">
             Contact us

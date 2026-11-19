@@ -8,6 +8,7 @@
 import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import HeroRobot from './HeroRobot';
+import Arrow from '../../../components/Arrow';
 import {
   motion,
   useMotionValue,
@@ -140,12 +141,12 @@ const Hero = () => {
           <motion.div whileHover={{ y: -3 }} whileTap={{ scale: 0.97 }}>
             <Link to="/contact" className="hx-btn hx-btn--primary">
               <span className="hx-btn-shine" aria-hidden="true" />
-              Start a project <span className="hx-btn-arrow">→︎</span>
+              Start a project <span className="hx-btn-arrow"><Arrow /></span>
             </Link>
           </motion.div>
           <motion.div whileHover={{ y: -3 }} whileTap={{ scale: 0.97 }}>
             <Link to="/portfolio" className="hx-btn hx-btn--glass">
-              See Our Work <span className="hx-btn-arrow">→︎</span>
+              See Our Work <span className="hx-btn-arrow"><Arrow /></span>
             </Link>
           </motion.div>
         </motion.div>

@@ -1,6 +1,6 @@
 // src/pages/About/sections/Companies.jsx
 import React, { useEffect, useState } from 'react';
-import artxLogo from '../../../assets/artx-logo.png';
+import artxLogo from '../../../assets/logo.png'; // main ARTX logo, shown in white
 
 const COMPANIES = [
   {
@@ -62,7 +62,6 @@ const Companies = () => {
 
               <div className="card-footer">
                 <p>{c.address}</p>
-                <span className="card-arrow">↗︎</span>
               </div>
             </div>
           ))}

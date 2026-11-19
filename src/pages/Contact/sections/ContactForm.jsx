@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useRegion } from '../../../context/RegionContext';
 import { OFFICES } from '../../../data/offices';
+import Arrow from '../../../components/Arrow';
 
 const faqs = [
   { q: "How long does it take to build a website?", a: "Most basic websites take 2-3 weeks, e-commerce stores take 3-4 weeks, and enterprise solutions take 4-8 weeks depending on complexity. We'll provide a detailed timeline during our initial consultation." },
@@ -173,7 +174,7 @@ const ContactForm = () => {
                     {isSubmitting ? (
                       <><span className="cf-spinner" aria-hidden="true" /> Sending...</>
                     ) : (
-                      <>Send Message <span className="cf-submit-arrow" aria-hidden="true">→︎</span></>
+                      <>Send Message <span className="cf-submit-arrow" aria-hidden="true"><Arrow /></span></>
                     )}
                   </button>
                 </form>
@@ -196,7 +197,7 @@ const ContactForm = () => {
                 <h3 className="cf-card-title">Email Us</h3>
                 <p className="cf-card-text">Get in touch via email for detailed project discussions</p>
                 <a key={region} href={`mailto:${office.email}`} className="cf-card-link cf-swap">
-                  {office.email} <span aria-hidden="true">→︎</span>
+                  {office.email} <span aria-hidden="true"><Arrow /></span>
                 </a>
               </div>
             </div>
@@ -208,7 +209,7 @@ const ContactForm = () => {
                 <h3 className="cf-card-title">Call Us <span key={region} className="cf-office-tag cf-swap">{region === 'USA' ? 'USA' : 'Nepal'}</span></h3>
                 <p className="cf-card-text">Speak directly with our team for immediate assistance</p>
                 <a key={region} href={office.phoneHref} className="cf-card-link cf-swap">
-                  {office.phone} <span aria-hidden="true">→︎</span>
+                  {office.phone} <span aria-hidden="true"><Arrow /></span>
                 </a>
               </div>
             </div>

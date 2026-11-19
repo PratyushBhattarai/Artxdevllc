@@ -5,6 +5,7 @@ import ankitImg from '../../../assets/team/ankit.jpg';
 import prashantImg from '../../../assets/team/prashant.jpg';
 import raybeenImg from '../../../assets/team/raybeen.jpg';
 import pratyushImg from '../../../assets/team/pratyush.jpg';
+import Arrow from '../../../components/Arrow';
 
 // Add a photo with:  image: someImportedImage
 // pos = object-position, keeps the face inside the square crop
@@ -72,7 +73,7 @@ const Team = () => {
           </h2>
           <div data-reveal="right">
             <Link to="/team" className="ax-link ax-link--ink">
-              Learn More <span className="ax-link-arrow ax-link-arrow--diag">↗︎</span>
+              Learn More <span className="ax-link-arrow ax-link-arrow--diag"><Arrow dir="up-right" /></span>
             </Link>
           </div>
         </div>

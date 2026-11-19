@@ -296,8 +296,9 @@ const Footer = () => {
         }
         /* Blue arrow appears on the left */
         .ft-link::before {
-          content: '→︎'; position: absolute; left: 0; top: 0;
-          color: #00A3FF; opacity: 0; transform: translateX(-6px);
+          content: ''; position: absolute; left: 0; top: 50%; margin-top: -0.45em; width: 0.9em; height: 0.9em;
+          background: #00A3FF; -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E") center / contain no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E") center / contain no-repeat;
+          opacity: 0; transform: translateX(-6px);
           transition: opacity 0.3s ease, transform 0.35s ease;
         }
         /* Blue underline draws in */

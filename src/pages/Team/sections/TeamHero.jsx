@@ -66,7 +66,7 @@ const TeamHero = () => {
           .th-glow {
             position: absolute; top: -260px; left: 50%; width: 900px; height: 520px; z-index: 0;
             transform: translateX(-50%); border-radius: 50%; pointer-events: none;
-            background: radial-gradient(ellipse, rgba(0,163,255,0.2), rgba(255,255,255,0.03) 45%, transparent 70%);
+            background: radial-gradient(ellipse, rgba(255,255,255,0.09), rgba(255,255,255,0.02) 45%, transparent 70%);
             animation: thBreath 6s ease-in-out infinite;
           }
 
@@ -87,7 +87,7 @@ const TeamHero = () => {
           }
           .th-ceo::before {
             content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
-            background: radial-gradient(520px circle at var(--mx, 30%) var(--my, 50%), rgba(0,163,255,0.12), transparent 50%);
+            background: radial-gradient(520px circle at var(--mx, 30%) var(--my, 50%), rgba(255,255,255,0.06), transparent 50%);
             opacity: 0; transition: opacity 0.4s ease;
           }
           .th-ceo::after {
@@ -96,7 +96,7 @@ const TeamHero = () => {
             background-size: 40% 100%; background-repeat: no-repeat;
             animation: thScan 4s linear infinite;
           }
-          .th-ceo:hover { border-color: rgba(0,163,255,0.4); box-shadow: 0 30px 70px -30px rgba(0,163,255,0.55); }
+          .th-ceo:hover { border-color: #3A3A3A; }
           .th-ceo:hover::before { opacity: 1; }
 
           .th-photo-wrap { position: relative; width: 350px; height: 350px; flex-shrink: 0; }
@@ -112,7 +112,7 @@ const TeamHero = () => {
             transition: filter 0.7s ease, transform 1s cubic-bezier(0.22, 1, 0.36, 1);
           }
           .th-ceo:hover .th-photo img { filter: grayscale(0); transform: scale(1.05); }
-          .th-ceo:hover .th-photo { border-color: #00A3FF; }
+          .th-ceo:hover .th-photo { border-color: #FFFFFF; }
           .th-silhouette {
             width: 80%; height: 90%; background: #444444;
             border-top-left-radius: 100px; border-top-right-radius: 100px;
