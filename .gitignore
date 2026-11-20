@@ -2,3 +2,5 @@
 dist/
 .env
 .git/
+# cPanel upload bundles
+*.zip

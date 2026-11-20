@@ -27,9 +27,9 @@ const TeamCard = ({ member, index }) => (
       </div>
 
       {/* Photo / silhouette */}
-      <div className="tm-photo">
+      <div className="tm-photo" onContextMenu={(e) => e.preventDefault()}>
         {member.image ? (
-          <img src={member.image} alt={member.name} className="tm-img" style={{ objectPosition: member.pos || 'center' }} />
+          <img src={member.image} alt={member.name} className="tm-img" draggable={false} style={{ objectPosition: member.pos || 'center' }} />
         ) : (
           <div className="tm-silhouette" aria-hidden="true">
             <span className="tm-head" />
@@ -143,6 +143,9 @@ const Team = () => {
             background: #333333; border-radius: 12px; margin-bottom: 1.5rem;
             display: flex; align-items: flex-end; justify-content: center;
           }
+          /* team photos can't be right-clicked, dragged or long-pressed to save */
+          .tm-photo { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
+          .tm-img { pointer-events: none; -webkit-user-drag: none; -webkit-touch-callout: none; }
           .tm-img {
             width: 100%; height: 100%; object-fit: cover;
             filter: grayscale(1) contrast(1.05);
