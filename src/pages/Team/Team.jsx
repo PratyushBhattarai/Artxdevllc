@@ -30,14 +30,14 @@ const LEADER = {
 
 // teams: which filter tabs the person appears under
 const MEMBERS = [
-  { name: 'Prashant', title: 'Lead Developer', teams: ['Engineering'], image: prashantImg, pos: 'center 15%', lead: true },
+  { name: 'Prashant Karna', title: 'Lead Developer', teams: ['Engineering'], image: prashantImg, pos: 'center 15%', lead: true },
   { name: 'Ankit Jung Thapa', title: 'Developer · Sales', teams: ['Engineering', 'Sales'], image: ankitImg, pos: 'center 20%' },
   { name: 'Pratyush Bhattarai', title: 'Developer · Sales', teams: ['Engineering', 'Sales'], image: pratyushImg, pos: 'center 30%' },
   { name: 'Rabin Lamichhane', title: 'Project Manager', teams: ['Sales'], image: raybeenImg, pos: 'center 40%' },
   { name: 'Sumeet', title: 'Developer', teams: ['Engineering'], image: sumeetImg, pos: 'center 40%' },
   // SEO – add photos/names when ready (a silhouette shows until then)
-  { name: 'SEO Specialist', title: 'Joining soon', teams: ['SEO'], image: null },
-  { name: 'Content Strategist', title: 'Joining soon', teams: ['SEO'], image: null },
+  { name: 'SEO Specialist', title: 'Coming soon', teams: ['SEO'], image: null },
+  { name: 'Content Strategist', title: 'Coming soon', teams: ['SEO'], image: null },
 ];
 
 const PRINCIPLES = [
@@ -74,6 +74,9 @@ const Photo = ({ image, name, pos, className = '' }) => (
 
 const Team = () => {
   const [tab, setTab] = useState('All');
+  // tap / click a photo to show it in colour (phones have no hover); tap again to go back
+  const [colorKey, setColorKey] = useState(null);
+  const toggleColor = (key) => setColorKey((k) => (k === key ? null : key));
   const visible = tab === 'All' ? MEMBERS.filter((m, i, arr) => arr.findIndex((x) => x.name === m.name) === i) : MEMBERS.filter((m) => m.teams.includes(tab));
   const countFor = (t) => (t === 'All'
     ? new Set(MEMBERS.map((m) => m.name)).size
@@ -119,7 +122,11 @@ const Team = () => {
       {/* ===================== 2. LEADERSHIP ===================== */}
       <section className="tm2-lead">
         <div className="tm2-wrap tm2-lead-grid">
-          <motion.div className="tm2-lead-photo-wrap" {...reveal(0)}>
+          <motion.div
+            className={`tm2-lead-photo-wrap${colorKey === 'leader' ? ' is-color' : ''}`}
+            onClick={() => toggleColor('leader')}
+            {...reveal(0)}
+          >
             <Photo image={LEADER.image} name={LEADER.name} pos={LEADER.pos} className="tm2-lead-photo" />
             <span className="tm2-lead-chip">Founder</span>
           </motion.div>
@@ -174,7 +181,8 @@ const Team = () => {
               {visible.map((m, i) => (
                 <motion.article
                   key={m.name + m.title}
-                  className="tm2-card"
+                  className={`tm2-card${colorKey === m.name + m.title ? ' is-color' : ''}`}
+                  onClick={() => toggleColor(m.name + m.title)}
                   layout
                   initial={{ opacity: 0, y: 18 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -376,7 +384,11 @@ const styles = `
   .tm2-tab-count { font-size: 0.72rem; opacity: 0.6; }
 
   .tm2-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem 1.5rem; }
-  .tm2-card { position: relative; }
+  .tm2-card { position: relative; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+  .tm2-lead-photo-wrap { cursor: pointer; -webkit-tap-highlight-color: transparent; }
+  /* tapped photo shows in colour */
+  .tm2-card.is-color .tm2-photo img,
+  .tm2-lead-photo-wrap.is-color .tm2-photo img { filter: grayscale(0); }
   .tm2-card .tm2-photo { aspect-ratio: 4 / 5; border-radius: 18px; }
   .tm2-card-badge {
     position: absolute; top: 0.85rem; left: 0.85rem;

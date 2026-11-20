@@ -1,5 +1,6 @@
 // src/pages/Home/sections/Team.jsx
 
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import ankitImg from '../../../assets/team/ankit.jpg';
 import prashantImg from '../../../assets/team/prashant.jpg';
@@ -10,18 +11,58 @@ import Arrow from '../../../components/Arrow';
 
 // Add a photo with:  image: someImportedImage
 // pos = object-position, keeps the face inside the square crop
+// Contact buttons (all optional – leave out any you don't want):
+//   phone: '+977…'   email: 'name@…'   linkedin: 'https://www.linkedin.com/in/…'
 const teamMembers = [
-  { num: '01', name: 'Raybeen', title: 'CEO & Project Manager', desc: 'Sets the vision and keeps every project on track.', image: raybeenImg, pos: 'center 45%' },
+  { num: '01', name: 'Raybeen', title: 'CEO & Project Manager', desc: 'Sets the vision and keeps every project on track.', image: raybeenImg, pos: 'center 45%',
+    phone: '+9779714511587', email: 'raybeen@artxdevllc.com', linkedin: 'https://www.linkedin.com/in/rabin-lamichhane-05b789257/' },
   { num: '02', name: 'Prashant', title: 'Lead Developer', desc: 'Leads the engineering team and architects the core infrastructure.', image: prashantImg, pos: 'center 15%' },
-  { num: '03', name: 'Ankit Jung Thapa', title: 'Developer', desc: 'Builds and ships features across our web projects.', image: ankitImg, pos: 'center 20%' },
-  { num: '04', name: 'Pratyush Bhattarai', title: 'Developer', desc: 'Builds and ships features across our web projects.', image: pratyushImg, pos: 'center 30%' },
+  { num: '03', name: 'Ankit Jung Thapa', title: 'Developer', desc: 'Builds and ships features across our web projects.', image: ankitImg, pos: 'center 20%',
+    phone: '+9779828772477', email: 'ankithapa321@gmail.com' },
+  { num: '04', name: 'Pratyush Bhattarai', title: 'Developer', desc: 'Builds and ships features across our web projects.', image: pratyushImg, pos: 'center 30%',
+    phone: '+9779823325453', email: 'pbhattrai140@gmail.com' },
   { num: '05', name: 'Sumeet', title: 'Developer', desc: 'Builds and ships features across our web projects.', image: sumeetImg, pos: 'center 40%' },
   
 ];
 
-const TeamCard = ({ member, index }) => (
+const ICONS = {
+  phone: <path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2" />,
+  email: <><rect x="3" y="5" width="18" height="14" rx="2" /><path d="M3 7l9 6 9-6" /></>,
+  linkedin: <><rect x="3" y="3" width="18" height="18" rx="3" /><path d="M8 11v6M8 7.5v.01M12 17v-6M12 13.5a2.5 2.5 0 0 1 5 0V17" /></>,
+};
+
+// Subject line that is filled in automatically when a visitor clicks the email button
+const EMAIL_SUBJECT = 'Project inquiry from the ARTX website';
+
+// mailto: link (phones open their mail app with the address + subject filled in)
+const mailtoLink = (email) => `mailto:${email}?subject=${encodeURIComponent(EMAIL_SUBJECT)}`;
+// Gmail "new message" in the browser (computers often have no mail app set up)
+const gmailLink = (email) =>
+  `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}&su=${encodeURIComponent(EMAIL_SUBJECT)}`;
+
+// On a computer, open Gmail compose in a new tab; on phones let mailto: open the mail app
+const openEmail = (e, email) => {
+  e.stopPropagation();
+  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    e.preventDefault();
+    window.open(gmailLink(email), '_blank', 'noopener,noreferrer');
+  }
+};
+
+// Phone / email / LinkedIn buttons – only the ones a member has are shown
+const contactLinks = (m) => [
+  m.phone && { key: 'phone', href: `tel:${m.phone}`, label: `Call ${m.name}` },
+  m.email && { key: 'email', href: mailtoLink(m.email), label: `Email ${m.name}`, email: m.email },
+  m.linkedin && { key: 'linkedin', href: m.linkedin, label: `${m.name} on LinkedIn`, external: true },
+].filter(Boolean);
+
+const TeamCard = ({ member, index }) => {
+  const links = contactLinks(member);
+  // tap / click the card to show the photo in colour (phones have no hover)
+  const [color, setColor] = useState(false);
+  return (
   <div data-reveal="zoom" style={{ '--d': `${(index % 4) * 0.1 + Math.floor(index / 4) * 0.12}s` }}>
-    <article className="tm-card">
+    <article className={`tm-card${color ? ' is-color' : ''}`} onClick={() => setColor((c) => !c)}>
 
       {/* Number + status dot */}
       <div className="tm-card-top">
@@ -48,18 +89,32 @@ const TeamCard = ({ member, index }) => (
         <p className="tm-desc">{member.desc}</p>
       </div>
 
-      {/* Social circles */}
-      <div className="tm-foot">
-        <div className="tm-socials">
-          {[0, 1, 2].map((i) => (
-            <span key={i} className="tm-social" style={{ '--i': i }} />
-          ))}
+      {/* Contact buttons */}
+      {links.length > 0 && (
+        <div className="tm-foot">
+          <div className="tm-socials">
+            {links.map((l, i) => (
+              <a
+                key={l.key}
+                href={l.href}
+                className="tm-social"
+                style={{ '--i': i }}
+                aria-label={l.label}
+                title={l.label}
+                onClick={(e) => (l.email ? openEmail(e, l.email) : e.stopPropagation())}
+                {...(l.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">{ICONS[l.key]}</svg>
+              </a>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
     </article>
   </div>
 );
+};
 
 const Team = () => {
   return (
@@ -148,6 +203,8 @@ const Team = () => {
           }
           /* team photos can't be right-clicked, dragged or long-pressed to save */
           .tm-photo { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
+          .tm-card { -webkit-tap-highlight-color: transparent; }
+          .tm-card.is-color .tm-img { filter: grayscale(0); }
           .tm-img { pointer-events: none; -webkit-user-drag: none; -webkit-touch-callout: none; }
           .tm-img {
             width: 100%; height: 100%; object-fit: cover;
@@ -188,13 +245,15 @@ const Team = () => {
 
           /* Footer */
           .tm-foot { display: flex; justify-content: space-between; align-items: center; }
-          .tm-socials { display: flex; gap: 6px; }
+          .tm-socials { display: flex; gap: 8px; }
           .tm-social {
-            width: 18px; height: 18px; border-radius: 50%; border: 1px solid #555555; box-sizing: border-box;
-            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) calc(var(--i) * 0.06s);
+            width: 34px; height: 34px; border-radius: 50%; border: 1px solid #444444; box-sizing: border-box;
+            display: grid; place-items: center; color: #CFCFCF; text-decoration: none;
+            transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
           }
-          .tm-card:hover .tm-social { border-color: #888888; }
-          .tm-social:hover { background: #FFFFFF !important; }
+          .tm-social svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+          .tm-card:hover .tm-social { border-color: #777777; }
+          .tm-social:hover { background: #FFFFFF; color: #000000; border-color: #FFFFFF; transform: translateY(-2px); }
 
           @keyframes tmBreath { 0%,100% { opacity: 0.6; } 50% { opacity: 1; } }
           @keyframes tmPulse {

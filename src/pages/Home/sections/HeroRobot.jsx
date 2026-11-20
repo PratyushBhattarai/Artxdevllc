@@ -72,6 +72,7 @@ const HeroRobot = () => {
       transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
       onMouseEnter={() => sceneRef.current?.setWaving(true)}
       onMouseLeave={() => sceneRef.current?.setWaving(false)}
+      onContextMenu={(e) => e.preventDefault()}
       aria-hidden="true"
     >
       <span className="rb-halo" />
@@ -85,6 +86,10 @@ const HeroRobot = () => {
           flex-shrink: 0;
         }
         .rb-canvas { position: absolute; inset: 0; z-index: 1; }
+        /* the robot can't be saved: no right-click menu, no drag, no long-press "Save image" */
+        .rb, .rb-canvas, .rb-canvas canvas {
+          -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; -webkit-user-drag: none;
+        }
         .rb-canvas canvas { display: block; width: 100% !important; height: 100% !important; }
         .rb-halo {
           position: absolute; left: 50%; top: 40%; width: 115%; aspect-ratio: 1 / 1;
