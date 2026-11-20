@@ -4,7 +4,7 @@
 // Drop <PageEffects /> once inside a page's <main> and you get:
 //   • data-reveal="up | down | left | right | zoom | blur" scroll animations
 //     (stagger with style={{ '--d': '0.2s' }})
-//   • scroll progress bar + cursor glow
+//   • scroll progress bar
 //   • shared classes: .ax-btn, .ax-link, .ax-play, .ax-shimmer, .ax-eyebrow,
 //     .ax-badge, .ax-line / .ax-word (headline reveal), .ax-fade-up, .ax-grid-bg
 // Palette: black / white + electric blue (#00A3FF)
@@ -44,21 +44,13 @@ const styles = `
   @keyframes axWordUp { to { transform: translateY(0); } }
   @keyframes axFadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
 
-  /* ---------- Progress bar + cursor glow ---------- */
+  /* ---------- Progress bar ---------- */
   .ax-progress {
     position: fixed; top: 0; left: 0; width: 100%; height: 3px;
     z-index: 10001; pointer-events: none;
     transform-origin: 0 50%; transform: scaleX(0);
     background: linear-gradient(90deg, #00A3FF, #7fd3ff, #ffffff);
     box-shadow: 0 0 12px rgba(0, 163, 255, 0.8);
-  }
-  .ax-cursor-glow {
-    position: fixed; top: 0; left: 0; width: 600px; height: 600px;
-    border-radius: 50%; pointer-events: none; z-index: 9990;
-    background: radial-gradient(circle, rgba(0,163,255,0.14) 0%, rgba(0,163,255,0.05) 35%, transparent 65%);
-    mix-blend-mode: screen;
-    opacity: 0; transition: opacity 0.6s ease;
-    will-change: transform;
   }
 
   /* ---------- Animated grid background ---------- */
@@ -180,7 +172,6 @@ const styles = `
 
 const PageEffects = () => {
   const progressRef = useRef(null);
-  const glowRef = useRef(null);
 
   // Scroll reveal for every [data-reveal] element on the page
   useEffect(() => {
@@ -211,7 +202,7 @@ const PageEffects = () => {
     };
   }, []);
 
-  // Progress bar + cursor glow
+  // Progress bar
   useEffect(() => {
     let frame = 0;
     const onScroll = () => {
@@ -222,28 +213,18 @@ const PageEffects = () => {
         if (progressRef.current) progressRef.current.style.transform = `scaleX(${progress})`;
       });
     };
-    const onMouseMove = (e) => {
-      const glow = glowRef.current;
-      if (!glow) return;
-      glow.style.opacity = '1';
-      glow.style.transform = `translate3d(${e.clientX - 300}px, ${e.clientY - 300}px, 0)`;
-    };
-    const hasMouse = window.matchMedia('(pointer: fine)').matches;
 
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
-    if (hasMouse) window.addEventListener('mousemove', onMouseMove, { passive: true });
     return () => {
       cancelAnimationFrame(frame);
       window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('mousemove', onMouseMove);
     };
   }, []);
 
   return (
     <>
       <div ref={progressRef} className="ax-progress" aria-hidden="true" />
-      <div ref={glowRef} className="ax-cursor-glow" aria-hidden="true" />
       <style>{styles}</style>
     </>
   );

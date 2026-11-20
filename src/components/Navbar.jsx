@@ -245,9 +245,13 @@ const Navbar = () => {
                 key={link.to}
                 ref={(el) => { linkRefs.current[index] = el; }}
                 className={`nv-item${servicesOpen ? ' is-open' : ''}`}
-                onMouseEnter={() => { setHoverIndex(index); setServicesOpen(true); }}
+                onMouseEnter={() => {
+                  setHoverIndex(index);
+                  // only a real mouse opens the dropdown – on touch screens a tap goes straight to /services
+                  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) setServicesOpen(true);
+                }}
                 onMouseLeave={() => setServicesOpen(false)}
-                onFocus={() => setServicesOpen(true)}
+                onFocus={(e) => { if (e.target.matches(':focus-visible')) setServicesOpen(true); }}
                 onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget)) setServicesOpen(false); }}
               >
                 {anchor}
@@ -373,24 +377,34 @@ const Navbar = () => {
               );
             }
 
-            // ---- Services: tap to expand the list of services ----
+            // ---- Services: the word opens the Services page, the arrow shows the list ----
             return (
               <div key={link.to} className={`nv-panel-group${mobileServicesOpen ? ' is-open' : ''}`}>
-                <button
-                  type="button"
+                <div
                   className={`nv-panel-link nv-panel-toggle${isActive(link.to) ? ' is-active' : ''}`}
                   style={{ '--i': index }}
-                  onClick={() => setMobileServicesOpen((o) => !o)}
-                  aria-expanded={mobileServicesOpen}
-                  aria-controls="nv-panel-services"
-                  tabIndex={menuOpen ? 0 : -1}
                 >
-                  {num}
-                  {link.label}
-                  <span className="nv-panel-chevron" aria-hidden="true">
-                    <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" /></svg>
-                  </span>
-                </button>
+                  <Link
+                    to={link.to}
+                    onClick={handleNavClick}
+                    className="nv-panel-toggle-link"
+                    tabIndex={menuOpen ? 0 : -1}
+                  >
+                    {num}
+                    {link.label}
+                  </Link>
+                  <button
+                    type="button"
+                    className="nv-panel-chevron"
+                    onClick={() => setMobileServicesOpen((o) => !o)}
+                    aria-expanded={mobileServicesOpen}
+                    aria-controls="nv-panel-services"
+                    aria-label={mobileServicesOpen ? 'Hide services list' : 'Show services list'}
+                    tabIndex={menuOpen ? 0 : -1}
+                  >
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" /></svg>
+                  </button>
+                </div>
 
                 <div className="nv-panel-sub" id="nv-panel-services">
                   <div className="nv-panel-sub-inner">
@@ -455,35 +469,19 @@ const Navbar = () => {
           position: relative; overflow: hidden; isolation: isolate;
           display: inline-flex; align-items: center; gap: 8px;
           height: 40px; padding: 0 18px; box-sizing: border-box;
-          border: 2px solid #00A3FF; border-radius: 30px; background: #FFFFFF;
-          font-family: 'Karma', serif; font-size: 15px; font-weight: 700; color: #000000;
+          border: 2px solid #000000; border-radius: 30px; background: #000000;
+          font-family: 'Karma', serif; font-size: 15px; font-weight: 700; color: #FFFFFF;
           white-space: nowrap; cursor: pointer;
-          transition: color 0.35s ease, transform 0.3s ease, box-shadow 0.3s ease;
+          transition: background 0.3s ease, transform 0.3s ease;
         }
-        .nv-pay::before {
-          content: ''; position: absolute; inset: 0; z-index: -1; background: #00A3FF;
-          transform: translateY(101%); transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-        /* soft blue pulse to draw the eye */
-        .nv-pay::after {
-          content: ''; position: absolute; inset: -2px; border-radius: inherit; pointer-events: none;
-          box-shadow: 0 0 0 0 rgba(0, 163, 255, 0.5); animation: nvPayPulse 2.6s ease-out infinite;
-        }
-        .nv-pay:hover { transform: translateY(-2px); box-shadow: 0 8px 18px -6px rgba(0, 163, 255, 0.7); }
-        .nv-pay:hover::before { transform: translateY(0); }
+        .nv-pay:hover { transform: translateY(-2px); background: #222222; }
         .nv-pay-icon {
           width: 18px; height: 18px; flex-shrink: 0; fill: none; stroke: currentColor;
-          stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; color: #00A3FF;
-          transition: color 0.35s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+          stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; color: #FFFFFF;
         }
-        .nv-pay:hover .nv-pay-icon { color: #000000; transform: rotate(-10deg) scale(1.1); }
-        @keyframes nvPayPulse {
-          0% { box-shadow: 0 0 0 0 rgba(0, 163, 255, 0.45); }
-          70%, 100% { box-shadow: 0 0 0 10px rgba(0, 163, 255, 0); }
-        }
-        /* Mobile menu version */
-        .nv-pay--panel { background: transparent; color: #FFFFFF; height: 44px; }
-        .nv-pay--panel:hover { color: #000000; }
+        /* Mobile menu version (on the black menu): black with a white outline */
+        .nv-pay--panel { height: 44px; border-color: rgba(255, 255, 255, 0.45); }
+        .nv-pay--panel:hover { border-color: #FFFFFF; }
         /* Tight desktop widths: icon-only so the navbar never wraps */
         @media (max-width: 1180px) and (min-width: 1081px) {
           .nv-pay:not(.nv-pay--panel) { width: 40px; padding: 0; justify-content: center; }
@@ -816,12 +814,14 @@ const Navbar = () => {
         .nv-panel-num { font-family: 'Gowun Dodum', sans-serif; font-size: 0.72rem; color: #555555; min-width: 18px; }
 
         /* ---- Services accordion (phone menu) ---- */
-        .nv-panel-toggle {
-          width: 100%; text-align: left; cursor: pointer;
-          background: none; border: none; border-bottom: 1px solid #1c1c1c; border-radius: 0;
+        .nv-panel-toggle { width: 100%; padding: 0; }
+        .nv-panel-toggle-link {
+          flex: 1; display: flex; align-items: center; gap: 0.85rem;
+          padding: 0.8rem 0; color: inherit; text-decoration: none;
         }
         .nv-panel-chevron {
-          margin-left: auto; align-self: center;
+          margin-left: auto; align-self: center; padding: 0; cursor: pointer;
+          background: none; color: inherit;
           width: 30px; height: 30px; border-radius: 50%; border: 1px solid #333333;
           display: grid; place-items: center; flex-shrink: 0;
           transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), background 0.3s ease, border-color 0.3s ease;

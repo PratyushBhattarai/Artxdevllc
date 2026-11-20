@@ -19,7 +19,7 @@ import FAQ from './sections/FAQ';
      Stagger with:  style={{ '--d': '0.2s' }}
   2. Shared classes used by the sections:
      .ax-btn (+ --solid / --outline), .ax-link, .ax-play, .ax-shimmer, .ax-eyebrow
-  3. Scroll progress bar + cursor glow (glow only shows on dark sections)
+  3. Scroll progress bar
   ===========================================================
 */
 
@@ -45,21 +45,13 @@ const globalStyles = `
   [data-reveal="blur"]  { transform: translateY(12px); filter: blur(6px); }
   [data-reveal][data-visible="true"] { opacity: 1; transform: none; filter: none; }
 
-  /* ---------- Scroll progress + cursor glow ---------- */
+  /* ---------- Scroll progress ---------- */
   .ax-progress {
     position: fixed; top: 0; left: 0; width: 100%; height: 3px;
     z-index: 10001; pointer-events: none;
     transform-origin: 0 50%; transform: scaleX(0);
     background: linear-gradient(90deg, #00A3FF, #7fd3ff, #ffffff);
     box-shadow: 0 0 12px rgba(0, 163, 255, 0.8);
-  }
-  .ax-cursor-glow {
-    position: fixed; top: 0; left: 0; width: 600px; height: 600px;
-    border-radius: 50%; pointer-events: none; z-index: 9990;
-    background: radial-gradient(circle, rgba(0,163,255,0.14) 0%, rgba(0,163,255,0.05) 35%, transparent 65%);
-    mix-blend-mode: screen;   /* invisible on white, glows on black */
-    opacity: 0; transition: opacity 0.6s ease;
-    will-change: transform;
   }
 
   /* ---------- Eyebrow label ---------- */
@@ -189,14 +181,12 @@ const globalStyles = `
       transition-delay: 0s !important;
     }
     [data-reveal] { opacity: 1 !important; transform: none !important; filter: none !important; }
-    .ax-cursor-glow { display: none; }
   }
 `;
 
 const Home = () => {
   const mainRef = useRef(null);
   const progressRef = useRef(null);
-  const glowRef = useRef(null);
 
   // Scroll reveal – every [data-reveal] element animates in once
   useEffect(() => {
@@ -219,7 +209,7 @@ const Home = () => {
     return () => observer.disconnect();
   }, []);
 
-  // Scroll progress bar + cursor glow
+  // Scroll progress bar
   useEffect(() => {
     let frame = 0;
 
@@ -232,30 +222,18 @@ const Home = () => {
       });
     };
 
-    const onMouseMove = (e) => {
-      const glow = glowRef.current;
-      if (!glow) return;
-      glow.style.opacity = '1';
-      glow.style.transform = `translate3d(${e.clientX - 300}px, ${e.clientY - 300}px, 0)`;
-    };
-
-    const hasMouse = window.matchMedia('(pointer: fine)').matches;
-
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
-    if (hasMouse) window.addEventListener('mousemove', onMouseMove, { passive: true });
 
     return () => {
       cancelAnimationFrame(frame);
       window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('mousemove', onMouseMove);
     };
   }, []);
 
   return (
     <main ref={mainRef}>
       <div ref={progressRef} className="ax-progress" aria-hidden="true" />
-      <div ref={glowRef} className="ax-cursor-glow" aria-hidden="true" />
 
       <Hero />
       {/* Sections alternate: white / black */}

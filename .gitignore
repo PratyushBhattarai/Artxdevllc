@@ -4,3 +4,4 @@ dist/
 .git/
 # cPanel upload bundles
 *.zip
+artx-cpanel-upload/

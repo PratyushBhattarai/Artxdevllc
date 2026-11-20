@@ -16,7 +16,7 @@ import Arrow from '../../../components/Arrow';
 */
 const projects = [
   { title: 'Seabrook Texas Town', category: 'Web App', description: 'A destination and community website for Seabrook, Texas on Galveston Bay – covering ecotourism, wildlife, local history and news, with a local business section, an online shop and an AI chat assistant for visitors.', videoUrl: '/videos/seabrook.mp4', projectLink: 'https://seabrooktexastown.com/' },
-  { title: 'Actexas', category: 'Website', description: 'A clean, professional business website for ACTS – Acoustical Ceiling Tile Solutions – presenting their acoustical ceiling tile services clearly so customers know exactly what they offer.', videoUrl: '/videos/actexas.mp4', projectLink: 'https://actexas.com' },
+  { title: 'Actexas', category: 'Website', description: 'A clean, professional business website for ACTS – Acoustical Ceiling Tile Solutions – presenting their acoustical ceiling tile services clearly so customers know exactly what they offer.', videoUrl: '/videos/actexas.mp4', projectLink: 'https://actstexas.com/' },
   { title: 'Stelgh', category: 'Website', description: 'A premium Gulf Coast apparel brand and store – print-on-demand tees, hoodies and caps shipped worldwide – paired with a Seabrook travel guide covering things to do, places to stay and local wildlife.', videoUrl: '/videos/stelgh.mp4', projectLink: 'https://stelgh.com' },
   { title: 'RRLCLLC', category: 'Website', description: 'A website for DoubleR LawnCare (RRLC LLC) showcasing weekly lawn maintenance, aeration, fertilization and weed control, with before-and-after concepts and a free estimate request.', videoUrl: '/videos/rrlcllc.mp4', projectLink: 'https://rrlcllc.com' },
 ];

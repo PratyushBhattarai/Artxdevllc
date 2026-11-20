@@ -5,6 +5,7 @@ import ankitImg from '../../../assets/team/ankit.jpg';
 import prashantImg from '../../../assets/team/prashant.jpg';
 import raybeenImg from '../../../assets/team/raybeen.jpg';
 import pratyushImg from '../../../assets/team/pratyush.jpg';
+import sumeetImg from '../../../assets/team/sumeet.jpeg';
 import Arrow from '../../../components/Arrow';
 
 // Add a photo with:  image: someImportedImage
@@ -14,6 +15,8 @@ const teamMembers = [
   { num: '02', name: 'Prashant', title: 'Lead Developer', desc: 'Leads the engineering team and architects the core infrastructure.', image: prashantImg, pos: 'center 15%' },
   { num: '03', name: 'Ankit Jung Thapa', title: 'Developer', desc: 'Builds and ships features across our web projects.', image: ankitImg, pos: 'center 20%' },
   { num: '04', name: 'Pratyush Bhattarai', title: 'Developer', desc: 'Builds and ships features across our web projects.', image: pratyushImg, pos: 'center 30%' },
+  { num: '05', name: 'Sumeet', title: 'Developer', desc: 'Builds and ships features across our web projects.', image: sumeetImg, pos: 'center 40%' },
+  
 ];
 
 const TeamCard = ({ member, index }) => (
@@ -108,7 +111,7 @@ const Team = () => {
           }
 
           .tm-grid {
-            position: relative; display: grid; grid-template-columns: repeat(4, 1fr);
+            position: relative; display: grid; grid-template-columns: repeat(5, 1fr);
             gap: 1.5rem; width: 100%;
           }
 
@@ -200,6 +203,8 @@ const Team = () => {
             100% { box-shadow: 0 0 0 0 rgba(0,163,255,0); }
           }
 
+          /* 5 per row on large screens, 3 on laptops, 2 on tablets */
+          @media (max-width: 1280px) { .tm-grid { grid-template-columns: repeat(3, 1fr); } }
           @media (max-width: 1024px) { .tm-grid { grid-template-columns: repeat(2, 1fr); } }
           @media (max-width: 560px) {
             .tm-grid { grid-template-columns: 1fr; }

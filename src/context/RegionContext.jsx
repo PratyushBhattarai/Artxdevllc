@@ -7,14 +7,15 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 
 const STORAGE_KEY = 'artx-region';
-const RegionContext = createContext({ region: 'Nepal', setRegion: () => {} });
+const DEFAULT_REGION = 'USA'; // first-time visitors see the USA office
+const RegionContext = createContext({ region: DEFAULT_REGION, setRegion: () => {} });
 
 const readSaved = () => {
   try {
     const saved = window.localStorage.getItem(STORAGE_KEY);
-    return saved === 'USA' || saved === 'Nepal' ? saved : 'Nepal';
+    return saved === 'USA' || saved === 'Nepal' ? saved : DEFAULT_REGION;
   } catch {
-    return 'Nepal';
+    return DEFAULT_REGION;
   }
 };
 

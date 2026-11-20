@@ -15,6 +15,7 @@ import logoCarolinaStump from '../../assets/barnd8.png';
 // Logos taken from each company's own website
 import logoDeConstruction from '../../assets/de-construction-logo.png';
 import logoTotalLandscape from '../../assets/total-landscape-solutions-logo.png';
+import logoMitchells from '../../assets/mitchells-logo.png';
 import Arrow from '../../components/Arrow';
 
 // "Other projects we've built" – logo + short description; clicking a card opens the live website
@@ -31,7 +32,7 @@ const otherProjects = [
     desc: 'A construction company website presenting their services, completed projects and contact details in one place.' },
   { name: 'Total Landscape Solutions', url: 'https://www.totallandscapesolution.com/', logo: logoTotalLandscape,
     desc: 'A landscaping and outdoor services website with clear service pages and an easy quote request for new clients.' },
-  { name: "Mitchell's Handyman Service", url: 'https://mitchellshandymanservice.com/', mark: 'MHS',
+  { name: "Mitchell's Handyman Service", url: 'https://mitchellshandymanservice.com/', logo: logoMitchells,
     desc: 'A website for a trusted handyman in Richlands, NC – drywall, painting, decks, fencing and pressure washing, with a project gallery and quick quote requests.' },
   // A project without a logo file shows a name tile instead. Add  logo: yourImport  to use an image,
   // and optionally  mark: 'AB'  to choose the letters on the name tile.
@@ -54,7 +55,7 @@ const projects = [
     category: 'Website',
     description: 'A clean, professional business website for ACTS – Acoustical Ceiling Tile Solutions – presenting their acoustical ceiling tile services clearly so customers know exactly what they offer.',
     videoUrl: '/videos/actexas.mp4',
-    projectLink: 'https://actexas.com',
+    projectLink: 'https://actstexas.com/',
   },
   {
     title: 'Stelgh',
