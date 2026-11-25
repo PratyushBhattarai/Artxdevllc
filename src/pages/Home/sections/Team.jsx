@@ -7,6 +7,7 @@ import prashantImg from '../../../assets/team/prashant.jpg';
 import raybeenImg from '../../../assets/team/raybeen.jpg';
 import pratyushImg from '../../../assets/team/pratyush.jpg';
 import sumeetImg from '../../../assets/team/sumeet.jpeg';
+import SubashRayImg from '../../../assets/team/Subash.jpeg';
 import Arrow from '../../../components/Arrow';
 
 // Add a photo with:  image: someImportedImage
@@ -22,6 +23,10 @@ const teamMembers = [
   { num: '04', name: 'Pratyush Bhattarai', title: 'Developer', desc: 'Builds and ships features across our web projects.', image: pratyushImg, pos: 'center 30%',
     phone: '+9779823325453', email: 'pbhattrai140@gmail.com' },
   { num: '05', name: 'Sumeet', title: 'Developer', desc: 'Builds and ships features across our web projects.', image: sumeetImg, pos: 'center 40%' },
+  { num: '06', name: 'Subash Ray', title: 'SEO Specialist', desc: 'Optimizes our web projects for search engines and user experience.', image: SubashRayImg, pos: 'center 40%',
+   
+  }
+
   
 ];
 

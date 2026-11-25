@@ -19,6 +19,7 @@ import prashantImg from '../../assets/team/prashant.jpg';
 import ankitImg from '../../assets/team/ankit.jpg';
 import pratyushImg from '../../assets/team/pratyush.jpg';
 import sumeetImg from '../../assets/team/sumeet.jpeg';
+import SubashRayImg from '../../assets/team/Subash.jpeg';
 /* ===================== EDIT THE TEAM HERE ===================== */
 const LEADER = {
   name: 'Rabin Lamichhane, (Raybeen)',
@@ -36,7 +37,7 @@ const MEMBERS = [
   { name: 'Rabin Lamichhane', title: 'Project Manager', teams: ['Sales'], image: raybeenImg, pos: 'center 40%' },
   { name: 'Sumeet', title: 'Developer', teams: ['Engineering'], image: sumeetImg, pos: 'center 40%' },
   // SEO – add photos/names when ready (a silhouette shows until then)
-  { name: 'SEO Specialist', title: 'Coming soon', teams: ['SEO'], image: null },
+  { name: 'Subash Ray', title: 'SEO Specialist', teams: ['SEO'], image: SubashRayImg, pos: 'center 40%' },
   { name: 'Content Strategist', title: 'Coming soon', teams: ['SEO'], image: null },
 ];
 
